@@ -1,5 +1,5 @@
 {
-  "name": "Webo-App",
+  "name": "easy-camp",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -13,9 +13,9 @@
     "less-loader": "^5.0.0",
     "lodash": "^4.17.15",
     "plop": "^2.6.0",
-    "react": "^16.13.1",
+    "react": "17.0.0",
     "react-app-rewired": "^2.1.5",
-    "react-dom": "^16.13.1",
+    "react-dom": "^17.0.1",
     "react-i18next": "^11.3.5",
     "react-redux": "^7.2.0",
     "react-responsive": "^8.0.3",
@@ -38,7 +38,7 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "lint-staged": {ack
+  "lint-staged": {
     "*.{js,jsx}": [
       "pretty-quick --staged",
       "eslint src/ --fix",
