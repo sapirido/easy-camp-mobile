@@ -6,7 +6,6 @@ import { useDispatch } from 'react-redux';
 import { FlexDivCenter, Text } from '../../components/Typography/Typography';
 import { loginAction } from '../../data/modules/auth/auth.actions';
 import { LoginStyled } from './Login.styled';
-import { updateUser } from '../../fb';
 
 export default ({history}) => {
   const dispatch = useDispatch();

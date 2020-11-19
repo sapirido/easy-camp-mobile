@@ -1,10 +1,14 @@
 import React, { useEffect } from 'react';
+import styled from 'styled-components';
 import { Route,Switch, withRouter } from "react-router";
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+import { getUserSession } from './data/modules/auth/auth.actions';
 import Login from './containers/Login/Login';
 import Main from './containers/Main/Main';
 import Sidebar from './components/Sidebar/Sidebar';
-import styled from 'styled-components';
+import AdminPanel from './containers/Admin/AdminPanel';
+import CampsEditor from './containers/camps/edit/CampsEditor';
+import CreateCamp from './containers/camps/create/CreateCamp';
 
 const ContentStyled = styled.div`
 display:flex;
@@ -15,22 +19,36 @@ height:95vh;
 `
 
  function AppRouter({history}){
-    const { activeUser } = useSelector(store => store.auth);
-    useEffect(()=>{
-        if(!activeUser){
-            history.replace('/login')
+    const { activeUser } = useSelector(({auth}) => auth);
+    const dispatch = useDispatch();
+    useEffect(async() => {
+        if(isSessionIsValide()){
+          const uid = localStorage.getItem('uid');
+          await dispatch(getUserSession(uid));
+        }else{
+          history.replace('/login');
         }
     },[])
 
+    function isSessionIsValide(){
+      var loggedInTime = localStorage.getItem('loggedIn');
+      loggedInTime = Number(loggedInTime);
+      const now = +new Date();
+      const valideDiff = 1000 * 60 * 60 * 3;
+      return now - loggedInTime < valideDiff;
+    }
+
     const authRoutes = [
         { path: "/", component: Main, isExact: true },
+        {path:"/admin",component: AdminPanel,isExact:true},
+        {path:'/admin/camps/edit',component: CampsEditor,isExact:true},
+        {path:'/admin/camps/create',component:CreateCamp,isExact:true}
       ];
       const notAuthRoutes = [
         {path:'/login',component:Login,isExact:true},
       ]
-
       const routes = activeUser ? authRoutes : notAuthRoutes;
-      console.log({routes});
+      console.log({routes})
       
     return(
         <>

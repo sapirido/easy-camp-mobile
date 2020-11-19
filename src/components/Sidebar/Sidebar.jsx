@@ -10,11 +10,12 @@ import { Layout, Menu } from 'antd';
 import React, { useState,useEffect } from 'react';
 import MenuItem from 'antd/lib/menu/MenuItem';
 import {useSelector} from 'react-redux'
+import {withRouter} from 'react-router'
 
 const {  Sider } = Layout;
 const { SubMenu } = Menu;
 
-export default function Sidebar(){
+ function Sidebar({history}){
     const activeUser = useSelector(({auth}) => auth.activeUser);
     const [collapsed,setCollapsed] = useState(true);
     function onCollapse(collapsed){
@@ -43,8 +44,9 @@ export default function Sidebar(){
             <Menu.Item key="9" icon={<FileOutlined />}>
               טפסים
             </Menu.Item>
-           {activeUser.isAdmin && <MenuItem key="10" icon={<EditOutlined />}>פאנל ניהולי</MenuItem>} 
+           {activeUser.isAdmin && <MenuItem onClick={()=>history.push('/admin')} key="10" icon={<EditOutlined />}>פאנל ניהולי</MenuItem>} 
           </Menu>
         </Sider>
     )
 }
+export default withRouter(Sidebar)

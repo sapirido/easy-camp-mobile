@@ -1,6 +1,4 @@
 import firebase from 'firebase';
-import store from '../src/data/store';
-import {setActiveUser} from './data/modules/auth/auth.actions'
 var firebaseConfig = {
   apiKey: "AIzaSyBjPWUKWf-m9nOdNEHV3-Q8Rn4Feu4oErI",
   authDomain: "easy-camp.firebaseapp.com",

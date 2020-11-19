@@ -14,23 +14,13 @@ export default () => {
   const { t } = useTranslation();
   const { activeUser } = useSelector(store => store.auth);
 
-  function onToggleLanguage() {
-    return getActiveLanguage() === 'en'
-      ? changeLanguage('he')
-      : changeLanguage('en');
-  }
 
   useEffect(()=>{
     console.log({activeUserFromMain:activeUser})
   },[])
 
-  async function onLogin() {
-    try {
-      dispatch(loginAction());
-    } catch (err) {
-      console.log(err);
-    }
-  }
+
+
 
   return (
     <MainWrapper>

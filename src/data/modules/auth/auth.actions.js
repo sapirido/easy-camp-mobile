@@ -1,5 +1,5 @@
 import {
-  login, getUserAndUpdateFromDB,
+  login, getUserAndUpdateFromDB, getUserById,
 
 } from "./auth.service";
 import {
@@ -15,9 +15,19 @@ export function loginAction() {
   return async function _(dispatch) {
     const user = await login(); // modify by your logic
     const dbUser = await getUserAndUpdateFromDB(user);
+    localStorage.setItem('loggedIn',+new Date());
+    localStorage.setItem('uid',user.uid);
     dispatch(setActiveUser(dbUser));
+    return dbUser;
 
   };
+}
+
+export function getUserSession(uid){
+  return async function _(dispatch){
+    const user = await getUserById(uid);
+    dispatch(setActiveUser(user));
+  }
 }
 
 export function setActiveUser(user){

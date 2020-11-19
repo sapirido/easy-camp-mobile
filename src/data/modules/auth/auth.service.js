@@ -17,3 +17,11 @@ export async function getUserAndUpdateFromDB(userData){
     console.log(err);
   }
 }
+
+export async function getUserById(uid){
+  try{
+    return await getUser(uid);
+  }catch(err){
+    console.log(err);
+  }
+}
