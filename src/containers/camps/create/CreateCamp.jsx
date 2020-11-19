@@ -4,6 +4,8 @@ import { CreateCampStyled,ManagerFormStyled,TeamCreateStyled,StepsStyled,StepCon
 import { MainText,HeaderStyled,DescriptionText } from '../../../common/styles/common.styled';
 import CampMangerForm from '../../../components/forms/CampMangerForm';
 import CampGeneralInfo from '../../../components/forms/CampGeneralInfo';
+import CampInstractions from '../../../components/forms/CampInstractions';
+import CampChildrenForm from '../../../components/forms/CampChildrensForm';
 
 const {Step} = Steps;
 
@@ -14,6 +16,7 @@ export default function PlusOutlined({}){
     const [managerId,setManagerId] = useState('');
     const [managerPhone,setManagerPhone] = useState('');
     const [managerEmail,setManagerEmail] = useState('');
+    const [instructions,setInstructions] = useState([]);
 
     const campMangerFormProps = {managerName,setManagerName,managerId,setManagerId,managerPhone,setManagerPhone,managerEmail,setManagerEmail};
 
@@ -28,11 +31,11 @@ export default function PlusOutlined({}){
         },
         {
             title:'פרטי מדריכי המחנה',
-            content:<CampMangerForm/>
+            content:<CampInstractions setInstructions={setInstructions}/>
         },
         {
             title:'ציוות ילדים לקבוצות',
-            content:<CampMangerForm/>
+            content:<CampChildrenForm/>
         }
     ]
 
