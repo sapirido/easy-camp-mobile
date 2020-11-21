@@ -1,8 +1,11 @@
-import React,{useEffect,useState} from 'react'
+import { UploadOutlined } from '@ant-design/icons';
+import { Button, Divider, Empty, Table, Upload } from 'antd';
+import React, { useEffect, useState } from 'react';
 import readXlsxfile from 'read-excel-file';
-import { Table } from 'antd';
-
-export default function CampChildrenForm({}){
+import { FormHeaderStyled, Text } from '../../common/styles/common.styled';
+import { CampChildrenFormStyled } from '../../containers/camps/create/CreateCamp.styled';
+import { EmptyStyled, TableStyled, UploaderStyled,ButtonContainerStyle } from './Forms.styled';
+export default function CampChildrenForm({setChildrens,checkValidation}){
     const [columns,setColumns] = useState(null);
     const [data,setData] = useState(null);
 useEffect(()=>{
@@ -21,6 +24,14 @@ const dataMaping  ={
     'קוד לקוח':'customerCode',
     'תעודת זהות':'id'
 
+}
+
+const props = {
+    name: 'file',
+    action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+    headers: {
+      authorization: 'authorization-text',
+    }
 }
 
 function getDataFromExcel(){
@@ -58,6 +69,7 @@ function getDataFromExcel(){
                         })
                     setData(data);
                     setColumns(columns);
+                    setChildrens(data);
                     
                 }else{
                     throw new Error('can not fetch data from this file')
@@ -74,9 +86,26 @@ function getDataFromExcel(){
  
     console.log({columns,data});
     return(
-        <>
-        <input type="file" id='uploader' placeholder='uploader'/>
-        {columns && <Table dataSource={data} columns={columns}/>}
-        </>
+<CampChildrenFormStyled>
+    <FormHeaderStyled>
+        <Text>פרטי ילדי המחנה</Text>
+    </FormHeaderStyled>
+    <UploaderStyled>
+    <Upload type="file" id="uploader" {...props}>
+        <Button icon={<UploadOutlined />}>העלאת קובץ</Button>
+    </Upload>\
+</UploaderStyled>
+<Divider dashed type={'horizontal'}/>
+    {columns ?
+    (<TableStyled>
+     <Table  dataSource={data} columns={columns} pagination={{ pageSize: 20 }} scroll={{ y: 240 }} />
+     </TableStyled>):(
+         <EmptyStyled>
+         <Empty/>
+         </EmptyStyled>
+     )
+     }
+    </CampChildrenFormStyled>        
+
     )
 }

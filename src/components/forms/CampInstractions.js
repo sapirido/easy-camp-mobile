@@ -2,22 +2,27 @@ import React,{useState} from 'react';
 
 import { Form, Input, Button, Space, Checkbox } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { intersection } from 'lodash';
+import { FormStyled,FormHeaderStyled,Text } from '../../common/styles/common.styled';
+import {CampImstractionStyled} from '../../containers/camps/create/CreateCamp.styled';
+
 
 export default function CampInstractions({setInstructions}){
 
     const [leader,setLeader] = useState(null);
   const onFinish = values => {
-      var { instructions } = values;
-      console.log({instructions})
+      let { instructions } = values;
       if(leader.checked){
         instructions[leader.key].leader = true;
       }
+      instructions = instructions.map(instruction=>({
+        ...instruction,
+        leader:!!instruction.leader,
+        type:'INSTRUCTION'
+      }))
       setInstructions(instructions);
   };
 
   function onLeaderSelected(e,field){
-      console.log(e.target.checked);
       if(e.target.checked){
           setLeader({checked:true,key:field.key});
       }
@@ -27,6 +32,11 @@ export default function CampInstractions({setInstructions}){
   }
 console.log({leader});
   return (
+      <CampImstractionStyled style={{height:'100%'}}>
+        
+        <FormHeaderStyled>
+                <Text>פרטי מדריכי המחנה</Text>
+            </FormHeaderStyled>
     <Form name="dynamic_form_nest_item" onFinish={onFinish} autoComplete="off">
       <Form.List name="instructions">
         {(fields, { add, remove }) => (
@@ -90,5 +100,6 @@ console.log({leader});
         </Button>
       </Form.Item>
     </Form>
+    </CampImstractionStyled>
   );
 };

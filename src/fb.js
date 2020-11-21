@@ -15,8 +15,9 @@ export const db = firebase.database();
 export const { auth } = firebase;
 export const storage = firebase.storage();
 
-const provider = new auth.GoogleAuthProvider();
 
+//***START_AUTH***//
+const provider = new auth.GoogleAuthProvider();
 export async function getUser(uid){
 const userData = await db.ref(`kleah/users/${uid}`).once('value').then(snapshot =>{  
    return snapshot.val();
@@ -46,5 +47,39 @@ export function login() {
       throw new Error();
     });
 }
+
+//***END_AUTH */
+
+//***START_CAMP */
+export async function saveEmpolyee(employee){
+try{
+  await db.ref(`/kleah/users/employees/${employee.id}`).set({
+    ...employee
+  })
+}catch(err){
+  console.error(err);
+ }
+}
+
+export async function saveChildren(children){
+  try{
+    await db.ref(`/kleah/users/childrens/${children.id}`).set({
+      ...children
+    })
+  }catch(err){
+    console.error(err);
+  }
+}
+
+export async function saveCamp(camp){
+  try{
+    await db.ref(`/kleah/camps/${camp.camp_id}`).set({
+      ...camp
+    })
+  }catch(err){
+    console.error(err);
+  }
+}
+
 
 

@@ -1,10 +1,10 @@
 import React from 'react';
-import { Form, Input } from 'antd';
+import { Form, Input,Button } from 'antd';
 import { FormStyled,FormHeaderStyled,Text } from '../../common/styles/common.styled';
 
 
 
-export default function CampGeneralInfo({campName,setCampName,campNumber,setCampNumber}){
+export default function CampGeneralInfo({campName,setCampName,campNumber,setCampNumber,checkValidation}){
     const [form] = Form.useForm();
 
     return(
@@ -23,6 +23,7 @@ export default function CampGeneralInfo({campName,setCampName,campNumber,setCamp
              <Input value={campNumber} placeholder="הכנס שם מלא" onChange={(e)=>setCampNumber(e.target.value)}/>
          </Form.Item>
         </Form>
+        <Button onClick={checkValidation} type="primary">אשר פרטים</Button> 
         </FormStyled>
     )
 }

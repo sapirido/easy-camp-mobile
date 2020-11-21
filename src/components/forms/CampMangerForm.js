@@ -1,9 +1,9 @@
 import { InfoCircleOutlined } from '@ant-design/icons';
-import { Form, Input } from 'antd';
-import React, { useState } from 'react';
+import { Form, Input, Button } from 'antd';
+import React from 'react';
 import { FormStyled,FormHeaderStyled,Text } from '../../common/styles/common.styled';
 
-export default function CampMangerForm({managerName,setManagerName,managerId,setManagerId,managerEmail,setManagerEmail,managerPhone,setManagerPhone}){
+export default function CampMangerForm({checkValidation,managerName,setManagerName,managerId,setManagerId,managerEmail,setManagerEmail,managerPhone,setManagerPhone}){
 const [form] = Form.useForm();
     return(
     <FormStyled>
@@ -27,6 +27,7 @@ const [form] = Form.useForm();
             <Input value={managerEmail} label="הכנס מספר טלפון" onChange={(e)=>setManagerEmail(e.target.value)}/>
         </Form.Item>
        </Form>
+       <Button onClick={checkValidation} type='primary'>אשר נתונים</Button>
        </FormStyled>
     )
 }

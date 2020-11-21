@@ -17,14 +17,15 @@ font-size:24px;
 `
 
 export const FormStyled = styled.div`
-padding:20px;
 width:20%;
+height:100%;
 margin:auto;
 `
 
 export const FormHeaderStyled = styled.div`
 padding-bottom:30px;
 text-align:center;
+height:15%;
 `
 export const Text = styled.span`
 font-size:24px;

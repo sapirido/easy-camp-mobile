@@ -1,7 +1,4 @@
-import axios from "axios";
-import get from "lodash/get";
-import { login as firebaseLogin, getUser,saveUser } from '../../../fb';
-//! PLOP_APPEND_SERVICE
+import { getUser, login as firebaseLogin, saveUser } from '../../../fb';
 
 export async function login() {
   return firebaseLogin();

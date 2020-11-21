@@ -21,13 +21,26 @@ padding-bottom:40px;
 `
 
 export const StepContent = styled.div`
-padding-bottom:30px;
+padding:30px;
 box-shadow:5px 5px 10px;
-height:500px;
+height:65vh;
 display:flex;
 align-items:center;
 justify-content:center;
 `
 export const StepActionStyled = styled.div`
 padding-top:50px;
+`
+
+export const CampChildrenFormStyled = styled.div`
+padding:25px;
+height:100%;
+width:100%;
+.ant-divider-dashed{
+    border-width: 2px 0 0;
+}
+`
+
+export const CampImstractionStyled = styled.div`
+height:100%;
 `
