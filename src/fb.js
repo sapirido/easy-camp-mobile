@@ -1,4 +1,6 @@
 import firebase from 'firebase';
+import { update } from 'lodash';
+import store from './data/store';
 var firebaseConfig = {
   apiKey: "AIzaSyBjPWUKWf-m9nOdNEHV3-Q8Rn4Feu4oErI",
   authDomain: "easy-camp.firebaseapp.com",
@@ -79,6 +81,54 @@ export async function saveCamp(camp){
   }catch(err){
     console.error(err);
   }
+}
+
+export async function getAllCamps(){
+  try{
+    const allCamps = await (await db.ref('/kleah/camps').once('value')).val();
+    return allCamps.filter(Boolean);
+  }catch(err){
+    console.error(err);
+  }
+}
+
+export async function updateCampManager(managerId,campId,updatedData){
+  try{
+    let updates = {};
+    updates[`/kleah/camps/${campId}/camp_manager`] = updatedData;
+    updates[`/kleah/users/employees/${managerId}`] = null;
+    updates[`/kleah/users/employees/${updatedData.id}`] = updatedData; 
+    return await db.ref().update(updates);
+  }catch(err){
+    console.error(err);
+  }
+}
+
+export async function updateInstruction(camp,instructionId,updatedData){
+  try{
+    let updates = {};
+    updates[`/kleah/users/employees/${instructionId}`] = null;
+    updates[`/kleah/users/employees/${updatedData?.id}`] = updatedData;
+    updates[`/kleah/camps/${camp.camp_id}`] = null;
+    updates[`/kleah/camps/${camp.camp_id}`] = camp;
+    return await db.ref().update(updates);
+
+  }catch(err){
+    console.error(err);
+  }
+}
+
+export async function updateChildren(camp,childrenId,updatedData){
+  try{
+    let updates = {};
+    updates[`/kleah/users/childrens/${childrenId}`] = null;
+    updates[`kleah/users/childrens/${updatedData.id}`] = updatedData;
+    updates[`kleah/camps/${camp.camp_id}`] = null;
+    updates[`kleah/camps/${camp.camp_id}`] = camp;
+    return await db.ref().update(updates);
+  }catch(err){
+    console.error(err);
+    }
 }
 
 
