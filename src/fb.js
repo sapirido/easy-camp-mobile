@@ -130,6 +130,19 @@ export async function updateChildren(camp,childrenId,updatedData){
     console.error(err);
     }
 }
+//** CAMP_END */
+
+//** EMPLOYEE_START */
+
+export async function getAllEmployees(){
+  try{
+    const allEmployees = await (await db.ref('/kleah/users/employees').once('value')).val();
+    console.log({allEmployees});
+    return allEmployees;
+  }catch(err){
+    console.error(err);
+  }
+}
 
 
 

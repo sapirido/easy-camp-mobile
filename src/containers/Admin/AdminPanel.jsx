@@ -16,7 +16,6 @@ export default function AdminPanel({history}){
         actions:[
         <EditOutlined onClick={()=>history.push('/admin/camps/edit')} key="edit" />,
         <PlusOutlined onClick={()=>history.push('/admin/camps/create')} key="create" />,
-        <EyeOutlined  onClick={()=>console.log('ellipsis')} key="view" />
     ]
     }
 
