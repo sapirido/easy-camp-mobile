@@ -9,6 +9,8 @@ import Sidebar from './components/Sidebar/Sidebar';
 import AdminPanel from './containers/Admin/AdminPanel';
 import CampsEditor from './containers/camps/edit/CampsEditor';
 import CreateCamp from './containers/camps/create/CreateCamp';
+import CampManagerPage from './containers/employee/campManager/CampManager';
+import InstructionPage from './containers/employee/instruction/Instruction';
 
 const ContentStyled = styled.div`
 display:flex;
@@ -42,7 +44,9 @@ height:95vh;
         { path: "/", component: Main, isExact: true },
         {path:"/admin",component: AdminPanel,isExact:true},
         {path:'/admin/camps/edit',component: CampsEditor,isExact:true},
-        {path:'/admin/camps/create',component:CreateCamp,isExact:true}
+        {path:'/admin/camps/create',component:CreateCamp,isExact:true},
+        {path:'/employee/campManager/:mangerId',component:CampManagerPage,isExact:true},
+        {path:'/employee/instruction/:instructionId',component:InstructionPage,isExact:true}
       ];
       const notAuthRoutes = [
         {path:'/login',component:Login,isExact:true},

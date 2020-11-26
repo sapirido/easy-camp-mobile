@@ -12,7 +12,8 @@ import MenuItem from 'antd/lib/menu/MenuItem';
 import {useSelector, batch,useDispatch} from 'react-redux'
 import {withRouter} from 'react-router'
 import { getAllCamps } from '../../data/modules/camp/camp.action';
-import { getEmployees } from '../../data/modules/employee/employee.action';
+import { getEmployees, setSelectedEmployee } from '../../data/modules/employee/employee.action';
+import { EMPLOYEE_TYPE } from '../../common/constants';
 
 const {  Sider } = Layout;
 const { SubMenu } = Menu;
@@ -35,6 +36,22 @@ batch(()=>{
 })
 },[])
 
+function handleEmployeeClicked(employee){
+  dispatch(setSelectedEmployee(employee));
+  switch(employee.type){
+    case EMPLOYEE_TYPE.CAMP_MANAGER:{
+      history.push(`/employee/campManager/${employee.id}`)
+      break;
+    }
+    case EMPLOYEE_TYPE.INSTRUCTION:
+      history.push(`/employee/instruction/${employee.id}`);
+      break;
+    default:
+      return null;
+  }
+
+}
+
 console.log({employees});
     return(
         <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
@@ -47,7 +64,7 @@ console.log({employees});
               משובים
             </Menu.Item>
             <SubMenu key="sub1" icon={<UserOutlined />} title="רשימת עובדים">
-              {Object.keys(employees)?.map((employee,index) => <Menu.Item key={employee}>{employees[employee]?.name}</Menu.Item> )}
+              {Object.keys(employees)?.map((employee) => <Menu.Item onClick={()=>handleEmployeeClicked(employees[employee])}  key={employee}>{employees[employee]?.name}</Menu.Item> )}
             </SubMenu>
             <SubMenu key="sub2" icon={<TeamOutlined />} title="מחנות">
               {camps.map((camp,index) => <Menu.Item key={String(Number(camp.camp_id)+30 + index)}>{camp.camp_name}</Menu.Item>)}

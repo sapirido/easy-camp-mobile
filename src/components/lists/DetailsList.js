@@ -4,7 +4,7 @@ import { Avatar, List } from 'antd';
 import Description from './Description';
 import { EMPLOYEE_TYPE } from '../../common/constants';
 
-export default function DetailsList({list,camp,onEditClicked,onDeleteClicked,avatar,paging}){
+export default function DetailsList({list,camp,onEditClicked,onDeleteClicked,avatar,paging,isEmployeePage}){
 
 
 
@@ -19,14 +19,15 @@ export default function DetailsList({list,camp,onEditClicked,onDeleteClicked,ava
         renderItem={(item,index)=>(
             <List.Item
              key={index}
-              actions={
-                  [<a><EditOutlined onClick={()=>onEditClicked(item.id,camp,item)}/></a>,<a style={{color:'red'}}><DeleteOutlined disabled onClick={()=>onDeleteClicked(item.id,camp.camp_id)} /></a>]
+              actions={!isEmployeePage ?
+                  [<a><EditOutlined onClick={() => onEditClicked(item.id,camp,item)}/></a>,<a style={{color:'red'}}><DeleteOutlined disabled onClick={()=>onDeleteClicked(item.id,camp.camp_id)} /></a>]
+                  :
+                  null
                 }
             >
                 <List.Item.Meta
                 key={index}
-                avatar={<Avatar src={avatar}/>}
-                title={<a href="#">{item.name}</a>}
+                avatar={<Avatar size={64} src={avatar}/>}
                 description={<Description item={item} type={item.type}/>}/>
             </List.Item>
         )}

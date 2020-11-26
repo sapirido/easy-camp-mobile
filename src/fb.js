@@ -136,12 +136,19 @@ export async function updateChildren(camp,childrenId,updatedData){
 
 export async function getAllEmployees(){
   try{
-    const allEmployees = await (await db.ref('/kleah/users/employees').once('value')).val();
-    console.log({allEmployees});
-    return allEmployees;
+    return await (await db.ref('/kleah/users/employees').once('value')).val();
   }catch(err){
     console.error(err);
   }
+}
+
+export async function getEmployee(employeeId){
+try{
+  return await (await db.ref(`/kleah/users/employees/${employeeId}`).once('value')).val();
+
+}catch(err){
+  console.error(err);
+}
 }
 
 
