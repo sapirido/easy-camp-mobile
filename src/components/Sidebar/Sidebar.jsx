@@ -53,7 +53,7 @@ function handleEmployeeClicked(employee){
 }
 
     return(
-        <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
+        <Sider width={250} collapsible collapsed={collapsed} onCollapse={onCollapse}>
           <div className="logo" />
           <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
             <Menu.Item key="1" icon={<PieChartOutlined />}>
@@ -63,7 +63,13 @@ function handleEmployeeClicked(employee){
               משובים
             </Menu.Item>
             <SubMenu key="sub1" icon={<UserOutlined />} title="רשימת עובדים">
-              {Object.keys(employees)?.map((employee) => <Menu.Item onClick={()=>handleEmployeeClicked(employees[employee])}  key={employee}>{employees[employee]?.name}</Menu.Item> )}
+              {camps?.map((camp,index)=>(
+                <SubMenu key={index} title={`עובדים מחנה ${camp.camp_name}`}>
+                  {camp?.instructions?.map((instruction,index) =>(
+                    <Menu.Item key={index} onClick={()=>history.push(`/employee/instruction/${instruction.id}`)}>{instruction.name}</Menu.Item>
+                  ))}
+                </SubMenu>
+              ))}
             </SubMenu>
             <SubMenu key="sub2" icon={<TeamOutlined />} title="מחנות">
               {camps.map((camp,index) => <Menu.Item key={String(Number(camp.camp_id)+30 + index)}>{camp.camp_name}</Menu.Item>)}
