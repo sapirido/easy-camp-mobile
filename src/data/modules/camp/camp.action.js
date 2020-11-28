@@ -1,6 +1,6 @@
-import {ADD_CAMP,SET_CAMPS} from './camp.types';
+import {ADD_CAMP,SET_CAMPS, SET_SELECTED_CAMP} from './camp.types';
 import {storeCamp,getCamps,editCampMananger,editInstruction,editChildren} from './camp.service';
-
+import store from '../../store';
 function addCamp(camp){
     return{
         type:ADD_CAMP,
@@ -75,4 +75,13 @@ export function setChildren(camp,childrenId,updatedData){
     }
 }
 
-
+export function setSelectedCampByInstruction(camps,instructionId){
+    const selectedCamp = camps?.find(camp => {
+       return (camp.instructions.filter(instruction => instruction.id === instructionId)).length
+    });
+    console.log({selectedCamp})
+    return{
+        type:SET_SELECTED_CAMP,
+        payload:selectedCamp
+    }
+}

@@ -52,7 +52,6 @@ function handleEmployeeClicked(employee){
 
 }
 
-console.log({employees});
     return(
         <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
           <div className="logo" />

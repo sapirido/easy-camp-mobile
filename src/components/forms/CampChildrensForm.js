@@ -13,7 +13,7 @@ useEffect(()=>{
    console.log({columns,data})
 },[])
 
-const dataMaping  ={
+const dataMaping  = {
     'שם משפחה':'familyName',
     'שם ההורה':'parentName',
     'שם הילד':'childrenName',
@@ -83,8 +83,9 @@ function getDataFromExcel(){
     }
 
 }
+
+
  
-    console.log({columns,data});
     return(
 <CampChildrenFormStyled>
     <FormHeaderStyled>
@@ -93,7 +94,7 @@ function getDataFromExcel(){
     <UploaderStyled>
     <Upload type="file" id="uploader" {...props}>
         <Button icon={<UploadOutlined />}>העלאת קובץ</Button>
-    </Upload>\
+    </Upload>
 </UploaderStyled>
 <Divider dashed type={'horizontal'}/>
     {columns ?

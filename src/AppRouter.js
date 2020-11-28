@@ -11,6 +11,7 @@ import CampsEditor from './containers/camps/edit/CampsEditor';
 import CreateCamp from './containers/camps/create/CreateCamp';
 import CampManagerPage from './containers/employee/campManager/CampManager';
 import InstructionPage from './containers/employee/instruction/Instruction';
+import ContactList from './components/contact-list/ContactList';
 
 const ContentStyled = styled.div`
 display:flex;
@@ -46,7 +47,8 @@ height:95vh;
         {path:'/admin/camps/edit',component: CampsEditor,isExact:true},
         {path:'/admin/camps/create',component:CreateCamp,isExact:true},
         {path:'/employee/campManager/:mangerId',component:CampManagerPage,isExact:true},
-        {path:'/employee/instruction/:instructionId',component:InstructionPage,isExact:true}
+        {path:'/employee/instruction/:instructionId',component:InstructionPage,isExact:true},
+        {path:'/employee/instruction/contactList/:employeeId/:transport',component:ContactList,isExact:true}
       ];
       const notAuthRoutes = [
         {path:'/login',component:Login,isExact:true},

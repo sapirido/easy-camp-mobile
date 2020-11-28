@@ -10,7 +10,7 @@ export default function ActionCard({activeUser,title,actions,description}){
         <ActionCardStyled>
         <Card
         className={'action-card'}
-        style={{ width: 300,boxShadow:'5px 5px 10px' }}
+        style={{ width: 300,boxShadow:'5px 5px 10px'}}
         cover={
           <img
             alt="example"
