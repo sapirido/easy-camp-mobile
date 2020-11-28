@@ -32,7 +32,7 @@ const actions = [
         title:'אלפון קבוצה',
         description:"ריכוז כלל הטלפונים של כל ילדי הקבוצה",
         actions:[    
-        <EyeOutlined  onClick={()=>history.push(`/employee/instruction/contactList/${selectedEmployee.id}/false`)} key="view" />]
+        <EyeOutlined  onClick={()=>history.push(`/employee/instruction/contactList/${selectedEmployee.id}/group`)} key="view" />]
     },
     {
         key:2,
@@ -60,7 +60,7 @@ const actions = [
         title:'אלפון הסעה',
         description:"ריכוז כלל הטלפונים של כל ילדי ההסעה",
         actions:[    
-        <EyeOutlined  onClick={() => history.push(`/employee/instruction/contactList/${selectedEmployee?.id}/true`)} key="view" />]
+        <EyeOutlined  onClick={() => history.push(`/employee/instruction/contactList/${selectedEmployee?.id}/transport`)} key="view" />]
     }
     
 ]

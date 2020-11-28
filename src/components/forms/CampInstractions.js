@@ -1,18 +1,25 @@
-import React,{useState} from 'react';
-
-import { Form, Input, Button, Space, Checkbox } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { FormStyled,FormHeaderStyled,Text } from '../../common/styles/common.styled';
-import {CampImstractionStyled} from '../../containers/camps/create/CreateCamp.styled';
+import { Button, Checkbox, Form, Input, Select, Space } from 'antd';
+import React, { useState } from 'react';
+import { TRANSPORTS } from '../../common/constants';
+import { FormHeaderStyled, Text } from '../../common/styles/common.styled';
+import { CampImstractionStyled } from '../../containers/camps/create/CreateCamp.styled';
 
+
+const {Option} = Select;
 
 export default function CampInstractions({setInstructions}){
 
     const [leader,setLeader] = useState(null);
-  const onFinish = values => {
+    const [transports,setTransports] = useState(TRANSPORTS);
+    const [selectedTransport,setSelectedTransport] = useState([])
+
+    const onFinish = values => {
       let { instructions } = values;
+      console.log({instructions});
       if(leader.checked){
         instructions[leader.key].leader = true;
+        instructions[leader.key].transports = selectedTransport;
       }
       instructions = instructions.map(instruction=>({
         ...instruction,
@@ -30,7 +37,11 @@ export default function CampInstractions({setInstructions}){
         setLeader(null);
       }
   }
-console.log({leader});
+  function handleTranspotSelected(value){
+    console.log({value});
+    setSelectedTransport(value);
+  }
+  console.log({selectedTransport});
   return (
       <CampImstractionStyled style={{height:'100%'}}>
         
@@ -75,6 +86,7 @@ console.log({leader});
                 >
                   <Input placeholder="אימייל" />
                 </Form.Item>
+
                 <Form.Item
                   {...field}
                   name={[field.name, 'leader']}
@@ -83,6 +95,19 @@ console.log({leader});
                 >
                  <Checkbox onChange={(e)=>onLeaderSelected(e,field)}>רכז הסעה?</Checkbox>
                 </Form.Item>
+                {leader &&(
+                  <Form.Item>
+                    <Select
+                    mode="multiple"
+                    allowClear
+                    style={{width:300}}
+                    onChange={handleTranspotSelected}
+                    placeholder="אנא בחר את מספרי ההסעות שבאחריות המדריך"
+                    >
+                      {transports.map(transport => <Option key={transport}>{transport}</Option>)}
+                    </Select>
+                  </Form.Item>
+                )}
                 <MinusCircleOutlined onClick={() => remove(field.name)} />
               </Space>
             ))}

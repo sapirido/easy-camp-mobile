@@ -13,7 +13,7 @@ export default function ContactList({}){
     const { selectedEmployee } = useSelector(({employee}) => employee);
     const { camps,selectedCamp } = useSelector(({camp}) => camp);    
     const [childrenList,setChildrenList] = useState([]);
-    transport = transport === 'true' ? true : false;
+    transport = transport === 'transport' ? true : false;
     const columns =[
         {
             key:1,
@@ -66,7 +66,6 @@ export default function ContactList({}){
             dispatch(setSelectedCampByInstruction(camps,employeeId))
         }
         if(!selectedEmployee){
-            console.log('a');
             dispatch(setSelectedEmployeeById(employeeId));
         }
         let childrenList = [];
@@ -76,7 +75,6 @@ export default function ContactList({}){
           for(let group of groups){
               const childrens = group.childrens;
               for(let children of childrens){
-                  console.log(selectedEmployee?.transports,selectedEmployee?.transports.includes(children.tranport));
                   if(selectedEmployee?.transports.includes(children.transport)){
                       childrenList.push(children);
                   }
