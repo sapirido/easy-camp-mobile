@@ -14,15 +14,20 @@ import {
 export function loginAction() {
   return async function _(dispatch) {
     const user = await login(); // modify by your logic
-    const dbUser = await getUserAndUpdateFromDB(user);
-    localStorage.setItem('loggedIn',+new Date());
-    localStorage.setItem('uid',user.uid);
-    dispatch(setActiveUser(dbUser));
-    return dbUser;
-
+    return user;
   };
 }
 
+export  function verifyUser(user){
+  return async function _(dispatch){
+    const dbUser = await getUserAndUpdateFromDB(user);
+    if(!dbUser) return null;
+    localStorage.setItem('loggedIn',+new Date());
+    localStorage.setItem('uid',user.id);
+    dispatch(setActiveUser(dbUser));
+    return dbUser;
+  }
+}
 export function getUserSession(uid){
   return async function _(dispatch){
     const user = await getUserById(uid);

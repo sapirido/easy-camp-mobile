@@ -20,8 +20,8 @@ export const storage = firebase.storage();
 
 //***START_AUTH***//
 const provider = new auth.GoogleAuthProvider();
-export async function getUser(uid){
-const userData = await db.ref(`kleah/users/${uid}`).once('value').then(snapshot =>{  
+export async function getUser(id){
+const userData = await db.ref(`kleah/users/employees/${id}`).once('value').then(snapshot =>{  
    return snapshot.val();
   });
   return userData;
@@ -29,7 +29,7 @@ const userData = await db.ref(`kleah/users/${uid}`).once('value').then(snapshot 
 
 export async function saveUser(userData){
 
-   await db.ref(`/kleah/users/${userData.uid}`).set({
+   await db.ref(`/kleah/users/employees/${userData.id}`).set({
     ...userData
   })
 }

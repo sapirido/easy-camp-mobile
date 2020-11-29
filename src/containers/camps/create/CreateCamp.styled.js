@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const CreateCampStyled = styled.div`
 width:100%;
-height:95vh;
+height:120vh;
 padding:50px;
 `
 export const ManagerFormStyled = styled.div`

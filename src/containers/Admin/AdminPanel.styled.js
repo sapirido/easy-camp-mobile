@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const AdminPanelStyled = styled.div`
 width:100%;
-height:95vh;
+height:120vh;
 padding:30px;
 `
 

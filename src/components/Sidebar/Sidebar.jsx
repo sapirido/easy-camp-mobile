@@ -6,14 +6,14 @@ import {
     UserOutlined,
     EditOutlined 
 } from '@ant-design/icons';
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, Avatar } from 'antd';
 import React, { useState,useEffect } from 'react';
-import MenuItem from 'antd/lib/menu/MenuItem';
 import {useSelector, batch,useDispatch} from 'react-redux'
 import {withRouter} from 'react-router'
 import { getAllCamps } from '../../data/modules/camp/camp.action';
 import { getEmployees, setSelectedEmployee } from '../../data/modules/employee/employee.action';
-import { EMPLOYEE_TYPE } from '../../common/constants';
+import { EMPLOYEE_TYPE, PERMISSIONS } from '../../common/constants';
+import {SidebarHeaderStyled} from './Sidebar.styled';
 
 const {  Sider } = Layout;
 const { SubMenu } = Menu;
@@ -52,9 +52,38 @@ function handleEmployeeClicked(employee){
 
 }
 
+function getActiveUserType(){
+  switch(activeUser.type){
+    case EMPLOYEE_TYPE.CAMP_MANAGER:
+      return 'רכז מחנה';
+    case EMPLOYEE_TYPE.INSTRUCTION && activeUser.leader:
+      return 'רכז הסעה';
+    case EMPLOYEE_TYPE.INSTRUCTION:
+      return 'מדריך';
+    default:
+      return 'מנהל קייטנה'
+    
+  }
+}
+
+function getHeaderContnet(){
+    return !collapsed ? (
+      <>
+      <div>
+        {activeUser.displayName} - {getActiveUserType()}
+      </div>
+      <Avatar src={activeUser.photoURL}/>
+      </>
+    ) : (
+      <Avatar src={activeUser.photoURL}/>
+    )
+}
+
     return(
         <Sider width={250} collapsible collapsed={collapsed} onCollapse={onCollapse}>
-          <div className="logo" />
+          <SidebarHeaderStyled>
+            {getHeaderContnet()}
+          </SidebarHeaderStyled>
           <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
             <Menu.Item key="1" icon={<PieChartOutlined />}>
               סטטיסטיקות
@@ -65,8 +94,9 @@ function handleEmployeeClicked(employee){
             <SubMenu key="sub1" icon={<UserOutlined />} title="רשימת עובדים">
               {camps?.map((camp,index)=>(
                 <SubMenu key={index} title={`עובדים מחנה ${camp.camp_name}`}>
+                  <Menu.Item key={camp?.camp_manager?.id} onClick={()=>handleEmployeeClicked(camp?.camp_manager)}>{camp?.camp_manager.name} (רכז)</Menu.Item>
                   {camp?.instructions?.map((instruction,index) =>(
-                    <Menu.Item key={index} onClick={()=>history.push(`/employee/instruction/${instruction.id}`)}>{instruction.name}</Menu.Item>
+                    <Menu.Item key={index} onClick={()=>handleEmployeeClicked(instruction)}>{instruction.name}</Menu.Item>
                   ))}
                 </SubMenu>
               ))}
@@ -77,7 +107,7 @@ function handleEmployeeClicked(employee){
             <Menu.Item key="9" icon={<FileOutlined />}>
               טפסים
             </Menu.Item>
-           {activeUser.isAdmin && <MenuItem onClick={()=>history.push('/admin')} key="10" icon={<EditOutlined />}>פאנל ניהולי</MenuItem>} 
+           {PERMISSIONS[activeUser.type] === 5  && <Menu.Item onClick={()=>history.push('/admin')} key="10" icon={<EditOutlined />}>פאנל ניהולי</Menu.Item>} 
           </Menu>
         </Sider>
     )
