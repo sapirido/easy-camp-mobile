@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 
 export default function AdminPanel({history}){
 
-    const {activeUser}  = useSelector(({auth})=>auth);
+    const {activeUser}  = useSelector(({auth}) => auth);
     const usersPermissionsCardProps = {
         activeUser,
         title:'חלוקה למחנות',

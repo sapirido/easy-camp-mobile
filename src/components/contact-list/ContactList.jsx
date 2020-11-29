@@ -75,7 +75,7 @@ export default function ContactList({}){
           for(let group of groups){
               const childrens = group.childrens;
               for(let children of childrens){
-                  if(selectedEmployee?.transports.includes(children.transport)){
+                  if(selectedEmployee?.transports.includes(children.transport.toString())){
                       childrenList.push(children);
                   }
               }
