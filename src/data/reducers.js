@@ -3,9 +3,11 @@ import { combineReducers } from "redux";
 import auth from "./modules/auth/auth.reducer";
 import camp from './modules/camp/camp.reducer';
 import employee from './modules/employee/employee.reducer';
+import schedule from './modules/schedule/schedule.reducer';
 export default combineReducers({
   //! PLOP MAIN_REDUCERS_APPEND
   auth,
   camp,
-  employee
+  employee,
+  schedule
 });

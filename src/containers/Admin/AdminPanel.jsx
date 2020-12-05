@@ -4,6 +4,7 @@ import ActionCard from '../../components/ActionCard/ActionCard';
 import { ActionsContainer, AdminPanelStyled } from './AdminPanel.styled';
 import {HeaderStyled, MainText, DescriptionText} from '../../common/styles/common.styled';
 import { useSelector } from 'react-redux';
+import { Button } from 'antd';
 
 
 export default function AdminPanel({history}){
@@ -28,6 +29,15 @@ export default function AdminPanel({history}){
         <EyeOutlined  onClick={()=>console.log('ellipsis')} key="view" />]
     }
 
+    const dailyCalanderProps = {
+        activeUser,
+        title:'בניית לו״ז יומי',
+        description:'בניית לוזים יומיים אשר יוצגו למדריכים בזמן אמת',
+        actions:[
+         <Button type="primary" onClick={()=>history.push('/admin/daily_calander')}>בנה לו״ז יומי</Button>
+        ]
+    }
+
     return(
        <AdminPanelStyled>
            <HeaderStyled>
@@ -37,9 +47,8 @@ export default function AdminPanel({history}){
         <ActionsContainer>
           <ActionCard {...usersPermissionsCardProps}/>
           <ActionCard {...calanderCardProps}/>
+          <ActionCard {...dailyCalanderProps}/>
           </ActionsContainer>
-
-
        </AdminPanelStyled>
     )
 }

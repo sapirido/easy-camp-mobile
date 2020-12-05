@@ -151,5 +151,28 @@ try{
 }
 }
 
+//**EMPLOYEE_END */
+
+//**SCHEDULE_START */
+export async function storeDailySchedule(dailySchedule){
+  try{
+    await db.ref(`/kleah/daily_schedules/${dailySchedule.date}`).set({
+      ...dailySchedule
+    })
+  }catch(err){
+    console.error(err);
+  }
+}
+
+export async function getAllSchedule(){
+  try{
+    return await (await db.ref(`/kleah/users/daily_schedules`).once('value')).val();
+  }catch(err){
+    console.error(err);
+  }
+}
+
+//**SCHEDULE_END */
+
 
 
