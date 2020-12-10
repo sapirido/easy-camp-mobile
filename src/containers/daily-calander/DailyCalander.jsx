@@ -5,11 +5,12 @@ import { HeaderStyled, MainText } from '../../common/styles/common.styled';
 import { CreateContentSyled, CreationStyled, DailyCalanderStyled,GeneralInfoStyled,CardsStyled } from './DailyCalander.styled';
 import moment from 'moment';
 import { useDispatch, useSelector, batch } from 'react-redux';
-import {addDailySchedule, getAllSchedules,editTaskByDate,deletedTask} from '../../data/modules/schedule/schedule.action';
+import {addDailySchedule, getAllSchedules,editTaskByDate,deletedTask,deleteSchdule} from '../../data/modules/schedule/schedule.action';
 import DailyScheduleCard from '../../components/daily-schedule-card/DailyScheduleCard';
 import ScheduleTasks from './ScheduleTasks';
 import EditTask from './EditTask';
 import DeleteTask from './DeleteTask';
+import DeleteSchedule from './DeleteSchedule'
 const {RangePicker} = TimePicker;
 export default function DailyCalander({}){
     const dispatch = useDispatch();
@@ -137,6 +138,10 @@ console.log(allDays);
       dispatch(deletedTask(selectedSchedule,selectedTask));
       closeModal();
     }
+    function handleDeleteSchedule(){
+      dispatch(deleteSchdule(selectedSchedule));
+      closeModal();
+    }
     function renderScheduleContent(){
       switch(scheduleModal.type){
         case 'SHOW':
@@ -145,11 +150,18 @@ console.log(allDays);
           return <EditTask task={selectedTask} setTask={setTask}/>
         case 'DELETE_TASK':
           return <DeleteTask task={selectedTask} closeModal={closeModal} deleteTask={handleDeleteTask}/>
+        case 'DELETE_SCHEDULE':
+          return <DeleteSchedule deleteSchdule={handleDeleteSchedule} closeModal={closeModal}/> 
         default:
           return null;
       }
 
 
+    }
+
+    function deleteScheduleClicked(schedule){
+      setSelectedSchedule(schedule);
+      setSchuduleModal({type:'DELETE_SCHEDULE',isVisible:true,title:'מחיקת לו״ז יומי'})
     }
     return(
      <DailyCalanderStyled>
@@ -185,7 +197,7 @@ console.log(allDays);
          <PlusCircleTwoTone  className='plus' onClick={()=>setIsVisible(true)} twoToneColor={'rgb(31 169 200 / 85%)'}>הוסף לוז יומי חדש</PlusCircleTwoTone>
          </CreationStyled>
          <CardsStyled>
-         {Object.keys(allDays).length > 0 && Object.keys(allDays).map((day,key) =><DailyScheduleCard setSchuduleModal={setSchuduleModal} setSelectedSchedule={setSelectedSchedule} key={key} daily={allDays[day]}/>)}
+         {Object.keys(allDays).length > 0 && Object.keys(allDays).map((day,key) =><DailyScheduleCard deleteSchedule={deleteScheduleClicked} setSchuduleModal={setSchuduleModal} setSelectedSchedule={setSelectedSchedule} key={key} daily={allDays[day]}/>)}
          </CardsStyled>
      </DailyCalanderStyled>
     )

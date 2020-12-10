@@ -1,17 +1,17 @@
 import React from 'react';
 import { Card } from 'antd';
-import { EditOutlined, EyeOutlined } from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 
 const {Meta} = Card;
-export default function DailyScheduleCard({daily,setSchuduleModal,setSelectedSchedule}){
+export default function DailyScheduleCard({daily,setSchuduleModal,setSelectedSchedule,deleteSchedule}){
        
     function showScheduleHendler(){
         setSelectedSchedule(daily);
         setSchuduleModal({type:'SHOW',isVisible:true,title:`לו״ז יומי, תאריך ${daily.date}`})
     }
     const actions = [
-        <EditOutlined onClick={()=>console.log('edit clicked')} key="edit" />,
-        <EyeOutlined onClick={()=>showScheduleHendler()} key="show" />
+        <DeleteOutlined style={{color:'red'}} onClick={()=>deleteSchedule(daily)} key="delete" />,
+        <EditOutlined onClick={()=>showScheduleHendler()} key="edit" />
 
     ]
     console.log({daily});

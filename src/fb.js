@@ -191,6 +191,16 @@ export async function setTaskByDate(schedule){
   }
 }
 
+export async function deleteScheduleByDate(scheduleDate){
+  try{
+    let updates = {};
+    updates[`/kleah/daily_schedules/${scheduleDate}`] = null;
+    return await db.ref().update(updates);
+    }catch(err){
+      console.error(err);
+    }
+}
+
 //**SCHEDULE_END */
 
 
