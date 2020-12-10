@@ -166,7 +166,26 @@ export async function storeDailySchedule(dailySchedule){
 
 export async function getAllSchedule(){
   try{
-    return await (await db.ref(`/kleah/users/daily_schedules`).once('value')).val();
+    return await (await db.ref(`/kleah/daily_schedules`).once('value')).val();
+  }catch(err){
+    console.error(err);
+  }
+}
+
+export async function getDailyByDate(date){
+  try{
+    return await (await db.ref(`/kleah/daily_schedules/${date}`).once('value')).val();
+  }catch(err){
+    console.error(err);
+  }
+}
+
+export async function setTaskByDate(schedule){
+  try{
+    let updates = {};
+    updates[`/kleah/daily_schedules/${schedule.date}`] = null;
+    updates[`/kleah/daily_schedules/${schedule.date}`] = schedule;
+    return await db.ref().update(updates);
   }catch(err){
     console.error(err);
   }

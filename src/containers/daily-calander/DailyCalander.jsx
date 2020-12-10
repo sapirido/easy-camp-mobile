@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Button, Form, Input, Modal, Space, TimePicker,DatePicker } from 'antd';
 import { PlusCircleTwoTone, PlusOutlined,MinusCircleOutlined} from '@ant-design/icons';
 import { HeaderStyled, MainText } from '../../common/styles/common.styled';
-import { CreateContentSyled, CreationStyled, DailyCalanderStyled,GeneralInfoStyled } from './DailyCalander.styled';
+import { CreateContentSyled, CreationStyled, DailyCalanderStyled,GeneralInfoStyled,CardsStyled } from './DailyCalander.styled';
 import moment from 'moment';
 import { useDispatch, useSelector, batch } from 'react-redux';
-import {addDailySchedule} from '../../data/modules/schedule/schedule.action';
+import {addDailySchedule, getAllSchedules} from '../../data/modules/schedule/schedule.action';
+import DailyScheduleCard from '../../components/daily-schedule-card/DailyScheduleCard';
+import ScheduleTasks from './ScheduleTasks';
+import EditTask from './EditTask';
 const {RangePicker} = TimePicker;
 export default function DailyCalander({}){
     const dispatch = useDispatch();
@@ -13,7 +16,15 @@ export default function DailyCalander({}){
     const [selectedDate,setSelectedDate] = useState(null);
     const [tasks,setTasks] = useState([]);
     const [disabled,setDisabled] = useState(true);
+    const [selectedSchedule,setSelectedSchedule] = useState(null);
+    const [scheduleModal,setSchuduleModal] = useState({});
+    const [selectedTask,setSelectedTask] = useState(null);
     const {allDays}  = useSelector(({schedule}) => schedule)
+
+  useEffect(() => {
+    dispatch(getAllSchedules());
+  }, [])
+
     function createCalanderHandler(){
         console.log({selectedDate,tasks});
         const dailySchedule = {
@@ -28,9 +39,11 @@ export default function DailyCalander({}){
         })
     }
 
+
 function onFinish(values){
 let {tasks} = values;
-tasks = tasks.map(task =>({
+tasks = tasks.map((task,index) =>({
+   id:index+1,
    title:task.title,
    description:task.description,
    timeRange:task.hourRange.map(time => moment(time).format('HH:mm')) 
@@ -42,7 +55,7 @@ function onDateSelected(date,dateString){
     setSelectedDate(dateString);
 }
 
-console.log({allDays});
+console.log(allDays);
     function renderCreateCalander(){
         return(
             <CreateContentSyled>
@@ -99,6 +112,29 @@ console.log({allDays});
 </CreateContentSyled>
         )
     }
+
+    function editTask(task){
+      console.log({selectedSchedule,task});
+      setSelectedTask(task);
+      setSchuduleModal({type:'EDIT_TASK',isVisible:true,title:'עריכת פעילות'});
+    }
+
+    function setTask(newTask){
+      setSchuduleModal({});
+      dispatch(editTask(selectedSchedule,newTask));
+    }
+    function renderScheduleContent(){
+      switch(scheduleModal.type){
+        case 'SHOW':
+          return <ScheduleTasks editTask={editTask} tasks={selectedSchedule.tasks}/>
+        case 'EDIT_TASK':
+          return <EditTask task={selectedTask} setTask={setTask}/>
+        default:
+          return null;
+      }
+
+
+    }
     return(
      <DailyCalanderStyled>
          <Modal
@@ -114,12 +150,27 @@ console.log({allDays});
          >
              {renderCreateCalander()}
          </Modal>
+         <Modal
+         title={scheduleModal.title}
+         visible={scheduleModal.isVisible}
+         onCancel={()=>{
+           setSchuduleModal({});
+           setSelectedSchedule(null)
+          }}
+         footer={null}
+         width={500}
+         >
+           {renderScheduleContent()}
+         </Modal>
          <HeaderStyled>
                 <MainText>בניית לו״ז יומי</MainText>
          </HeaderStyled>
          <CreationStyled>
          <PlusCircleTwoTone  className='plus' onClick={()=>setIsVisible(true)} twoToneColor={'rgb(31 169 200 / 85%)'}>הוסף לוז יומי חדש</PlusCircleTwoTone>
          </CreationStyled>
+         <CardsStyled>
+         {Object.keys(allDays).length > 0 && Object.keys(allDays).map((day,key) =><DailyScheduleCard setSchuduleModal={setSchuduleModal} setSelectedSchedule={setSelectedSchedule} key={key} daily={allDays[day]}/>)}
+         </CardsStyled>
      </DailyCalanderStyled>
     )
 }

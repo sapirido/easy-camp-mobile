@@ -32,3 +32,14 @@ display:flex;
 justify-content:center;
 padding-bottom:30px;
 `
+
+export const CardsStyled = styled.div`
+padding-top:40px;
+display:flex;
+width:100%;
+justify-content:space-between;
+flex-wrap:wrap;
+.ant-card-meta-detail{
+    text-align:center;
+}
+`
