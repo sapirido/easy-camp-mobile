@@ -7,14 +7,14 @@ const {RangePicker} = TimePicker;
 export default function EditTask({task,setTask}){
     const [title,setTitle] = useState(task.title);
     const [description,setDescription] = useState(task.description);
-    const [hourRange,setHourRange] = useState(task.hourRange);
+    const [timeRange,setTimeRange] = useState(task.hourRange);
     function onEditTask(){
-        setTask({title,description,hourRange,id:task.id});
+        setTask({title,description,timeRange,id:task.id});
     }
 
     function editTimeRang(time){
         const times = time.map(t => moment(t).format('HH:mm'));
-        setHourRange(times);
+        setTimeRange(times);
     }
     return(
         <EditTaskStyled>

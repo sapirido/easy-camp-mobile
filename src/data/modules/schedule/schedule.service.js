@@ -16,3 +16,12 @@ export async function setTask(schedule,newTask){
     } 
     return await setTaskByDate(newSchedule);
 }
+
+export async function deleteTaskById(schdule,taskId){
+    const filteredTasks = schdule.tasks.filter(task => task.id !== taskId);
+    const newSchedule ={
+        ...schdule,
+        tasks:filteredTasks
+    }
+   return await setTaskByDate(newSchedule)
+}

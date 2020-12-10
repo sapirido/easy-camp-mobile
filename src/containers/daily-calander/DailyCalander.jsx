@@ -5,10 +5,11 @@ import { HeaderStyled, MainText } from '../../common/styles/common.styled';
 import { CreateContentSyled, CreationStyled, DailyCalanderStyled,GeneralInfoStyled,CardsStyled } from './DailyCalander.styled';
 import moment from 'moment';
 import { useDispatch, useSelector, batch } from 'react-redux';
-import {addDailySchedule, getAllSchedules} from '../../data/modules/schedule/schedule.action';
+import {addDailySchedule, getAllSchedules,editTaskByDate,deletedTask} from '../../data/modules/schedule/schedule.action';
 import DailyScheduleCard from '../../components/daily-schedule-card/DailyScheduleCard';
 import ScheduleTasks from './ScheduleTasks';
 import EditTask from './EditTask';
+import DeleteTask from './DeleteTask';
 const {RangePicker} = TimePicker;
 export default function DailyCalander({}){
     const dispatch = useDispatch();
@@ -120,15 +121,30 @@ console.log(allDays);
     }
 
     function setTask(newTask){
+      closeModal();
+      dispatch(editTaskByDate(selectedSchedule,newTask));
+    }
+    function deleteTask(task){
+      setSelectedTask(task);
+      setSchuduleModal({type:'DELETE_TASK',title:'מחיקת פעילות',isVisible:true});
+    }
+
+    function closeModal(){
       setSchuduleModal({});
-      dispatch(editTask(selectedSchedule,newTask));
+    }
+
+    function handleDeleteTask(){
+      dispatch(deletedTask(selectedSchedule,selectedTask));
+      closeModal();
     }
     function renderScheduleContent(){
       switch(scheduleModal.type){
         case 'SHOW':
-          return <ScheduleTasks editTask={editTask} tasks={selectedSchedule.tasks}/>
+          return <ScheduleTasks deleteTask={deleteTask} editTask={editTask} tasks={selectedSchedule.tasks}/>
         case 'EDIT_TASK':
           return <EditTask task={selectedTask} setTask={setTask}/>
+        case 'DELETE_TASK':
+          return <DeleteTask task={selectedTask} closeModal={closeModal} deleteTask={handleDeleteTask}/>
         default:
           return null;
       }

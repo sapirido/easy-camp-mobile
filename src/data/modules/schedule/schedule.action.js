@@ -1,5 +1,5 @@
 import {SET_ALL_DAYS} from './schedule.types';
-import {createDailySchedule,getAllDailys,setTask} from './schedule.service';
+import {createDailySchedule,getAllDailys,setTask,deleteTaskById} from './schedule.service';
 
 
 function setAllSchedules(allDays){
@@ -36,9 +36,21 @@ export function editTaskByDate(schedule,newTask){
     return async function _(dispatch){
         try{
             await setTask(schedule,newTask);
+            console.log('here!!!');
             dispatch(getAllSchedules());
         }catch(err){
         console.error(err);
     }
 }
+}
+
+export function deletedTask(schedule,task){
+    return async function _(dispatch){
+        try{
+            await deleteTaskById(schedule,task.id);
+            dispatch(getAllSchedules());
+        }catch(err){
+            console.log(err);
+        }
+    }
 }

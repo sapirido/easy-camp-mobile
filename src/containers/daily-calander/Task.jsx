@@ -3,7 +3,7 @@ import {TaskStyled,TaskTitle,TaskDiscription,TitleAndTimeStyled,TimeIcon,TimeSty
 import { ClockCircleOutlined,DeleteOutlined,EditOutlined } from '@ant-design/icons';
 
 
-export default function Task({task,editTask}){
+export default function Task({task,editTask,deleteTask}){
 const [deleteVisible,setDeleteVisible] = useState(false);
 const [editVisible,setEditVisible] = useState(false);
 
@@ -14,7 +14,7 @@ const [editVisible,setEditVisible] = useState(false);
                 {task.title}
             </TaskTitle>
             <TimeStyled>
-              <TimeText>{task.timeRange[0]} - {task.timeRange[1]}</TimeText>
+              <TimeText>{task?.timeRange?.[0]} - {task?.timeRange?.[1]}</TimeText>
               <TimeIcon>
                 <ClockCircleOutlined />
               </TimeIcon>
@@ -25,7 +25,7 @@ const [editVisible,setEditVisible] = useState(false);
                 {task.description}
             </TaskDiscription>
             <ActionsStyled>
-                <DeleteOutlined  style={{paddingLeft:6,cursor:'pointer',color:'red'}}/>
+                <DeleteOutlined onClick={()=>deleteTask(task)}  style={{paddingLeft:6,cursor:'pointer',color:'red'}}/>
                 <EditOutlined onClick={()=>editTask(task)} style={{cursor:'pointer',color:'blue'}}/>
             </ActionsStyled>
             </DescWithActions>

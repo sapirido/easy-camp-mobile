@@ -52,3 +52,9 @@ export const ActionsStyled = styled.span``
 export const EditTaskStyled = styled.div`
 padding:30px;
 `
+export const DeleteStyled = styled.div`
+`
+export const ButtonsContainer = styled.div`
+display:flex;
+padding-top:30px;
+`
