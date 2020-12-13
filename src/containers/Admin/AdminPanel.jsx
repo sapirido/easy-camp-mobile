@@ -38,6 +38,15 @@ export default function AdminPanel({history}){
         ]
     }
 
+    const pointReaportsProps = {
+        activeUser,
+        title:'יצירת נקודות דיווח להסעות',
+        description:'דיווחים בזמן אמת בדרכים בימי הפארקים',
+        actions:[
+            <Button type="primary" onClick={()=>history.push('/admin/report_points')}>כניסה לנקודות דיווח</Button>
+        ]
+    }
+
     return(
        <AdminPanelStyled>
            <HeaderStyled>
@@ -48,6 +57,8 @@ export default function AdminPanel({history}){
           <ActionCard {...usersPermissionsCardProps}/>
           <ActionCard {...calanderCardProps}/>
           <ActionCard {...dailyCalanderProps}/>
+          <ActionCard {...pointReaportsProps}/>
+
           </ActionsContainer>
        </AdminPanelStyled>
     )

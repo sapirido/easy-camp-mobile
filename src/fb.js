@@ -193,6 +193,7 @@ export async function setTaskByDate(schedule){
 
 export async function deleteScheduleByDate(scheduleDate){
   try{
+    console.log('im in fb');
     let updates = {};
     updates[`/kleah/daily_schedules/${scheduleDate}`] = null;
     return await db.ref().update(updates);
@@ -202,6 +203,33 @@ export async function deleteScheduleByDate(scheduleDate){
 }
 
 //**SCHEDULE_END */
+//**REPORT_START */
+export async function addReportPoint(report){
+  try{
+    let update = {}
+    update[`/kleah/reports/point_reports/${report.date}`] = report;
+    console.log({update})
+    return await db.ref().update(update);
+  }catch(err){
+    console.error(err);
+  }
+};
 
+export async function getReportPoints(){
+  try{
+   return await (await db.ref('/kleah/reports/point_reports').once('value')).val();
+  }catch(err){
+    console.error(err);
+  }
+}
 
+export async function removeReportPoint(date){
+  try{
+    let update = {}
+    update[`/kleah/reports/point_reports/${date}`] = null;
+    return await db.ref().update(update);
+  }catch(err){
+    console.error(err);
+  }
+}
 

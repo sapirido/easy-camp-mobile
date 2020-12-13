@@ -55,12 +55,14 @@ export function deletedTask(schedule,task){
     }
 }
 
-export async function deleteSchdule(schedule){
+export  function deleteSchdule(schedule){
     return async function _(dispatch){
         try{
-            await deleteDailySchedule(schedule.date);
+            console.log('im in store')
+            await deleteDailySchedule(schedule);
             dispatch(getAllSchedules());
         }catch(err){
+            console.log('im in catch')
             console.error(err);
         }
     }

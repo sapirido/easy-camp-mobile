@@ -13,6 +13,7 @@ import CampManagerPage from './containers/employee/campManager/CampManager';
 import InstructionPage from './containers/employee/instruction/Instruction';
 import ContactList from './components/contact-list/ContactList';
 import DailyCalander from './containers/daily-calander/DailyCalander';
+import ReportPoints from './containers/reports/point_reports/PointReports';
 
 const ContentStyled = styled.div`
 display:flex;
@@ -50,7 +51,8 @@ height:120vh;
         {path:'/employee/campManager/:mangerId',component:CampManagerPage,isExact:true},
         {path:'/employee/instruction/:instructionId',component:InstructionPage,isExact:true},
         {path:'/employee/instruction/contactList/:employeeId/:transport',component:ContactList,isExact:true},
-        {path:'/admin/daily_calander',component:DailyCalander, isExact:true}
+        {path:'/admin/daily_calander',component:DailyCalander, isExact:true},
+        {path:'/admin/report_points',component:ReportPoints, isExact:true}
       ];
       const notAuthRoutes = [
         {path:'/login',component:Login,isExact:true},

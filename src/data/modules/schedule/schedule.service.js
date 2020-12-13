@@ -27,6 +27,6 @@ export async function deleteTaskById(schdule,taskId){
 }
 
 export async function deleteDailySchedule(schduleDate){
-
+    console.log('im in service')
     return await deleteScheduleByDate(schduleDate);
 }

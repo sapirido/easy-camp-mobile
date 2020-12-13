@@ -43,3 +43,9 @@ flex-wrap:wrap;
     text-align:center;
 }
 `
+export const CreateText = styled.div`
+display:flex;
+justify-content:center;
+font-size:16px;
+font-weight:bold;
+`
