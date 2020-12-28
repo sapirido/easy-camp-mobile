@@ -1,8 +1,9 @@
-import {SET_REPORT_POINTS,ADD_REPORT_POINT} from './report.types';
+import {SET_REPORT_POINTS,ADD_REPORT_POINT,SET_SELCTED_PARENT_REPORTS} from './report.types';
 
 const defaultState = {
    reportPoints:[],
-   selectedReportPoiny:null
+   selectedReportPoint:null,
+   selectedParentReports:[],
 }
 
 export default function reportReducer(state = defaultState,action){

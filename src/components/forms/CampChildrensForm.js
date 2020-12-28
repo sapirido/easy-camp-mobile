@@ -38,10 +38,10 @@ function getDataFromExcel(){
     const input  = document.getElementById('uploader');
     if(input){
         input.addEventListener('change',()=>{
-            readXlsxfile(input.files[0]).then((row)=>{
+            readXlsxfile(input.files?.[0]).then((row)=>{
                 if(row){
                     // setColumns(row[0]);
-                    let columns = row[0];
+                    let columns = row?.[0];
                     columns = columns.map((column)=>{
                         return{
                             key:column,
@@ -56,15 +56,15 @@ function getDataFromExcel(){
                     data = data.map((children,index) => {
                             return{
                                 key:index,
-                                familyName:children[0],
-                                parentName:children[1],
-                                childrenName:children[2],
-                                graduate:children[3],
-                                phone:children[4],
-                                neighborhood:children[5],
-                                transport:children[6],
-                                customerCode:children[7],
-                                id:children[8]
+                                familyName:children?.[0],
+                                parentName:children?.[1],
+                                childrenName:children?.[2],
+                                graduate:children?.[3],
+                                phone:children?.[4],
+                                neighborhood:children?.[5],
+                                transport:children?.[6],
+                                customerCode:children?.[7],
+                                id:children?.[8]
                             }
                         })
                     setData(data);
@@ -77,6 +77,7 @@ function getDataFromExcel(){
                 
             })
             .catch((err)=>{
+                console.log('in in catch !!!')
                 console.error(err);
             })
         })

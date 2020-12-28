@@ -233,3 +233,20 @@ export async function removeReportPoint(date){
   }
 }
 
+export async function addParentReport(instructionId,report){
+  try{
+    let update = {};
+    update[`/kleah/reports/parent_reports/${instructionId}/${report.date}/${report.id}`] = report;
+    return await db.ref().update(update);
+  }catch(err){
+    console.error(err);
+  }
+}
+
+export async function getParentReportById(instructionId){
+  try{
+    return await (await db.ref(`/kleah/reports/parent_reports/${instructionId}`).once('value')).val();
+  }catch(err){
+    console.error(err);
+  }
+}

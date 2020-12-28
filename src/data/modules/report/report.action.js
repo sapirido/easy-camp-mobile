@@ -1,8 +1,15 @@
-import {createPointReport,getAllPointReports, deletePointReport} from './report.service';
-import {SET_REPORT_POINTS} from './report.types';
+import {createPointReport,getAllPointReports, deletePointReport,createParentReport,getAllParentReportById} from './report.service';
+import {SET_REPORT_POINTS,SET_SELCTED_PARENT_REPORTS} from './report.types';
+import CreateParentReport from '../../../containers/reports/parent_reports/CreateParentReport';
 export function setPointReports(reports){
     return{
         type:SET_REPORT_POINTS,
+        payload:reports
+    }
+}
+export function setParentReport(reports){
+    return{
+        type:SET_SELCTED_PARENT_REPORTS,
         payload:reports
     }
 }
@@ -14,6 +21,7 @@ export function addNewReport(report){
         dispatch(setPointReports(allReports));
     }
 }
+
 
 export function getReportPoints(){
     return async function _(dispatch){
@@ -28,5 +36,13 @@ export function removeReportPoint(date){
         await deletePointReport(date);
         const allUpdatedReports = await getAllPointReports();
         dispatch(setPointReports(allUpdatedReports));
+    }
+}
+
+export function addNewParentReport(instructionId,report){
+    return async function _(dispatch){
+        await createParentReport(instructionId,report);
+        const allInstructionReport = await getAllParentReportById(instructionId);
+        dispatch(setParentReport(allInstructionReport));
     }
 }

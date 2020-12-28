@@ -11,6 +11,6 @@ export async function getEmployeeById(employeeId){
     try{
         return await getEmployee(employeeId);
     }catch(err){
-
+    console.error(err);
     }
 }

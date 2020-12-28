@@ -50,8 +50,7 @@ const actions = [
         title:'דו״ח שיחות הורים',
         description:'הזנת שיחות עם ההורים, יש להזין לאחר כל שיחה',
         actions:[
-            <EditOutlined onClick={() => console.log('Edit')} key="edit"/>,
-            <PlusOutlined onClick={()=>console.log('add')} key="add"/>
+            <EyeOutlined  onClick={()=>history.push(`/employee/instruction/${selectedEmployee.id}/parent_report`)} key="view" />
         ]
     },
     {
