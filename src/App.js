@@ -2,7 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import './App.css';
 import { ConfigProvider } from 'antd';
-import { AppWrapper } from './App.styled';
+import { AppWrapper,GlobalStyle } from './App.styled';
 import createStore from './data/store';
 import AppRouter from './AppRouter';
 import { BrowserRouter } from 'react-router-dom';
@@ -14,6 +14,7 @@ function App() {
     <Provider store={createStore()}>
       <ConfigProvider direction="rtl">
         <AppWrapper>
+          <GlobalStyle/>
       <BrowserRouter>
           <AppRouter/>
       </BrowserRouter>

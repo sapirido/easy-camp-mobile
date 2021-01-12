@@ -1,13 +1,30 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@font-face{
+  font-family: almoni-bold;
+  src: local('almoni-bold'), url(./assets/fonts/almoni-neue-bold-aaa.otf) format('truetype');
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@font-face{
+  font-family: almoni-regular;
+  src: local('almoni-regular'), url(./assets/fonts/almoni-neue-regular-aaa.otf) format('truetype');
+}
+@font-face{
+  font-family: almoni-meduim;
+  src: local('almoni-meduim'), url(./assets/fonts/almoni-neue-medium-aaa.otf) format('truetype');
+}
+@font-face{
+  font-family: rivkabau-bold;
+  src: local('rivkabau-bold'), url(./assets/fonts/rivkabau-bold-fm.otf) format('truetype');
+}
+@font-face{
+  font-family: rivkabau-regular;
+  src: local('rivkabau-regular'), url(./assets/fonts/rivkabau-regular-fm.otf) format('truetype');
+}
+body {
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+title{
+  font-family: 'almoni-bold';
 }

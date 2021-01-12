@@ -1,21 +1,7 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Route,Switch, withRouter } from "react-router";
-import {useSelector, useDispatch} from 'react-redux';
-import { getUserSession } from './data/modules/auth/auth.actions';
-import Login from './containers/Login/Login';
-import Main from './containers/Main/Main';
-import Sidebar from './components/Sidebar/Sidebar';
-import AdminPanel from './containers/Admin/AdminPanel';
-import CampsEditor from './containers/camps/edit/CampsEditor';
-import CreateCamp from './containers/camps/create/CreateCamp';
-import CampManagerPage from './containers/employee/campManager/CampManager';
-import InstructionPage from './containers/employee/instruction/Instruction';
-import ContactList from './components/contact-list/ContactList';
-import DailyCalander from './containers/daily-calander/DailyCalander';
-import ReportPoints from './containers/reports/point_reports/PointReports';
-import ParentReports from './containers/reports/parent_reports/ParentReports';
-
+// import Login from './containers/login/Login'
 const ContentStyled = styled.div`
 display:flex;
 justify-content: center;
@@ -25,49 +11,21 @@ height:120vh;
 `
 
  function AppRouter({history}){
-    const { activeUser } = useSelector(({auth}) => auth);
-    const dispatch = useDispatch();
-    useEffect(async() => {
-        if(isSessionIsValide()){
-          const uid = localStorage.getItem('uid');
-          await dispatch(getUserSession(uid));
-        }else{
-          history.replace('/login');
-        }
-    },[])
 
-    function isSessionIsValide(){
-      var loggedInTime = localStorage.getItem('loggedIn');
-      loggedInTime = Number(loggedInTime);
-      const now = +new Date();
-      const valideDiff = 1000 * 60 * 60 * 3;
-      return now - loggedInTime < valideDiff;
-    }
+  // const routes = [
+  //   {
+  //     component:Login,
+  //     isExact:true,
+  //     path:'/login'
 
-    const authRoutes = [
-        { path: "/", component: Main, isExact: true },
-        {path:"/admin",component: AdminPanel,isExact:true},
-        {path:'/admin/camps/edit',component: CampsEditor,isExact:true},
-        {path:'/admin/camps/create',component:CreateCamp,isExact:true},
-        {path:'/employee/campManager/:mangerId',component:CampManagerPage,isExact:true},
-        {path:'/employee/instruction/:instructionId',component:InstructionPage,isExact:true},
-        {path:'/employee/instruction/contactList/:employeeId/:transport',component:ContactList,isExact:true},
-        {path:'/admin/daily_calander',component:DailyCalander, isExact:true},
-        {path:'/admin/report_points',component:ReportPoints, isExact:true},
-        {path:'/employee/instruction/:instructionId/parent_report',component:ParentReports,isExact:true}
-      ];
-      const notAuthRoutes = [
-        {path:'/login',component:Login,isExact:true},
-      ]
-      const routes = activeUser ? authRoutes : notAuthRoutes;
-      console.log({routes})
+  //   }
+  // ]
       
     return(
         <>
-        {activeUser && <Sidebar/>}
         <Switch>
-          <ContentStyled>
-        {routes.map(route => (
+          <ContentStyled className="title">
+        {/* {routes.map(route => (
           <Route
             exact={route.isExact}
             key={route.path}
@@ -75,7 +33,8 @@ height:120vh;
             component={route.component}
           />
         ))
-        }
+        } */}
+        Almoni!!
         </ContentStyled>  
         </Switch>
         </>

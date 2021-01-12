@@ -1,0 +1,83 @@
+*,
+*::after,
+*::before {
+	margin: 0;
+	padding: 0;
+	box-sizing: inherit;
+}
+
+/* body {
+	overflow: hidden;
+} */
+
+html {
+	font-size: 62.5%;
+}
+@media only screen and (max-width: 137.5em) {
+	html {
+		font-size: 52.5%;
+	}
+}
+@media only screen and (max-width: 120em) {
+	html {
+		font-size: 48%;
+	}
+}
+@media only screen and (max-width: 112.5em) {
+	html {
+		font-size: 46%;
+	}
+}
+@media only screen and (max-width: 100em) {
+	html {
+		font-size: 41%;
+	}
+}
+@media only screen and (max-width: 90.5em) {
+	html {
+		font-size: 39%;
+	}
+}
+@media only screen and (max-width: 86em) {
+	html {
+		font-size: 32.5%;
+	}
+}
+@media only screen and (max-width: 80em) {
+	html {
+		font-size: 27%;
+	}
+}
+
+body {
+	box-sizing: border-box;
+	min-height: 100% !important;
+	height: 100%;
+}
+
+/* .material-icons.xsm {
+	font-size: 2rem;
+}
+
+.material-icons.sm {
+	font-size: 3rem;
+}
+.material-icons.md {
+	font-size: 4rem;
+}
+.material-icons.lg {
+	font-size: 5rem;
+}
+.material-icons.hg {
+	font-size: 6rem;
+}
+a {
+	text-decoration: none;
+	color: #6186ff;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+	width: 0px;
+	background: transparent; /* make scrollbar transparent */
+
+
