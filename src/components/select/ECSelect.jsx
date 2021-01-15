@@ -1,18 +1,20 @@
 import React from 'react';
 import {Select} from 'antd';
-import styled from 'styled-components';
 const {Option} = Select;
 
 
 
 export default function ECSelect({width = 167,options = [],placeholder = ''}){
-function onSearch(val){
-    console.log({val});
-}
+
+
+    function onSearch(val){
+         console.log({val});
+    }
+
     return(
         <Select
           showSearch
-          style={{width}}
+          style={{width,marginBottom:20}}
           filterOption={(input, option) =>
             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
           }
