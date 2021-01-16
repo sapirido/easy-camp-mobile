@@ -1,6 +1,4 @@
 import firebase from 'firebase';
-import { update } from 'lodash';
-import store from './data/store';
 var firebaseConfig = {
   apiKey: "AIzaSyBjPWUKWf-m9nOdNEHV3-Q8Rn4Feu4oErI",
   authDomain: "easy-camp.firebaseapp.com",
@@ -50,6 +48,31 @@ export function login() {
     });
 }
 
+export async function loginEmployee(email,password){
+  try{
+    const masterCampCode = localStorage.getItem('campCode');
+    const campEmployees =  await (await db.ref(`/${masterCampCode}/users/employees`).once('value')).val();
+    const employees = Object.values(campEmployees);
+    if(employees.length){
+      const selectedEmployee = employees.find(employee => employee.email === email);
+      return selectedEmployee;
+    }
+    return false;
+  }catch(err){
+    console.error(err);
+  }
+}
+
+export async function loginParent(childId,password){
+  const masterCampCode = localStorage.getItem('campCode');
+  const campChildrens = await (await db.ref(`/${masterCampCode}/users/childrens`).once('value')).val();
+  for(let id in campChildrens){
+    if(id === childId){
+      return campChildrens[id];
+    }
+  }
+  return false;
+}
 //***END_AUTH */
 
 //***START_CAMP */
@@ -174,7 +197,8 @@ export async function getAllSchedule(){
 
 export async function getDailyByDate(date){
   try{
-    return await (await db.ref(`/kleah/daily_schedules/${date}`).once('value')).val();
+    const masterCamp = localStorage.getItem('masterCamp') || 'kleah';
+    return await (await db.ref(`/${masterCamp}/daily_schedules/${date}`).once('value')).val();
   }catch(err){
     console.error(err);
   }
@@ -250,3 +274,15 @@ export async function getParentReportById(instructionId){
     console.error(err);
   }
 }
+
+
+//MASTER_CAMP
+
+export async function getMasterCamps(){
+  try{
+    return await (await db.ref('/camps').once('value')).val();
+  }catch(err){
+    console.error(err);
+  }
+}
+

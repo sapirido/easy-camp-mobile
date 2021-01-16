@@ -1,6 +1,5 @@
 import {
-  login, getUserAndUpdateFromDB, getUserById,
-
+  login, getUserAndUpdateFromDB, getUserById,employeeLogin,parentLogin
 } from "./auth.service";
 import {
   LOGIN_START,
@@ -40,4 +39,18 @@ return{
   type:UPDATE_ACTIVE_USER,
   payload:user
  }
+}
+
+export function onEmployeeLogin(email,password){
+  return async function _(dispatch){
+    const employee = await employeeLogin(email,password);
+    dispatch(setActiveUser(employee));
+  }
+}
+
+export function onParentLogin(childId,password){
+  return async function _(dispatch){
+    const parent = await parentLogin(childId,password);
+    dispatch(setActiveUser(parent));
+  }
 }

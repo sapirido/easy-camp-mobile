@@ -4,12 +4,13 @@ const {Option} = Select;
 
 
 
-export default function ECSelect({width = 167,options = [],placeholder = ''}){
+export default function ECSelect({width = 167,options = [],placeholder = '',handleSelect}){
 
 
     function onSearch(val){
          console.log({val});
     }
+    
 
     return(
         <Select
@@ -20,7 +21,10 @@ export default function ECSelect({width = 167,options = [],placeholder = ''}){
           }
           placeholder={placeholder}
           optionFilterProp="children"
-          onSearch={onSearch}>
+          onSearch={onSearch}
+          onSelect={handleSelect}
+          >
+          
               {options.map((option,index) => <Option value={option} key={index}>{option}</Option>)}
           </Select>
     )
