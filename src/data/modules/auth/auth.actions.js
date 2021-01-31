@@ -1,5 +1,5 @@
 import {
-  login, getUserAndUpdateFromDB, getUserById,employeeLogin,parentLogin
+  login, getUserAndUpdateFromDB, getUserById,employeeLogin,parentLogin,createParentUser,getParent
 } from "./auth.service";
 import {
   LOGIN_START,
@@ -34,6 +34,24 @@ export function getUserSession(uid){
   }
 }
 
+export function registerParent(parentData){
+  return async function _(dispatch){
+    parentData = {
+      ...parentData,
+      type:'PARENT'
+    }
+    const parent = await createParentUser(parentData);
+    if(parent){
+      const parentObj = await getParent(parentData.childId);
+      if(!!parentObj){
+        localStorage.setItem('loggedIn',+new Date());
+        localStorage.setItem('uid',parentObj.childId);
+        dispatch(setActiveUser(parentObj));
+      }
+    }
+  }
+}
+
 export function setActiveUser(user){
 return{
   type:UPDATE_ACTIVE_USER,
@@ -51,6 +69,9 @@ export function onEmployeeLogin(email,password){
 export function onParentLogin(childId,password){
   return async function _(dispatch){
     const parent = await parentLogin(childId,password);
-    dispatch(setActiveUser(parent));
+    if(!!parent){
+      dispatch(setActiveUser(parent));
+      return true;
+    }
   }
 }

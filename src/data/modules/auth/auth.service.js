@@ -1,4 +1,4 @@
-import { getUser, login as firebaseLogin, saveUser,loginEmployee,loginParent } from '../../../fb';
+import { getUser, login as firebaseLogin, saveUser,loginEmployee,loginParent,getChildById,registerParent,getParentByChildId} from '../../../fb';
 import _ from 'lodash';
 export async function login() {
   return firebaseLogin();
@@ -42,6 +42,20 @@ export async function parentLogin(childId,password){
     localStorage.setItem('expired',+new Date());
     return parent;
   }
-  alert('המשתמש קיים במערכת');
+}
 
+export async function createParentUser(parent){
+  const { childId } = parent;
+  const child =  await getChildById(childId);
+  if(!child) return false;
+  const parentRegistered = await registerParent(parent);
+  return parentRegistered;
+}
+
+export async function getParent(childId){
+try{
+return await getParentByChildId(childId);
+}catch(err){
+  console.error(err);
+}
 }

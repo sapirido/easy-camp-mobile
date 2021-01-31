@@ -14,7 +14,7 @@ firebase.initializeApp(firebaseConfig);
 export const db = firebase.database();
 export const { auth } = firebase;
 export const storage = firebase.storage();
-
+const masterCamp = localStorage.getItem('campCode');
 
 //***START_AUTH***//
 const provider = new auth.GoogleAuthProvider();
@@ -48,10 +48,13 @@ export function login() {
     });
 }
 
+function loginParentWithEmailAndPassword(email,password){
+  return auth().signInWithEmailAndPassword(email,password);
+}
+
 export async function loginEmployee(email,password){
   try{
-    const masterCampCode = localStorage.getItem('campCode');
-    const campEmployees =  await (await db.ref(`/${masterCampCode}/users/employees`).once('value')).val();
+    const campEmployees =  await (await db.ref(`/${masterCamp}/users/employees`).once('value')).val();
     const employees = Object.values(campEmployees);
     if(employees.length){
       const selectedEmployee = employees.find(employee => employee.email === email);
@@ -63,15 +66,34 @@ export async function loginEmployee(email,password){
   }
 }
 
-export async function loginParent(childId,password){
-  const masterCampCode = localStorage.getItem('campCode');
-  const campChildrens = await (await db.ref(`/${masterCampCode}/users/childrens`).once('value')).val();
-  for(let id in campChildrens){
-    if(id === childId){
-      return campChildrens[id];
-    }
+export async function getChildById(childId){
+  try{
+    const child = await (await db.ref(`/${masterCamp}/users/childrens/${childId}`).once('value')).val();
+    return !!child && child;
+  }catch(err){
+    console.log(err);
   }
-  return false;
+}
+
+export async function registerParent(parent){
+  const {email,password} = parent;
+  const parentRegistered = await auth().createUserWithEmailAndPassword(email,password);
+  console.log({parentRegistered,masterCamp});
+  await  db.ref(`/${masterCamp}/users/parents/${parent.childId}`).set({
+    ...parent
+  }
+  )
+return true;
+}
+
+export async function loginParent(childId,password){
+  const parent = await (await db.ref(`/${masterCamp}/users/parents/${childId}`).once('value')).val();
+  if(!!parent){
+    loginParentWithEmailAndPassword(parent.email,password);
+    return parent;
+  }else{
+    return false;
+  }
 }
 //***END_AUTH */
 
@@ -110,6 +132,14 @@ export async function getAllCamps(){
   try{
     const allCamps = await (await db.ref('/kleah/camps').once('value')).val();
     return allCamps.filter(Boolean);
+  }catch(err){
+    console.error(err);
+  }
+}
+
+export async function getParentByChildId(childId){
+  try{
+    return await (await db.ref(`/${masterCamp}/users/parents/${childId}`).once('value')).val();
   }catch(err){
     console.error(err);
   }

@@ -31,3 +31,10 @@ export const Text = styled.span`
 font-size:24px;
 text-decoration:underline;
 `
+
+export const IconSVG = styled.img`
+height:1.3rem;
+width:1.3rem;
+margin-left:1rem;
+font-family:almoni-meduim;
+`

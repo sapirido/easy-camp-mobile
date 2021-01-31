@@ -1,8 +1,9 @@
 import React from 'react'
 import {Input} from 'antd';
-import {FormStyled,IconSVG} from './Login.styled';
-import passwordSVG from '../../assets/images/password.svg'
-import emailSVG from '../../assets/images/email.svg'
+import {FormStyled} from './Login.styled';
+import {IconSVG} from '../../common/styles/common.styled';
+import passwordSVG from '../../assets/icons/password.svg'
+import emailSVG from '../../assets/icons/email.svg'
 export default function EmployeeLoginForm({email,setEmail,password,setPassword}){
 
     return(

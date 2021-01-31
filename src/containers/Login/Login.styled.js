@@ -4,7 +4,7 @@ import { TEXT_COLOR,PRIMARY,WHITE } from '../../common/styles/colors';
 export const LoginStyled = styled.div`
 height:100%;
 width:100%;
-padding:3rem;
+padding-top:5rem;
 
 `
 export const ContentStyled = styled.div`
@@ -14,7 +14,6 @@ flex-direction:column;
 justify-content:center;
 text-align:center;
 `
-
 
 export const SwitcherStyled = styled.div`
 padding-top:3rem;
@@ -28,7 +27,7 @@ text-align:center;
 `
 
 export const TitleStyled = styled.span`
-font-size:2.8rem;
+font-size:1.8rem;
 color:#707070;
 font-family:rivkabau-regular;
 `
@@ -39,7 +38,7 @@ justify-content:center;
 flex-direction:column;
 align-items:center;
 font-family:almoni-regular;
-padding-top:4rem;
+padding-top:6rem;
 .ant-select > .ant-select-selector {
     border-radius:1.5rem;
     border:2px solid ${PRIMARY};
@@ -65,15 +64,10 @@ width:${({width}) => width ? width : '3rem'};
 `
 
 export const FormStyled = styled.div`
-padding-top:5.5rem;
+padding-top:6.5rem;
 
 `
-export const IconSVG = styled.img`
-height:1.3rem;
-width:1.3rem;
-margin-left:1rem;
-font-family:almoni-meduim;
-`
+
 export const ButtonsStyled = styled.div`
-padding-top:2rem;
+padding-top:3rem;
 `

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const HomeStyled = styled.div`
 height:100%;
 width:100%;
-padding:5rem 2rem 1.5rem 2rem;
+padding-top:3rem;
 text-align:center;
 display:flex;
 flex-direction:column;

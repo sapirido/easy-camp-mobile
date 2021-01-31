@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import {WHITE} from '../../common/styles/colors';
 export const TaskStyled = styled.div`
 display:flex;
-height:8.9rem;
+height:8rem;
 margin-bottom:2rem;
 `
 

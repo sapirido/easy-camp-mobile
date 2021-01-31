@@ -28,3 +28,23 @@ body {
 p,span,button,input{
   font-family: almoni-bold;
 }
+
+
+::-webkit-scrollbar {
+  width: 2px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: none; 
+}
+
+/* Handle */
+.ant-menu, .ant-menu-dark, .ant-menu-inline, .ant-menu-root, .ant-menu-rtl-menu{
+  background-color:#219EBC;
+}
+
+.ant-input-affix-wrapper.ant-input-affix-wrapper-rtl, .ant-input.ant-input-rtl{
+  border: none;
+  border-bottom: 1px solid #333333;
+}
