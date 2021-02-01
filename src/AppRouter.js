@@ -1,28 +1,18 @@
-import React, { useEffect,useState } from 'react';
+import { MenuOutlined } from '@ant-design/icons';
+import { Layout } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Route, Switch, withRouter } from "react-router";
 import styled from 'styled-components';
-import { Route,Switch, withRouter } from "react-router";
-import Login from './containers/login/Login'
-import Home from './containers/home/Home';
-import {useSelector, useDispatch} from 'react-redux';
-import { setActiveUser } from './data/modules/auth/auth.actions';
-import {checkActiveUser} from './common/utils';
-import {Layout,Menu, Divider} from 'antd';
-import {AppStyled} from './App.styled' 
-import {
-  AppstoreOutlined,
-  BarChartOutlined,
-  CloudOutlined,
-  ShopOutlined,
-  TeamOutlined,
-  UserOutlined,
-  UploadOutlined,
-  VideoCameraOutlined,
-  MenuOutlined
-} from '@ant-design/icons';
 import { PRIMARY, WHITE } from './common/styles/colors';
-import Register from './containers/register/Register';
+import { checkActiveUser } from './common/utils';
 import ECSideBar from './components/sidebar/Sidebar';
 import GeneralSchedule from './containers/general-schedule/GeneralSchedule';
+import Home from './containers/home/Home';
+import Login from './containers/login/Login';
+import Register from './containers/register/Register';
+import { setActiveUser } from './data/modules/auth/auth.actions';
+import ContactList from './containers/contact-list/ContactList';
 
 
 
@@ -52,11 +42,46 @@ color:${PRIMARY};
 margin-right:5rem;
 `
 
+const notAuthRoute = [
+  {
+    component:Login,
+    isExact:true,
+    path:'/login'
+
+  },
+  {
+    component:Register,
+    isExact:true,
+    path:'/register'
+  }
+]
+
+
+
+const authRoutes = [
+  {
+    component:Home,
+    isExact:true,
+    path:'/'
+  },
+  {
+    component:GeneralSchedule,
+    isExact:true,
+    path:'/general-schedule'
+  },
+  {
+    component:ContactList,
+    isExact:true,
+    path:'/contact-list'
+  }
+]
+
  function AppRouter({history}){
 
+  console.log({history})
   const {activeUser} = useSelector(({auth}) => auth);
   const dispatch = useDispatch();
-  const [opened,setOpened] = useState(true);
+  const [collapsed,setCollapsed] = useState(true);
 
  
   useEffect(() => {
@@ -68,45 +93,18 @@ margin-right:5rem;
     }
     history.push('/login')
   },[])
-  const notAuthRoute = [
-    {
-      component:Login,
-      isExact:true,
-      path:'/login'
-
-    },
-    {
-      component:Register,
-      isExact:true,
-      path:'/register'
-    }
-  ]
 
   function handleMenuClicked(e){
     e.stopPropagation()
-    setOpened(!opened);
+    setCollapsed(!collapsed);
   }
 
-  const authRoutes = [
-    {
-      component:Home,
-      isExact:true,
-      path:'/'
-    },
-    {
-      component:GeneralSchedule,
-      isExact:true,
-      path:'/general-schdule'
-    }
-  ]
-
-  const handleRouteChanged = (path) => history.push(path);
   const routes = activeUser ? authRoutes : [];
      console.log({activeUser}) 
     return(
-  <Layout style={{display:"flex",flexDirection:'column',background:`${WHITE}`}}>
-       <ECSideBar activeUser={activeUser} handleRouteChanged={handleRouteChanged} opened={opened}/>
-       <Content onClick={()=>setOpened(true)} style={{direction:'ltr'}}>
+  <Layout style={{display:"flex",flexDirection:'column',background:`${WHITE}`,padding:'20px 0px'}}>
+       <ECSideBar setCollapsed={setCollapsed} activeUser={activeUser}  collapsed={collapsed}/>
+       <Content onClick={()=>setCollapsed(true)} style={{direction:'ltr'}}>
           {
             activeUser &&
             (<MenuStyled>

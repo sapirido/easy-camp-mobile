@@ -77,10 +77,12 @@ export async function getChildById(childId){
 
 export async function registerParent(parent){
   const {email,password} = parent;
-  const parentRegistered = await auth().createUserWithEmailAndPassword(email,password);
-  console.log({parentRegistered,masterCamp});
+  await auth().createUserWithEmailAndPassword(email,password);
   await  db.ref(`/${masterCamp}/users/parents/${parent.childId}`).set({
-    ...parent
+    email:parent.email,
+    name:parent.name,
+    childId:parent.childId,
+    type:parent.type
   }
   )
 return true;

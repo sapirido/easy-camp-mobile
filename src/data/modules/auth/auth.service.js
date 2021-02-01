@@ -53,9 +53,9 @@ export async function createParentUser(parent){
 }
 
 export async function getParent(childId){
-try{
-return await getParentByChildId(childId);
-}catch(err){
-  console.error(err);
-}
+try {
+  return await getParentByChildId(childId);
+  } catch(err){
+    console.error(err);
+  }
 }

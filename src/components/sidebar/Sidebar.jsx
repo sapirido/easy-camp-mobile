@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import styled, { createGlobalStyle } from 'styled-components';
 import { AboutSVG, CalendarSVG, ClockSVG, ContactSVG, LogoutSVG, ReportSVG, WeeklyFeefbackSVG,ImageSVG } from '../../common/icons/icons';
 import { PRIMARY, SECONDARY, WHITE } from '../../common/styles/colors';
+import { withRouter } from 'react-router';
 
 const {Sider} = Layout;
 
@@ -22,15 +23,18 @@ const ContentItem = ({text,iconComponent}) =>(
 
 
 
-export default function ECSidebar({opened,handleRouteChanged,activeUser}) {
+ function ECSidebar({history,collapsed,activeUser,setCollapsed}) {
  
   const [selectedKey,setSelectedKey] = useState('1');
   
-  function handleSelect(e,path){
-    setSelectedKey(e.key);
-    handleRouteChanged(path);
-  }
+function handleSelect(e){
+  setSelectedKey(e.key);
+}
 
+function handleClicked(path){
+  setCollapsed(true);
+  history.push(path);
+}
   const SideBarHeader = () => (
     <HeaderWrapper>
       <IconWrapper>
@@ -55,9 +59,10 @@ export default function ECSidebar({opened,handleRouteChanged,activeUser}) {
       position: 'fixed',
       right: 0,
       direction:'rtl',
-      backgroundColor:`${PRIMARY}`
+      backgroundColor:`${PRIMARY}`,
+      zIndex:1000
     }}
-    collapsed={opened}
+    collapsed={collapsed}
     collapsedWidth={0}      
     collapsible
   >
@@ -67,16 +72,13 @@ export default function ECSidebar({opened,handleRouteChanged,activeUser}) {
       <DividerWrapper>
         <Divider/>
       </DividerWrapper>
-  <Menu.Item style={selectedKey === "1" ? selectedStyled : unSelectedStyled} key="1" onSelect={e => handleSelect(e,'/')} >
-   <ContentItem text={'לו״ז יומי'} iconComponent={ <ClockSVG color={selectedKey === "1" ? SECONDARY : WHITE}/>}/>
+  <Menu.Item style={selectedKey === "1" ? selectedStyled : unSelectedStyled} key="1" onSelect={setSelectedKey} onClick={()=>handleClicked('/')}>
+   <ContentItem text={'לו״ז יומי'}  iconComponent={ <ClockSVG color={selectedKey === "1" ? SECONDARY : WHITE}/>}/>
       </Menu.Item>
-      <Menu.Item style={selectedKey === "2" ? selectedStyled : unSelectedStyled} key="2" onSelect={(e)=>{
-        handleSelect(e);
-        handleRouteChanged('/general-schedule')
-        }}>
+      <Menu.Item  style={selectedKey === "2" ? selectedStyled : unSelectedStyled} key="2" onClick={()=>handleClicked('/general-schedule')} onSelect={handleSelect}>
         <ContentItem text={'תוכנית קייטנה'} iconComponent={<CalendarSVG color={selectedKey === "2" ? SECONDARY : WHITE}/>}/>
       </Menu.Item>
-      <Menu.Item style={selectedKey === "3" ? selectedStyled : unSelectedStyled} key="3" onSelect={handleSelect}>
+      <Menu.Item style={selectedKey === "3" ? selectedStyled : unSelectedStyled} key="3" onClick={()=>history.push('/')} onSelect={handleSelect}>
         <ContentItem iconComponent={<ReportSVG color={selectedKey === "3" ? SECONDARY : WHITE}/>} text={'דיווח הסעות'}/>
       </Menu.Item>
       <Menu.Item style={selectedKey === "4" ? selectedStyled : unSelectedStyled} key="4" onSelect={handleSelect}>
@@ -88,8 +90,8 @@ export default function ECSidebar({opened,handleRouteChanged,activeUser}) {
       <Menu.Item style={selectedKey === "5" ? selectedStyled : unSelectedStyled} key="5" onSelect={handleSelect}>
        <ContentItem iconComponent={<AboutSVG color={selectedKey === "5" ? SECONDARY : WHITE}/>} text={'אודות'}/>
       </Menu.Item>
-      <Menu.Item style={selectedKey === "6" ? selectedStyled : unSelectedStyled} key="6">
-        <ContentItem iconComponent={<ContactSVG color={selectedKey === "6" ? SECONDARY : WHITE}/>} text={'אודות'}/>
+      <Menu.Item style={selectedKey === "6" ? selectedStyled : unSelectedStyled} onSelect={handleSelect} onClick={()=>handleClicked('/contact-list')} key="6">
+        <ContentItem iconComponent={<ContactSVG color={selectedKey === "6" ? SECONDARY : WHITE}/>} text={'צור קשר'}/>
       </Menu.Item>
       <Menu.Item style={selectedKey === "7" ? selectedStyled : unSelectedStyled} key="7" onSelect={handleSelect}>
         <ContentItem iconComponent={<LogoutSVG color={selectedKey === "7" ? SECONDARY : WHITE}/>} text={'התנתק'}/>
@@ -99,6 +101,7 @@ export default function ECSidebar({opened,handleRouteChanged,activeUser}) {
   )
 }
 
+export default withRouter(ECSidebar)
  
 const DividerWrapper = styled.div`
 width: 100px;
