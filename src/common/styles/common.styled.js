@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import {PRIMARY} from './colors';
 
 export const HeaderStyled = styled.div`
 padding-bottom:150px;
@@ -37,4 +38,15 @@ height:1.3rem;
 width:1.3rem;
 margin-left:1rem;
 font-family:almoni-meduim;
+`
+
+export const BlockContainer = styled.div`
+position:absolute;
+bottom:-10;
+height:80%;
+width:100%;
+background-color:${PRIMARY};
+border-top-left-radius:50px;
+border-top-right-radius:50px;
+overflow:hidden;
 `

@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 export const HomeStyled = styled.div`
-height:100%;
 width:100%;
 padding-top:3rem;
 text-align:center;
@@ -14,4 +13,5 @@ export const ContentStyled = styled.div`
 padding-top:4.5rem;
 overflow:scroll;
 padding-bottom:10rem;
+height:36rem;
 `
