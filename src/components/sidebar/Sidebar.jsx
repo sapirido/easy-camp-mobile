@@ -50,7 +50,7 @@ function handleClicked(path){
       </HeaderContent> */}
     </HeaderWrapper>
   )
-console.log('Yair branch');
+console.log('Yair branch - new commit0');
   return(
    <Sider
     style={{
