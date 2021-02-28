@@ -17,7 +17,7 @@ width:22rem;
 border-radius:16px;
 `
 
-export default function GeneralSchedule({}){
+export default function GeneralSchedule(){
 
     return(
         <>

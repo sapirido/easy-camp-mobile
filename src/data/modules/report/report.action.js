@@ -1,6 +1,6 @@
 import {createPointReport,getAllPointReports, deletePointReport,createParentReport,getAllParentReportById} from './report.service';
 import {SET_REPORT_POINTS,SET_SELCTED_PARENT_REPORTS} from './report.types';
-import CreateParentReport from '../../../containers/reports/parent_reports/CreateParentReport';
+
 export function setPointReports(reports){
     return{
         type:SET_REPORT_POINTS,

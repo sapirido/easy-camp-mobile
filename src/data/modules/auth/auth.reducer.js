@@ -11,9 +11,8 @@ function authReducer(state = defaultState, action) {
     }
     case UPDATE_ACTIVE_USER:
       return {...state,activeUser: action.payload};
-    default: {
+    default:
       return state;
-    }
   }
 }
 

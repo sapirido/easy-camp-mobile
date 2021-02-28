@@ -13,10 +13,11 @@ import Login from './containers/login/Login';
 import Register from './containers/register/Register';
 import { setActiveUser } from './data/modules/auth/auth.actions';
 import ContactList from './containers/contact-list/ContactList';
+import TransferReport from './containers/transfer-reports/TransferReport';
 
 
 
-const {Sider,Content} = Layout;
+const {Content} = Layout;
 
 const ContentStyled = styled.div`
 display:flex;
@@ -72,6 +73,11 @@ const authRoutes = [
     component:ContactList,
     isExact:true,
     path:'/contact-list'
+  },
+  {
+    component:TransferReport,
+    isExact:true,
+    path:'/transfer-report'
   }
 ]
 

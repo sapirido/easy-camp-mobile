@@ -21,8 +21,8 @@ display:flex;
 justify-content:space-between;
 background-color:${({backgroundColor}) => backgroundColor};
 border-radius:30px;
-height:105px;
-width:45%;
+height:95px;
+width:47%;
 padding:12px;
 margin-bottom:2rem;
 `

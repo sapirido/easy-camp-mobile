@@ -8,6 +8,22 @@ display:flex;
 flex-direction:column;
 `
 
+const Button = styled.button`
+width:100%;
+height:40px;
+color:white;
+border:1px solid lightgray;
+cursor: pointer;
+scale:1.1;
+`
+
+export const ActionButton = styled(Button)`
+background-color:green;
+`
+
+export const ErrorButton = styled(Button)`
+background-color:red;
+`
 export const MainText = styled.span`
 font-size:36px;
 text-decoration: underline;
@@ -42,8 +58,8 @@ font-family:almoni-meduim;
 
 export const BlockContainer = styled.div`
 position:absolute;
-bottom:-10;
-height:80%;
+bottom:-10px;
+height:${props => props.height || '75%' };
 width:100%;
 background-color:${PRIMARY};
 border-top-left-radius:50px;

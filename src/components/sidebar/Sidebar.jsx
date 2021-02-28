@@ -50,7 +50,7 @@ function handleClicked(path){
       </HeaderContent> */}
     </HeaderWrapper>
   )
-
+console.log('Yair branch');
   return(
    <Sider
     style={{
@@ -75,10 +75,10 @@ function handleClicked(path){
   <Menu.Item style={selectedKey === "1" ? selectedStyled : unSelectedStyled} key="1" onSelect={setSelectedKey} onClick={()=>handleClicked('/')}>
    <ContentItem text={'לו״ז יומי'}  iconComponent={ <ClockSVG color={selectedKey === "1" ? SECONDARY : WHITE}/>}/>
       </Menu.Item>
-      <Menu.Item  style={selectedKey === "2" ? selectedStyled : unSelectedStyled} key="2" onClick={()=>handleClicked('/general-schedule')} onSelect={handleSelect}>
-        <ContentItem text={'תוכנית קייטנה'} iconComponent={<CalendarSVG color={selectedKey === "2" ? SECONDARY : WHITE}/>}/>
-      </Menu.Item>
-      <Menu.Item style={selectedKey === "3" ? selectedStyled : unSelectedStyled} key="3" onClick={()=>history.push('/')} onSelect={handleSelect}>
+    <Menu.Item  style={selectedKey === "2" ? selectedStyled : unSelectedStyled} key="2" onClick={()=>handleClicked('/general-schedule')} onSelect={handleSelect}>
+      <ContentItem text={'תוכנית קייטנה'} iconComponent={<CalendarSVG color={selectedKey === "2" ? SECONDARY : WHITE}/>}/>
+    </Menu.Item>
+      <Menu.Item style={selectedKey === "3" ? selectedStyled : unSelectedStyled} key="3" onClick={()=>history.push('/transfer-report')} onSelect={handleSelect}>
         <ContentItem iconComponent={<ReportSVG color={selectedKey === "3" ? SECONDARY : WHITE}/>} text={'דיווח הסעות'}/>
       </Menu.Item>
       <Menu.Item style={selectedKey === "4" ? selectedStyled : unSelectedStyled} key="4" onSelect={handleSelect}>
