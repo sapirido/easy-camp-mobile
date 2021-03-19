@@ -88,7 +88,7 @@ const authRoutes = [
   const dispatch = useDispatch();
   const [collapsed,setCollapsed] = useState(true);
 
- 
+
   useEffect(() => {
     const user = checkActiveUser(activeUser);
     if(user){
@@ -105,9 +105,9 @@ const authRoutes = [
   }
 
   const routes = activeUser ? authRoutes : [];
-     console.log({activeUser}) 
+     console.log({activeUser})
     return(
-  <Layout style={{display:"flex",flexDirection:'column',background:`${WHITE}`,padding:'20px 0px'}}>
+  <Layout style={{display:"flex", background:`${WHITE}`,padding:'20px 0px'}}>
        <ECSideBar setCollapsed={setCollapsed} activeUser={activeUser}  collapsed={collapsed}/>
        <Content onClick={()=>setCollapsed(true)} style={{direction:'ltr'}}>
           {
@@ -119,7 +119,7 @@ const authRoutes = [
             </NameStlyed>
           </MenuStyled>)
           }
-        
+
         <Switch>
           <ContentStyled>
             {[...notAuthRoute,...routes].map(route => (
@@ -131,7 +131,7 @@ const authRoutes = [
               />
             ))
             }
-        </ContentStyled>  
+        </ContentStyled>
        </Switch>
       </Content>
   </Layout>

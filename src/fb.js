@@ -19,7 +19,7 @@ const masterCamp = localStorage.getItem('campCode');
 //***START_AUTH***//
 const provider = new auth.GoogleAuthProvider();
 export async function getUser(id){
-const userData = await db.ref(`kleah/users/employees/${id}`).once('value').then(snapshot =>{  
+const userData = await db.ref(`kleah/users/employees/${id}`).once('value').then(snapshot =>{
    return snapshot.val();
   });
   return userData;
@@ -35,7 +35,7 @@ export async function saveUser(userData){
 export function login() {
   return auth().signInWithPopup(provider).then(async (result) => {
     const { displayName, email, photoURL, uid } = result.user;
-    const authUser = { displayName, email, photoURL, uid }; 
+    const authUser = { displayName, email, photoURL, uid };
     return authUser;
   })
     .catch((error) => {
@@ -55,7 +55,11 @@ function loginParentWithEmailAndPassword(email,password){
 export async function loginEmployee(email,password){
   try{
     const campEmployees =  await (await db.ref(`/${masterCamp}/users/employees`).once('value')).val();
+
+    console.log(masterCamp)
+    console.log(campEmployees)
     const employees = Object.values(campEmployees);
+    console.log(employees)
     if(employees.length){
       const selectedEmployee = employees.find(employee => employee.email === email);
       return selectedEmployee;
@@ -152,7 +156,7 @@ export async function updateCampManager(managerId,campId,updatedData){
     let updates = {};
     updates[`/kleah/camps/${campId}/camp_manager`] = updatedData;
     updates[`/kleah/users/employees/${managerId}`] = null;
-    updates[`/kleah/users/employees/${updatedData.id}`] = updatedData; 
+    updates[`/kleah/users/employees/${updatedData.id}`] = updatedData;
     return await db.ref().update(updates);
   }catch(err){
     console.error(err);

@@ -5,12 +5,13 @@ import { SECONDARY, PRIMARY, BLUE_CARD, RED_CARD } from '../../common/styles/col
 import {getDailyByDate} from '../../data/modules/schedule/schedule.action';
 import { useSelector,useDispatch } from 'react-redux';
 import Task from '../../components/task/Task';
+
 export default function Home({history}){
     const { today,selectedDailyCalander } = useSelector(({schedule}) => schedule);
     const dispatch = useDispatch();
 
     useEffect(() => {
-    dispatch(getDailyByDate(today));    
+    dispatch(getDailyByDate(today));
     }, [today])
 
     console.log({selectedDailyCalander})
