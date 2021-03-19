@@ -14,7 +14,6 @@ firebase.initializeApp(firebaseConfig);
 export const db = firebase.database();
 export const { auth } = firebase;
 export const storage = firebase.storage();
-const masterCamp = localStorage.getItem('campCode');
 
 //***START_AUTH***//
 const provider = new auth.GoogleAuthProvider();
@@ -54,6 +53,7 @@ function loginParentWithEmailAndPassword(email,password){
 
 export async function loginEmployee(email,password){
   try{
+    const masterCamp = localStorage.getItem('campCode');
     const campEmployees =  await (await db.ref(`/${masterCamp}/users/employees`).once('value')).val();
     const employees = Object.values(campEmployees);
     if(employees.length){
@@ -68,6 +68,7 @@ export async function loginEmployee(email,password){
 
 export async function getChildById(childId){
   try{
+    const masterCamp = localStorage.getItem('campCode');
     const child = await (await db.ref(`/${masterCamp}/users/childrens/${childId}`).once('value')).val();
     return !!child && child;
   }catch(err){
@@ -77,6 +78,7 @@ export async function getChildById(childId){
 
 export async function registerParent(parent){
   const {email,password} = parent;
+  const masterCamp = localStorage.getItem('campCode');
   await auth().createUserWithEmailAndPassword(email,password);
   await  db.ref(`/${masterCamp}/users/parents/${parent.childId}`).set({
     email:parent.email,
@@ -89,6 +91,7 @@ return true;
 }
 
 export async function loginParent(childId,password){
+  const masterCamp = localStorage.getItem('campCode');
   const parent = await (await db.ref(`/${masterCamp}/users/parents/${childId}`).once('value')).val();
   if(!!parent){
     loginParentWithEmailAndPassword(parent.email,password);
@@ -141,8 +144,9 @@ export async function getAllCamps(){
 
 export async function getParentByChildId(childId){
   try{
+    const masterCamp = localStorage.getItem('campCode');
     return await (await db.ref(`/${masterCamp}/users/parents/${childId}`).once('value')).val();
-  }catch(err){
+  } catch(err) {
     console.error(err);
   }
 }
