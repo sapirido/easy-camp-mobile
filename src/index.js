@@ -4,7 +4,6 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import i18n from './config/translations';
-import 'react-pro-sidebar/dist/css/styles.css';
 
 i18n("he");
 
