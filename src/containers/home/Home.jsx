@@ -48,7 +48,7 @@ export default function Home({history}){
             <HeaderPage title={'- הלוז היומי -'} size={1.6} color={SECONDARY}/>
            {renderDailyScheduleSelection()}
             <ContentStyled>
-                {selectedDailyCalander?.tasks?.length  ? selectedDailyCalander.tasks.map((task,index) => <Task background={colors[index % colors.length]} task={task}/>) : <EmptyTask/>
+                {selectedDailyCalander?.tasks?.length  ? selectedDailyCalander.tasks.map((task,index) => <Task allowedActions={allowedToEdit.includes(activeUser.role)} background={colors[index % colors.length]} task={task}/>) : <EmptyTask/>
                 }
             </ContentStyled>
         </HomeStyled>

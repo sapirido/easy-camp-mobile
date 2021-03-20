@@ -164,3 +164,20 @@ export const SelfTranportSVG = () => (
 
 )
 
+export const DeleteSVG = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="14.65" height="16" viewBox="0 0 14.65 16">
+  <g id="delete" transform="translate(0 -2.673)">
+    <path id="Path_1951" data-name="Path 1951" d="M29.728,137.357h8.93a1.608,1.608,0,0,0,1.529-1.7V124H28.2v11.658a1.608,1.608,0,0,0,1.529,1.7ZM36.6,125.8a.378.378,0,1,1,.755,0v8.92a.378.378,0,0,1-.755,0Zm-2.785,0a.378.378,0,1,1,.755,0v8.92a.378.378,0,0,1-.755,0Zm-2.785,0a.378.378,0,1,1,.755,0v8.92a.378.378,0,0,1-.755,0Zm0,0" transform="translate(-26.868 -118.684)" fill="#fff"/>
+    <path id="Path_1952" data-name="Path 1952" d="M.944,69.888H13.706a.944.944,0,1,0,0-1.888H.944a.944.944,0,1,0,0,1.888Zm0,0" transform="translate(0 -65.327)" fill="#fff"/>
+  </g>
+</svg>
+
+)
+
+export const EditSVG = () =>(
+  <svg id="Edit" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <rect id="Rectangle_324" data-name="Rectangle 324" width="16" height="16" fill="none"/>
+  <path id="Path_110" data-name="Path 110" d="M8.154,3.077,2.462,8.923,0,16l7.077-2.308L12.769,8Zm7.231-.462-2-2a1.865,1.865,0,0,0-2.769,0L8.923,2.308l4.615,4.769,1.846-1.846A1.95,1.95,0,0,0,16,3.846,1.9,1.9,0,0,0,15.385,2.615Z" fill="#fff"/>
+</svg>
+
+)

@@ -51,3 +51,15 @@ margin-bottom:0.5rem;
 margin-left:0.45rem;
 border:${({color}) => `3px solid ${color}`};
 `
+export const TimeAndActions = styled.div`
+display:flex;
+justify-content:space-between;
+`
+
+export const ActionsStyled = styled.div`
+display:flex;
+`
+
+export const IconWrapper = styled.div`
+padding:0 5px;
+`
