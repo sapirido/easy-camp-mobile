@@ -5,6 +5,8 @@ import styled, { createGlobalStyle } from 'styled-components';
 import { AboutSVG, CalendarSVG, ClockSVG, ContactSVG, LogoutSVG, ReportSVG, WeeklyFeefbackSVG,ImageSVG } from '../../common/icons/icons';
 import { PRIMARY, SECONDARY, WHITE } from '../../common/styles/colors';
 import { withRouter } from 'react-router';
+import { useDispatch } from 'react-redux';
+import { setActiveUser } from '../../data/modules/auth/auth.actions';
 
 const {Sider} = Layout;
 
@@ -26,6 +28,7 @@ const ContentItem = ({text,iconComponent}) =>(
  function ECSidebar({history,collapsed,activeUser,setCollapsed}) {
  
   const [selectedKey,setSelectedKey] = useState('1');
+  const dispatch = useDispatch();
   
 function handleSelect(e){
   setSelectedKey(e.key);
@@ -34,6 +37,13 @@ function handleSelect(e){
 function handleClicked(path){
   setCollapsed(true);
   history.push(path);
+}
+
+function handleLogout(){
+  localStorage.removeItem('activeUser');
+  localStorage.removeItem('expired');
+  dispatch(setActiveUser(null));
+  history.push('/login');
 }
   const SideBarHeader = () => (
     <HeaderWrapper>
@@ -93,7 +103,7 @@ console.log('Yair branch');
       <Menu.Item style={selectedKey === "6" ? selectedStyled : unSelectedStyled} onSelect={handleSelect} onClick={()=>handleClicked('/contact-list')} key="6">
         <ContentItem iconComponent={<ContactSVG color={selectedKey === "6" ? SECONDARY : WHITE}/>} text={'צור קשר'}/>
       </Menu.Item>
-      <Menu.Item style={selectedKey === "7" ? selectedStyled : unSelectedStyled} key="7" onSelect={handleSelect}>
+      <Menu.Item style={selectedKey === "7" ? selectedStyled : unSelectedStyled} key="7" onSelect={handleSelect} onClick={()=>handleLogout()}>
         <ContentItem iconComponent={<LogoutSVG color={selectedKey === "7" ? SECONDARY : WHITE}/>} text={'התנתק'}/>
       </Menu.Item>
     </Menu>

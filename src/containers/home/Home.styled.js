@@ -15,3 +15,10 @@ overflow:scroll;
 padding-bottom:10rem;
 height:36rem;
 `
+
+export const EmptyStyled = styled.div`
+display:flex;
+justify-content:center;
+align-items:center;
+height:100%;
+`

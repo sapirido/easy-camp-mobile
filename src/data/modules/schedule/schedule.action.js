@@ -79,6 +79,8 @@ export function getDailyByDate(date){
         const daily = await getDailyScheduleByDate(date);
         if(daily?.tasks?.length){
             dispatch(setDaily(daily));
+        }else{
+            dispatch(setDaily(null));
         }
 
     }
