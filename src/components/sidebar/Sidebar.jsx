@@ -86,26 +86,6 @@ console.log('Yair branch - new commit0');
   <Menu.Item style={selectedKey === "1" ? selectedStyled : unSelectedStyled} key="1" onSelect={setSelectedKey} onClick={()=>handleClicked('/')}>
    <ContentItem text={'לו״ז יומי'}  iconComponent={ <ClockSVG color={selectedKey === "1" ? SECONDARY : WHITE}/>}/>
       </Menu.Item>
-<<<<<<< Updated upstream
-    <Menu.Item  style={selectedKey === "2" ? selectedStyled : unSelectedStyled} key="2" onClick={()=>handleClicked('/general-schedule')} onSelect={handleSelect}>
-      <ContentItem text={'תוכנית קייטנה'} iconComponent={<CalendarSVG color={selectedKey === "2" ? SECONDARY : WHITE}/>}/>
-    </Menu.Item>
-      <Menu.Item style={selectedKey === "3" ? selectedStyled : unSelectedStyled} key="3" onClick={()=>history.push('/transfer-report')} onSelect={handleSelect}>
-        <ContentItem iconComponent={<ReportSVG color={selectedKey === "3" ? SECONDARY : WHITE}/>} text={'דיווח הסעות'}/>
-      </Menu.Item>
-      <Menu.Item style={selectedKey === "4" ? selectedStyled : unSelectedStyled} key="4" onSelect={handleSelect}>
-        <ContentItem iconComponent={<WeeklyFeefbackSVG color={selectedKey === "4" ? SECONDARY : WHITE}/>} text={'משו״ב שבועי'}/>
-      </Menu.Item>
-      <DividerWrapper>
-      <Divider/>
-    </DividerWrapper>
-      <Menu.Item style={selectedKey === "5" ? selectedStyled : unSelectedStyled} key="5" onSelect={handleSelect}>
-       <ContentItem iconComponent={<AboutSVG color={selectedKey === "5" ? SECONDARY : WHITE}/>} text={'אודות'}/>
-      </Menu.Item>
-      <Menu.Item style={selectedKey === "6" ? selectedStyled : unSelectedStyled} onSelect={handleSelect} onClick={()=>handleClicked('/contact-list')} key="6">
-        <ContentItem iconComponent={<ContactSVG color={selectedKey === "6" ? SECONDARY : WHITE}/>} text={'צור קשר'}/>
-      </Menu.Item>
-=======
       <Menu.Item  style={selectedKey === "2" ? selectedStyled : unSelectedStyled} key="2" onClick={()=>handleClicked('/general-schedule')} onSelect={handleSelect}>
         <ContentItem text={'תוכנית קייטנה'} iconComponent={<CalendarSVG color={selectedKey === "2" ? SECONDARY : WHITE}/>}/>
       </Menu.Item>
@@ -143,7 +123,6 @@ console.log('Yair branch - new commit0');
           <Divider style={{'background-color':'white'}} />
         </DividerWrapper>
       ) }
->>>>>>> Stashed changes
       <Menu.Item style={selectedKey === "7" ? selectedStyled : unSelectedStyled} key="7" onSelect={handleSelect}>
         <ContentItem iconComponent={<LogoutSVG color={selectedKey === "7" ? SECONDARY : WHITE}/>} text={'התנתק'}/>
       </Menu.Item>
