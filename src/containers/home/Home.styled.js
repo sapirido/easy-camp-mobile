@@ -15,3 +15,18 @@ overflow:scroll;
 padding-bottom:10rem;
 height:36rem;
 `
+
+export const EmptyStyled = styled.div`
+display:flex;
+justify-content:center;
+align-items:center;
+height:100%;
+`
+
+export const SelectionContainer = styled.div`
+display:flex;
+justify-content:center;
+flex-direction:column;
+width:15rem;
+margin:auto;
+`

@@ -14,6 +14,7 @@ import Register from './containers/register/Register';
 import { setActiveUser } from './data/modules/auth/auth.actions';
 import ContactList from './containers/contact-list/ContactList';
 import TransferReport from './containers/transfer-reports/TransferReport';
+import ECModal from './components/modal/ECModal';
 
 
 
@@ -83,11 +84,10 @@ const authRoutes = [
 
  function AppRouter({history}){
 
-  console.log({history})
-  const {activeUser} = useSelector(({auth}) => auth);
-  const dispatch = useDispatch();
-  const [collapsed,setCollapsed] = useState(true);
-
+   const [collapsed,setCollapsed] = useState(true);
+   const dispatch = useDispatch();
+   const {activeUser} = useSelector(({auth}) => auth);
+   const {modalState} = useSelector(({modal}) => modal);
  
   useEffect(() => {
     const user = checkActiveUser(activeUser);
@@ -106,10 +106,12 @@ const authRoutes = [
 
   const routes = activeUser ? authRoutes : [];
      console.log({activeUser}) 
+  const {type,title,isVisible,onCancel,content,onOk} = modalState;
     return(
   <Layout style={{display:"flex",flexDirection:'column',background:`${WHITE}`,padding:'20px 0px'}}>
        <ECSideBar setCollapsed={setCollapsed} activeUser={activeUser}  collapsed={collapsed}/>
        <Content onClick={()=>setCollapsed(true)} style={{direction:'ltr'}}>
+         <ECModal  type={type} title={title} isVisible={isVisible} onCancel={onCancel} content={content} onOk={onOk}/>
           {
             activeUser &&
             (<MenuStyled>

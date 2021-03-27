@@ -1,11 +1,26 @@
 import React from 'react';
-import {TaskStyled,HorizontalContainer,TaskContentStyled,TimeContiner,TitleStyled,DescriptionStyled,SideStyled,BallStyled} from './Task.styled';
-export default function Task({background,task}){
+import {TaskStyled,HorizontalContainer,IconWrapper,TaskContentStyled,TimeContiner,TitleStyled,DescriptionStyled,SideStyled,BallStyled,TimeAndActions,ActionsStyled} from './Task.styled';
+import {EditSVG,DeleteSVG} from '../../common/icons/icons';
 
+export default function Task({background,task,allowedActions,deleteTask,editTask}){
     return(
         <TaskStyled>
             <TaskContentStyled background={background}>
-                <TimeContiner>{task.timeRange[0]}-{task.timeRange[1]}</TimeContiner>
+                <TimeAndActions>
+                    <ActionsStyled>
+                        {allowedActions && (
+                            <>
+                            <IconWrapper onClick={deleteTask}>
+                            <DeleteSVG/>
+                            </IconWrapper>
+                            <IconWrapper onClick={editTask}>
+                            <EditSVG/>
+                            </IconWrapper>
+                            </>
+                        )}
+                    </ActionsStyled>
+                 <TimeContiner>{task.timeRange[0]}-{task.timeRange[1]}</TimeContiner>
+                </TimeAndActions>
                 <TitleStyled>{task.title}</TitleStyled>
             <DescriptionStyled>{task.description}</DescriptionStyled>
             </TaskContentStyled>
