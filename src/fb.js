@@ -84,7 +84,8 @@ export async function registerParent(parent){
     email:parent.email,
     name:parent.name,
     childId:parent.childId,
-    type:parent.type
+    type:parent.type,
+    campId:parent.campId
   }
   )
 return true;
@@ -223,28 +224,28 @@ export async function storeDailySchedule(dailySchedule){
   }
 }
 
-export async function getAllSchedule(){
+export async function getAllSchedule(campId){
   try{
-    return await (await db.ref(`/kleah/daily_schedules`).once('value')).val();
+    return await (await db.ref(`/kleah/daily_schedules/${campId}`).once('value')).val();
   }catch(err){
     console.error(err);
   }
 }
 
-export async function getDailyByDate(date){
+export async function getDailyByDate(campId,date){
   try{
     const masterCamp = localStorage.getItem('masterCamp') || 'kleah';
-    return await (await db.ref(`/${masterCamp}/daily_schedules/${date}`).once('value')).val();
+    return await (await db.ref(`/${masterCamp}/daily_schedules/${campId}/${date}`).once('value')).val();
   }catch(err){
     console.error(err);
   }
 }
 
-export async function setTaskByDate(schedule){
+export async function setTaskByDate(schedule,campId){
   try{
     let updates = {};
-    updates[`/kleah/daily_schedules/${schedule.date}`] = null;
-    updates[`/kleah/daily_schedules/${schedule.date}`] = schedule;
+    updates[`/kleah/daily_schedules/${campId}/${schedule.date}`] = null;
+    updates[`/kleah/daily_schedules/${campId}/${schedule.date}`] = schedule;
     return await db.ref().update(updates);
   }catch(err){
     console.error(err);

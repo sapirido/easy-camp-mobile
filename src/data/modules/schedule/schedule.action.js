@@ -20,10 +20,10 @@ export function addDailySchedule(dailySchedule){
     }
 }
 
-export function getAllSchedules(){
+export function getAllSchedules(campId = '1'){
     return async function _(dispatch){
         try{
-            const allDays = await getAllDailys();
+            const allDays = await getAllDailys(campId);
             console.log({allDays});
             dispatch(setAllSchedules(allDays));
         }catch(err){
@@ -44,11 +44,11 @@ export function editTaskByDate(schedule,newTask){
 }
 }
 
-export function deletedTask(schedule,task){
+export function deletedTask(schedule,taskId,campId){
     return async function _(dispatch){
         try{
-            await deleteTaskById(schedule,task.id);
-            dispatch(getAllSchedules());
+            await deleteTaskById(schedule,taskId,campId);
+            dispatch(getAllSchedules(campId));
         }catch(err){
             console.log(err);
         }
@@ -74,9 +74,9 @@ function setDaily(daily){
         payload:daily
     }
 }
-export function getDailyByDate(date){
+export function getDailyByDate(campId,date){
     return async function _(dispatch){
-        const daily = await getDailyScheduleByDate(date);
+        const daily = await getDailyScheduleByDate(campId,date);
         if(daily?.tasks?.length){
             dispatch(setDaily(daily));
         }else{

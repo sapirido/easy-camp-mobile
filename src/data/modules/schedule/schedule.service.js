@@ -17,13 +17,13 @@ export async function setTask(schedule,newTask){
     return await setTaskByDate(newSchedule);
 }
 
-export async function deleteTaskById(schdule,taskId){
-    const filteredTasks = schdule.tasks.filter(task => task.id !== taskId);
+export async function deleteTaskById(schedule,taskId,campId){
+    const filteredTasks = schedule.tasks.filter(task => task.id !== taskId);
     const newSchedule ={
-        ...schdule,
+        ...schedule,
         tasks:filteredTasks
     }
-   return await setTaskByDate(newSchedule)
+   return await setTaskByDate(newSchedule,campId)
 }
 
 export async function deleteDailySchedule(schduleDate){
@@ -31,6 +31,6 @@ export async function deleteDailySchedule(schduleDate){
     return await deleteScheduleByDate(schduleDate);
 }
 
-export async function getDailyScheduleByDate(date){
-    return await getDailyByDate(date);
+export async function getDailyScheduleByDate(campId,date){
+    return await getDailyByDate(campId,date);
 }

@@ -1,8 +1,8 @@
 import React from 'react';
 import {TaskStyled,HorizontalContainer,IconWrapper,TaskContentStyled,TimeContiner,TitleStyled,DescriptionStyled,SideStyled,BallStyled,TimeAndActions,ActionsStyled} from './Task.styled';
-import { PERMISSIONS } from '../../common/constants';
 import {EditSVG,DeleteSVG} from '../../common/icons/icons';
-export default function Task({background,task,allowedActions}){
+
+export default function Task({background,task,allowedActions,deleteTask,editTask}){
     return(
         <TaskStyled>
             <TaskContentStyled background={background}>
@@ -10,10 +10,10 @@ export default function Task({background,task,allowedActions}){
                     <ActionsStyled>
                         {allowedActions && (
                             <>
-                            <IconWrapper onClick={()=>console.log('delete')}>
+                            <IconWrapper onClick={deleteTask}>
                             <DeleteSVG/>
                             </IconWrapper>
-                            <IconWrapper onClick={()=>console.log('edit')}>
+                            <IconWrapper onClick={editTask}>
                             <EditSVG/>
                             </IconWrapper>
                             </>
