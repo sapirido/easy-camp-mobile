@@ -5,11 +5,14 @@ import employee from './modules/employee/employee.reducer';
 import schedule from './modules/schedule/schedule.reducer';
 import report from './modules/report/report.reducer';
 import masterCamp from './modules/master.camp/masterCamp.reducer';
+import modal from './modules/modal/modal.reducer';
+
 export default combineReducers({
   auth,
   camp,
   employee,
   schedule,
   report,
-  masterCamp
+  masterCamp,
+  modal
 });

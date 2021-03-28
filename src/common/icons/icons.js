@@ -111,6 +111,73 @@ export const ImageSVG = () => (
     <path id="Path_298" data-name="Path 298" d="M229.766,241.214a20,20,0,0,1,2.949,21.154,13.19,13.19,0,0,1-4.239,5.308,10.672,10.672,0,0,1-8.79,1.413,12.29,12.29,0,0,1-7.116-5.467,19.848,19.848,0,0,1-2.291-11.427,17.936,17.936,0,0,1,1.815-7.59,11.589,11.589,0,0,1,18.409-2.684" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
   </g>
 </svg>
+);
+
+export const CorrectSVG = () =>(
+  <svg xmlns="http://www.w3.org/2000/svg" width="20.346" height="19.164" viewBox="0 0 20.346 19.164">
+  <g id="Component_23_1" data-name="Component 23 – 1" transform="translate(0.53 0.514)">
+    <path id="Path_1811" data-name="Path 1811" d="M295.255,58.38A9,9,0,0,0,282,60.1a9.09,9.09,0,0,0,7.91,14.258,9.078,9.078,0,0,0,6.691-3.544A8.975,8.975,0,0,0,298.14,63.4" transform="translate(-280.391 -56.217)" fill="none" stroke="#fff" stroke-linecap="round" stroke-miterlimit="10" stroke-width="1"/>
+    <path id="Path_1812" data-name="Path 1812" d="M285.38,65.576l2.635,4.551c4.3-4.452,7.185-7.175,11.485-11.627" transform="translate(-280.391 -56.217)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1"/>
+  </g>
+</svg>
 )
 
+export const ContactListSVG = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="19.172" height="19.145" viewBox="0 0 19.172 19.145">
+  <g id="Component_24_2" data-name="Component 24 – 2" transform="translate(0.516 0.497)">
+    <path id="Path_1813" data-name="Path 1813" d="M300.8,288.547l-.068,5.748a1.845,1.845,0,0,1-.2.991c-.337.522-1.073.58-1.7.582l-4.385.012-8.039.021a2.332,2.332,0,0,1-1.514-.347,2.27,2.27,0,0,1-.554-1.824l0-14.209a1.967,1.967,0,0,1,.323-1.326,2.049,2.049,0,0,1,1.672-.435l12.856.52a1.548,1.548,0,0,1,1.265.454,1.473,1.473,0,0,1,.19.767c.147,2.4.236,4.848.382,7.251" transform="translate(-282.894 -277.754)" fill="none" stroke="#fff" stroke-linecap="round" stroke-miterlimit="10" stroke-width="1"/>
+    <path id="Path_1814" data-name="Path 1814" d="M283.065,282.809l2.384.112" transform="translate(-282.894 -276.93)" fill="none" stroke="#fff" stroke-linecap="round" stroke-miterlimit="10" stroke-width="1"/>
+    <path id="Path_1815" data-name="Path 1815" d="M282.894,288.253l2.639-.083" transform="translate(-282.894 -276.06)" fill="none" stroke="#fff" stroke-linecap="round" stroke-miterlimit="10" stroke-width="1"/>
+    <path id="Path_1816" data-name="Path 1816" d="M294.153,289.987a3.081,3.081,0,0,0-.118-2.211,2.042,2.042,0,0,0-1.164-.826,6.018,6.018,0,0,0-1.441-.2,3.213,3.213,0,0,0-2.49.553,2.128,2.128,0,0,0-.567,1.256,6.378,6.378,0,0,0,.029,1.4" transform="translate(-281.468 -275.919)" fill="none" stroke="#fff" stroke-linecap="round" stroke-miterlimit="10" stroke-width="1"/>
+    <path id="Path_1817" data-name="Path 1817" d="M291.191,282.181a1.532,1.532,0,1,1-.045,0" transform="translate(-281.525 -276.865)" fill="none" stroke="#fff" stroke-linecap="round" stroke-miterlimit="10" stroke-width="1"/>
+  </g>
+</svg>
+)
 
+export const GameSVG = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="19.031" height="19.032" viewBox="0 0 19.031 19.032">
+  <g id="Group_521" data-name="Group 521" transform="translate(-262.86 -228.926)">
+    <path id="Path_1833" data-name="Path 1833" d="M266.957,247.355l3.065,0a1.675,1.675,0,0,1-.451-1.592,1.476,1.476,0,0,1,1.185-1.109,1.333,1.333,0,0,1,1.351.83c.25.685-.351,1.48-.086,1.666.039.027.059,0,.315.018l.684.039,1.315.075a2.433,2.433,0,0,0,.62.016,1.262,1.262,0,0,1,.238-.01l1.062-.013,1.795-.023a.846.846,0,0,0,.576-.151.856.856,0,0,0,.166-.69,39.746,39.746,0,0,1,0-4.128,2.241,2.241,0,0,0,.471-.012,1.832,1.832,0,0,0,.529-.172c.134-.068.246-.169.383-.227a1.428,1.428,0,0,0,.33-.233,2.536,2.536,0,0,0,.523-.617,2.472,2.472,0,0,0,.338-.975,2.461,2.461,0,0,0-2.863-2.714c-.039.007,0-.308,0-.345v-1.05l-.011-.436c0-.482.16-2.72.16-3.2l.041-.059-4.671-.112a.712.712,0,0,1-.5-.143.85.85,0,0,1-.162-.526,2.3,2.3,0,1,0-4.57.549l-.1.057-4.622-.205a.412.412,0,0,0-.546.448,29.854,29.854,0,0,0-.055,6.095,2.378,2.378,0,0,1,2.212.066,1.677,1.677,0,0,1,.778.888,1.47,1.47,0,0,1-.816,1.726,2.275,2.275,0,0,1-2.151-.582c-.1,2.049-.01,4.5-.106,6.546,0,.071-.018.279.1.368s.344.011.482-.057h1.339" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1"/>
+  </g>
+</svg>
+)
+
+export const GlassSVG = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="13.772" height="22.067" viewBox="0 0 13.772 22.067">
+  <g id="Group_519" data-name="Group 519" transform="translate(-279.279 -272.348)">
+    <path id="Path_1829" data-name="Path 1829" d="M279.779,276.087c.007.033.03.162.059.325.6,3.345,2.019,13.379,2.118,15.467a1.144,1.144,0,0,0,.353.894,1.161,1.161,0,0,0,.689.141l5.978-.034a1.424,1.424,0,0,0,1.762-1.537q.9-7.168,1.8-14.337a.653.653,0,0,0-.783-.88l-7.6-.1c-.576-.008-1.181.022-1.415.024-.942.005-1.44-.011-1.685-.02-.444-.017-.811-.042-1.067-.061Z" transform="translate(0 1.001)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1"/>
+    <path id="Path_1830" data-name="Path 1830" d="M290.879,273l-3.015-.147a1.247,1.247,0,0,0-1.638,1.268q-.973,6.355-1.5,12.769" transform="translate(1.586 0)" fill="none" stroke="#fff" stroke-linecap="round" stroke-miterlimit="10" stroke-width="1"/>
+    <path id="Path_1831" data-name="Path 1831" d="M281.227,281.039a6.32,6.32,0,0,1,3.9.3,9.485,9.485,0,0,0,1.658.666c1.424.3,2.935-.564,4.338-.187" transform="translate(0.111 2.571)" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="1"/>
+  </g>
+</svg>
+)
+
+export const SelfTranportSVG = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="15.357" height="18.85" viewBox="0 0 15.357 18.85">
+  <g id="Component_36_1" data-name="Component 36 – 1" transform="translate(0.507 0.499)">
+    <path id="Path_1961" data-name="Path 1961" d="M282.628,125.358l.091-6.146a1.713,1.713,0,0,1,.421-1.345,1.694,1.694,0,0,1,1.092-.256l5.158-.022a6.244,6.244,0,0,1,5.449,2.085,5.8,5.8,0,0,1,1.948,2.5,5.621,5.621,0,0,1,.167,1.505q.093,5.013-.183,10.024a2.048,2.048,0,0,1-.366,1.279,2.083,2.083,0,0,1-1.644.452l-10.853-.19a.909.909,0,0,1-1.095-1.108l-.083-6.122" transform="translate(-282.628 -117.588)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+    <path id="Path_1962" data-name="Path 1962" d="M292.6,118.214l-.021,2.653a.532.532,0,0,0,.644.666l2.677-.016" transform="translate(-282.465 -117.578)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+    <path id="Path_1963" data-name="Path 1963" d="M284.806,119.514a47.941,47.941,0,0,1,5.128-.076" transform="translate(-282.592 -117.558)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+    <path id="Path_1964" data-name="Path 1964" d="M284.806,121.514a47.943,47.943,0,0,1,5.128-.076" transform="translate(-282.592 -117.526)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+  </g>
+</svg>
+
+)
+
+export const DeleteSVG = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="14.65" height="16" viewBox="0 0 14.65 16">
+  <g id="delete" transform="translate(0 -2.673)">
+    <path id="Path_1951" data-name="Path 1951" d="M29.728,137.357h8.93a1.608,1.608,0,0,0,1.529-1.7V124H28.2v11.658a1.608,1.608,0,0,0,1.529,1.7ZM36.6,125.8a.378.378,0,1,1,.755,0v8.92a.378.378,0,0,1-.755,0Zm-2.785,0a.378.378,0,1,1,.755,0v8.92a.378.378,0,0,1-.755,0Zm-2.785,0a.378.378,0,1,1,.755,0v8.92a.378.378,0,0,1-.755,0Zm0,0" transform="translate(-26.868 -118.684)" fill="#fff"/>
+    <path id="Path_1952" data-name="Path 1952" d="M.944,69.888H13.706a.944.944,0,1,0,0-1.888H.944a.944.944,0,1,0,0,1.888Zm0,0" transform="translate(0 -65.327)" fill="#fff"/>
+  </g>
+</svg>
+
+)
+
+export const EditSVG = () =>(
+  <svg id="Edit" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <rect id="Rectangle_324" data-name="Rectangle 324" width="16" height="16" fill="none"/>
+  <path id="Path_110" data-name="Path 110" d="M8.154,3.077,2.462,8.923,0,16l7.077-2.308L12.769,8Zm7.231-.462-2-2a1.865,1.865,0,0,0-2.769,0L8.923,2.308l4.615,4.769,1.846-1.846A1.95,1.95,0,0,0,16,3.846,1.9,1.9,0,0,0,15.385,2.615Z" fill="#fff"/>
+</svg>
+
+)

@@ -48,7 +48,9 @@ export async function createParentUser(parent){
   const { childId } = parent;
   const child =  await getChildById(childId);
   if(!child) return false;
-  const parentRegistered = await registerParent(parent);
+  console.log({child});
+  const parentObject = {...parent,campId:child.campId};
+  const parentRegistered = await registerParent(parentObject);
   return parentRegistered;
 }
 
