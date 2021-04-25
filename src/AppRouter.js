@@ -82,9 +82,9 @@ function AppRouter({ history }) {
   const dispatch = useDispatch();
   const { activeUser } = useSelector(({ auth }) => auth);
   const { modalState } = useSelector(({ modal }) => modal);
-
   useEffect(() => {
     const user = checkActiveUser(activeUser);
+    console.log({user});
     if (user) {
       dispatch(setActiveUser(user));
       history.push('/');
@@ -97,20 +97,27 @@ function AppRouter({ history }) {
     e.stopPropagation();
     setCollapsed(!collapsed);
   }
-
+  const notAllowedPath = ['/login','/register'];
   const routes = activeUser ? authRoutes : [];
-  console.log({ activeUser });
   const { type, title, isVisible, onCancel, content, onOk } = modalState;
   return (
     <Layout
       style={{ display: 'flex', background: `${WHITE}`, padding: '20px 0px' }}
     >
+  
       <ECSideBar
         setCollapsed={setCollapsed}
         activeUser={activeUser}
         collapsed={collapsed}
       />
       <Content onClick={() => setCollapsed(true)} style={{ direction: 'ltr' }}>
+        { !notAllowedPath.includes(history.location.pathname) && (<MenuStyled>
+          <MenuOutlined
+            onClick={handleMenuClicked}
+            style={{ fontSize: 24 }}
+          />
+          <NameStlyed>קייטנת לאה</NameStlyed>
+        </MenuStyled>)}
         <ECModal
           type={type}
           title={title}
@@ -119,15 +126,7 @@ function AppRouter({ history }) {
           content={content}
           onOk={onOk}
         />
-        {activeUser && (
-          <MenuStyled>
-            <MenuOutlined
-              onClick={handleMenuClicked}
-              style={{ fontSize: 24 }}
-            />
-            <NameStlyed>קייטנת לאה</NameStlyed>
-          </MenuStyled>
-        )}
+     
 
         <Switch>
           <ContentStyled>

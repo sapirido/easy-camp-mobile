@@ -43,6 +43,7 @@ function renderRole(role) {
   }
 }
 
+
 function ECSidebar({ history, collapsed, activeUser, setCollapsed }) {
   const [selectedKey, setSelectedKey] = useState('1');
   const dispatch = useDispatch();
@@ -76,7 +77,6 @@ function ECSidebar({ history, collapsed, activeUser, setCollapsed }) {
       </HeaderContent>
     </HeaderWrapper>
   );
-  console.log('Yair branch - new commit0');
   return (
     <Sider
       style={{
@@ -129,12 +129,11 @@ function ECSidebar({ history, collapsed, activeUser, setCollapsed }) {
             }
           />
         </Menu.Item>
-        {activeUser?.role === PERMISSIONS.PARENT && (
           <React.Fragment>
             <Menu.Item
               style={selectedKey === '3' ? selectedStyled : unSelectedStyled}
               key="3"
-              onClick={() => history.push('/')}
+              onClick={() => history.push('/transfer-report')}
               onSelect={handleSelect}
             >
               <ContentItem
@@ -187,7 +186,6 @@ function ECSidebar({ history, collapsed, activeUser, setCollapsed }) {
               />
             </Menu.Item>
           </React.Fragment>
-        )}
         {activeUser?.role === PERMISSIONS.INSTRUCTION && (
           <Menu.Item
             style={selectedKey === '8' ? selectedStyled : unSelectedStyled}
@@ -214,6 +212,7 @@ function ECSidebar({ history, collapsed, activeUser, setCollapsed }) {
           style={selectedKey === '7' ? selectedStyled : unSelectedStyled}
           key="7"
           onSelect={handleSelect}
+          onClick={() => handleLogout()}
         >
           <ContentItem
             iconComponent={
