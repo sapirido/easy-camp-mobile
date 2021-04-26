@@ -11,20 +11,17 @@ useEffect(() => {
 },[])
 
 useEffect(() => {
-    console.log({reportInContent:report});
-if(!!report && !report?.src_done){
-    const currPoints = Object.values(report.points).filter(({type}) => type === 'to_dest');
+if(!!report){
+    const currPoints = Object.values(report.points).filter(({type}) => report.to_dest ? type ===  'to_src' : type ===  'to_dest');
     setRelevantPoints(currPoints);
-    console.log({relevantPoints});
 }
 },[report])
-
 
 
 return (
 <ReportContentContainer>
     {relevantPoints.map((point,index) => (
-        <Point point={point} key={index} onReportPoint={onReportPoint} isLeader={isLeader} isLast={index === relevantPoints.length - 1}/>
+        <Point point={point} key={index} onReportPoint={(point,isLast) => onReportPoint(point,report,isLast)} isLeader={isLeader} isLast={index === relevantPoints.length - 1}/>
     ))}
 </ReportContentContainer>    
 )

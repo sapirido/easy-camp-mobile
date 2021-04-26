@@ -280,10 +280,21 @@ export async function addReportPoint(report){
   }
 };
 
-export async function getReportPoints(campId){
+export async function getReportPoints(transportId){
   try{
-   return await (await db.ref(`/kleah/reports/point_reports/${campId}`).once('value')).val();
+   return await (await db.ref(`/kleah/reports/point_reports/${transportId}`).once('value')).val();
   }catch(err){
+    console.error(err);
+  }
+}
+
+export async function updateTransportPoint(transportId,report){
+  try{
+    let update = {};
+    update[`/kleah/reports/point_reports/${transportId}/${report.date}`] = report;
+    await db.ref().update(update);
+    return report;
+  } catch(err) {
     console.error(err);
   }
 }

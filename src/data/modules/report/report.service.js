@@ -1,5 +1,5 @@
 
-import {addReportPoint,getReportPoints, removeReportPoint,getParentReportById,addParentReport} from '../../../fb';
+import {addReportPoint,getReportPoints, removeReportPoint,getParentReportById,addParentReport,updateTransportPoint} from '../../../fb';
 
 export async function createPointReport(report){
     try{
@@ -9,8 +9,8 @@ export async function createPointReport(report){
     }
 }
 
-export async function getAllPointReports(campId){
-    return await getReportPoints(campId);
+export async function getAllPointReports(transportId){
+    return await getReportPoints(transportId);
 }
 export async function deletePointReport(date){
     return await removeReportPoint(date);
@@ -31,4 +31,30 @@ export async function createParentReport(instructionId,report){
         id:reportId
     }
     return await addParentReport(instructionId,updatedReport);
+}
+
+export async function updatePointStatus(transportId,point,report,isLast){
+    const updatedPoints = report.points.map(p => {
+        return point.order === p.order ? {
+            ...p,
+            done:true
+        }:p
+    });
+    let updatedReport;
+    if(isLast && report.dest_done){
+        updatedReport = {
+            ...report,
+            src_done:true
+        }
+    }else if(isLast && !report.dest_done){
+        updatedReport = {
+            ...report,
+            dest_done:true,
+        }
+    }else{
+        updatedReport ={ ...report };
+    }
+    updatedReport = {...updatedReport,points:updatedPoints};
+    
+    return await updateTransportPoint(transportId,updatedReport);
 }

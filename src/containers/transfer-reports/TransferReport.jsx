@@ -1,13 +1,17 @@
 import React, { useEffect,useState } from 'react';
-import {TrasferReportsContainer,ReportContainer} from './TransferReports.styled';
+import {TrasferReportsContainer,ReportContainer,TextWrapper} from './TransferReports.styled';
 import ReportContent from './ReportContent';
 import HeaderPage from '../../components/header-page/HeaderPage';
 import {useDispatch,useSelector} from 'react-redux'
 import { BlockContainer } from '../../common/styles/common.styled';
-import { SECONDARY } from '../../common/styles/colors';
-import { getReportPoints } from '../../data/modules/report/report.action';
+import { PRIMARY, SECONDARY } from '../../common/styles/colors';
+import { getReportPoints,updatePointAsDone } from '../../data/modules/report/report.action';
 import { getChildById } from '../../data/modules/camp/camp.action';
+import { SelectionContainer } from '../home/Home.styled';
+import {Select} from 'antd';
 import moment from 'moment';
+
+const {Option} = Select;
 
 export default function TransferReport({}){
 
@@ -15,18 +19,14 @@ export default function TransferReport({}){
     const {activeUser} = useSelector(({auth}) => auth);
     const {reportPoints} = useSelector(({report}) => report)
     const {selectedChild} = useSelector(({camp}) => camp);
+    const campId = useSelector(({camp}) => camp?.selectedChild?.campId)
     const [report,setReport] = useState(null);
+    const [selectedTransport,setSelectedTransport] = useState('');
     useEffect(() => {
-        if( activeUser?.role === 1 ) {//parent
-            dispatch(getChildById(activeUser.childId))
+        if( activeUser?.role === 1 ) {
+            dispatch(getReportPoints(activeUser.transport))
         }
-    },[])
-    useEffect(() => {
-        if(!!selectedChild){
-        const {campId} = selectedChild;
-        dispatch(getReportPoints(campId));
-        }
-    },[selectedChild])
+    },[activeUser])
 
     useEffect(() => {
         if(!!reportPoints){
@@ -37,19 +37,37 @@ export default function TransferReport({}){
         }
     },[reportPoints])
 
-    useEffect(() => {
-        console.log({report});
-    },[report])
+    function reportPointHandler(point,report,isLast){
+        dispatch(updatePointAsDone(activeUser?.transport,point,report,isLast));
+    }
 
-
-    console.log({selectedChild,reportPoints});
-    console.log({report});
+    function renderTitleByDirection(){
+        return report?.to_dest ? `${report?.dest} -> ${report?.source}` :`${report?.dest} <- ${report?.source}`;
+    }
     return(
         <TrasferReportsContainer>
+        <TextWrapper>
         <HeaderPage  title={'- איפה אנחנו? -'} size={1.6} color={SECONDARY}/>
+        <HeaderPage
+        title={renderTitleByDirection()}
+        size={1.2}
+        color={PRIMARY}
+        style={{ paddingTop: '0.4rem' }}
+      />
+      <SelectionContainer>
+      <Select
+      allowClear
+      style={{ width: '100%', marginBottom: '1.5rem' }}
+      placeholder={'בחר מחנה'}
+      onChange={(transport) => setSelectedTransport(transport)}
+    >
+   <Option value="1">הסעה 1</Option>
+    </Select>
+  </SelectionContainer>
+      </TextWrapper>
         <ReportContainer>
             <BlockContainer height={100} style={{right:0,height:'70%'}}>
-                <ReportContent report={report}/>
+                <ReportContent isLeader={activeUser?.leader} onReportPoint={reportPointHandler} report={report}/>
             </BlockContainer>
         </ReportContainer>
         </TrasferReportsContainer>

@@ -34,3 +34,8 @@ display:flex;
 justify-content:space-between;
 align-item:baseline;
 `
+export const TextWrapper = styled.div`
+display:flex;
+flex-direction:column;
+justify-content:center;
+`
