@@ -19,8 +19,8 @@ font-family:almoni-regular;
 text-align:right;
 `
 export const HorizontalContainer = styled.div`
-margin-left:1rem;
-height:100%;
+margin-left:${({marginLeft}) => marginLeft || 1}rem;
+height:${({height}) => height ||'100%'};
 border-left:${({color}) => `2px dashed ${color}`};
 `
 const SmallText = styled.div`

@@ -181,3 +181,23 @@ export const EditSVG = () =>(
 </svg>
 
 )
+
+
+export const DonePoint = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+  <g id="Ellipse_1" data-name="Ellipse 1" fill="#fff" stroke="#fff" stroke-width="3">
+    <circle cx="10" cy="10" r="10" stroke="none"/>
+    <circle cx="10" cy="10" r="8.5" fill="none"/>
+  </g>
+</svg>
+)
+
+export const NotDonePoint = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+  <g id="Ellipse_4" data-name="Ellipse 4" fill="none" stroke="#fff" stroke-width="3">
+    <circle cx="10" cy="10" r="10" stroke="none"/>
+    <circle cx="10" cy="10" r="8.5" fill="none"/>
+  </g>
+</svg>
+
+)

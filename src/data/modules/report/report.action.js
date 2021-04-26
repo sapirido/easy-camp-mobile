@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import {createPointReport,getAllPointReports, deletePointReport,createParentReport,getAllParentReportById} from './report.service';
 import {SET_REPORT_POINTS,SET_SELCTED_PARENT_REPORTS} from './report.types';
 
@@ -23,9 +24,9 @@ export function addNewReport(report){
 }
 
 
-export function getReportPoints(){
+export function getReportPoints(campId){
     return async function _(dispatch){
-        const allReports = await getAllPointReports();
+        const allReports = await getAllPointReports(campId);
         dispatch(setPointReports(allReports));
         return allReports;
     }
@@ -44,5 +45,11 @@ export function addNewParentReport(instructionId,report){
         await createParentReport(instructionId,report);
         const allInstructionReport = await getAllParentReportById(instructionId);
         dispatch(setParentReport(allInstructionReport));
+    }
+}
+
+export function updatePointAsDone(campId,report,isLast){
+    return async function _(dispatch){ 
+        // await updatePointStatus(campId,report,isLast);
     }
 }

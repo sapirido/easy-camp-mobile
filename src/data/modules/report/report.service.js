@@ -9,8 +9,8 @@ export async function createPointReport(report){
     }
 }
 
-export async function getAllPointReports(){
-    return await getReportPoints();
+export async function getAllPointReports(campId){
+    return await getReportPoints(campId);
 }
 export async function deletePointReport(date){
     return await removeReportPoint(date);

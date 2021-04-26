@@ -1,8 +1,9 @@
-import {ADD_CAMP, SET_CAMPS,SET_SELECTED_CAMP} from './camp.types';
+import {ADD_CAMP, SET_CAMPS,SET_SELECTED_CAMP, SET_SELECTED_CHILD} from './camp.types';
 
 const defaultState = {
     camps:[],
-    selectedCamp:null
+    selectedCamp:null,
+    selectedChild:null
 }
 
 export default function campReducer(state = defaultState,action){
@@ -14,6 +15,8 @@ export default function campReducer(state = defaultState,action){
            return {...state,camps:action.payload};
         case SET_SELECTED_CAMP:
             return {...state,selectedCamp:action.payload}
+        case SET_SELECTED_CHILD:
+            return { ...state,selectedChild:action.payload}
         default:
             return state;
     }

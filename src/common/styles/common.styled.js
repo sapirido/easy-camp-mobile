@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {PRIMARY} from './colors';
+import {PRIMARY,WHITE} from './colors';
 
 export const HeaderStyled = styled.div`
 padding-bottom:150px;
@@ -46,7 +46,7 @@ height:15%;
 `
 export const Text = styled.span`
 font-size:24px;
-text-decoration:underline;
+color:${({color}) => color || WHITE};
 `
 
 export const IconSVG = styled.img`
