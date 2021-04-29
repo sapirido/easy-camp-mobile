@@ -338,3 +338,10 @@ export async function getMasterCamps(){
   }
 }
 
+export async function getAllTransport(){
+  try{
+    return await (await db.ref('/kleah/transports').once('value')).val();
+  }catch(err){
+    console.log(err);
+  }
+}

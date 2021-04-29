@@ -1,8 +1,9 @@
-import {SET_MASTER_CAMP, SET_ALL_MASTER_CAMPS} from './masterCamp.types'
+import {SET_MASTER_CAMP, SET_ALL_MASTER_CAMPS, SET_TRANSPORT_LIST} from './masterCamp.types'
 
 const INITAL_STATE = {
     masterCamps:[],
     selectedMasterCamp:null,
+    transportList:[]
 }
 
 
@@ -19,6 +20,8 @@ export default function masterCampReducer(state = INITAL_STATE,action){
                 ...state,
                 masterCamps:action.payload
             }
+        case SET_TRANSPORT_LIST:
+            return {...state,transportList:action.payload}
         default:
             return state;
     }

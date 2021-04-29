@@ -54,3 +54,4 @@ export function updatePointAsDone(transportId,point,report,isLast){
         
     }
 }
+

@@ -6,6 +6,7 @@ import {useDispatch,useSelector} from 'react-redux'
 import { BlockContainer } from '../../common/styles/common.styled';
 import { PRIMARY, SECONDARY } from '../../common/styles/colors';
 import { getReportPoints,updatePointAsDone } from '../../data/modules/report/report.action';
+import {getTransportNumbers} from '../../data/modules/master.camp/masterCamps.action';
 import { getChildById } from '../../data/modules/camp/camp.action';
 import { SelectionContainer } from '../home/Home.styled';
 import {Select} from 'antd';
@@ -20,15 +21,21 @@ export default function TransferReport({}){
     const {reportPoints} = useSelector(({report}) => report)
     const {selectedChild} = useSelector(({camp}) => camp);
     const campId = useSelector(({camp}) => camp?.selectedChild?.campId)
+    const { transportList = [] } = useSelector(({masterCamp}) => masterCamp);
     const [report,setReport] = useState(null);
     const [selectedTransport,setSelectedTransport] = useState('');
     useEffect(() => {
         if( activeUser?.role === 1 ) {
             dispatch(getReportPoints(activeUser.transport))
         }
+        if(activeUser?.role > 4){
+            dispatch(getTransportNumbers());
+        }
     },[activeUser])
 
+
     useEffect(() => {
+        console.log({reportPoints})
         if(!!reportPoints){
             const now = Date.now();
             const formattedDate = moment(now).format('YYYY-MM-DD');
@@ -37,12 +44,17 @@ export default function TransferReport({}){
         }
     },[reportPoints])
 
+    useEffect(() => {
+        dispatch(getReportPoints(selectedTransport))
+    },[selectedTransport])
+
     function reportPointHandler(point,report,isLast){
         dispatch(updatePointAsDone(activeUser?.transport,point,report,isLast));
     }
 
     function renderTitleByDirection(){
-        return report?.to_dest ? `${report?.dest} -> ${report?.source}` :`${report?.dest} <- ${report?.source}`;
+        if(!report?.source || !report?.dest) return null;
+        return  report?.to_dest ? `${report?.dest} -> ${report?.source}` :`${report?.dest} <- ${report?.source}`;
     }
     return(
         <TrasferReportsContainer>
@@ -61,7 +73,9 @@ export default function TransferReport({}){
       placeholder={'בחר מחנה'}
       onChange={(transport) => setSelectedTransport(transport)}
     >
-   <Option value="1">הסעה 1</Option>
+    {transportList.map(transportNumber => (
+        <Option value={transportNumber} key={transportNumber}>הסעה {transportNumber}</Option>
+    ))}
     </Select>
   </SelectionContainer>
       </TextWrapper>
