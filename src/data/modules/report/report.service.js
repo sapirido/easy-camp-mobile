@@ -25,7 +25,6 @@ export async function createParentReport(instructionId,report){
     for(let c in report.parentName){
         reportId+= c.charCodeAt(0);
     }
-    console.log({reportId});
     const updatedReport = {
         ...report,
         id:reportId
@@ -33,13 +32,14 @@ export async function createParentReport(instructionId,report){
     return await addParentReport(instructionId,updatedReport);
 }
 
-export async function updatePointStatus(transportId,point,report,isLast){
-    const updatedPoints = report.points.map(p => {
-        return point.order === p.order ? {
-            ...p,
-            done:true
-        }:p
-    });
+export async function updatePointStatus(transportId,point,report = {},isLast){
+
+    console.log({report});
+    const updatedPoints = report?.points?.map(p => point.order === p.order ?({
+        ...p,
+        done:true
+    }): p);
+
     let updatedReport;
     if(isLast && report.dest_done){
         updatedReport = {

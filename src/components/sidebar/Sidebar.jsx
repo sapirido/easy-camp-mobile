@@ -133,7 +133,7 @@ function ECSidebar({ history, collapsed, activeUser, setCollapsed }) {
             <Menu.Item
               style={selectedKey === '3' ? selectedStyled : unSelectedStyled}
               key="3"
-              onClick={() => history.push('/transfer-report')}
+              onClick={() => handleClicked('/transfer-report')}
               onSelect={handleSelect}
             >
               <ContentItem

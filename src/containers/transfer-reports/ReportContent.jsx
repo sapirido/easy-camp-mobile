@@ -7,12 +7,8 @@ export default function ReportContent({report,isLeader = false,onReportPoint}){
 const [relevantPoints,setRelevantPoints] = useState([]);
 
 useEffect(() => {
-    console.log({rep:report})
-},[])
-
-useEffect(() => {
 if(!!report){
-    const currPoints = Object.values(report.points).filter(({type}) => report.to_dest ? type ===  'to_src' : type ===  'to_dest');
+    const currPoints = Object.values(report.points).filter(({type}) => report.dest_done ? type ===  'to_src' : type ===  'to_dest');
     setRelevantPoints(currPoints);
 }
 },[report])
