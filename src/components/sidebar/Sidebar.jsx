@@ -143,10 +143,11 @@ function ECSidebar({ history, collapsed, activeUser, setCollapsed }) {
                 text={'דיווח הסעות'}
               />
             </Menu.Item>
-            <Menu.Item
+           {activeUser?.role === 1 && <Menu.Item
               style={selectedKey === '4' ? selectedStyled : unSelectedStyled}
               key="4"
               onSelect={handleSelect}
+              onClick={() => handleClicked('/feedbacks')}
             >
               <ContentItem
                 iconComponent={
@@ -156,7 +157,7 @@ function ECSidebar({ history, collapsed, activeUser, setCollapsed }) {
                 }
                 text={'משו״ב שבועי'}
               />
-            </Menu.Item>
+            </Menu.Item>}
             <DividerWrapper>
               <Divider style={{ 'background-color': 'white' }} />
             </DividerWrapper>

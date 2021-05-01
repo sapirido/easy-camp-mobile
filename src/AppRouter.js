@@ -15,6 +15,8 @@ import { setActiveUser } from './data/modules/auth/auth.actions';
 import ContactList from './containers/contact-list/ContactList';
 import TransferReport from './containers/transfer-reports/TransferReport';
 import ECModal from './components/modal/ECModal';
+import Feedbacks from './containers/feedbacks/Feedbacks';
+import Feedback  from './containers/feedbacks/Feedback';
 
 const { Content } = Layout;
 
@@ -75,6 +77,16 @@ const authRoutes = [
     isExact: true,
     path: '/transfer-report',
   },
+  {
+    component:Feedbacks,
+    isExact:true,
+    path:'/feedbacks'
+  },
+  {
+    component:Feedback,
+    isExact:true,
+    path:'/feedbacks/:week'
+  }
 ];
 
 function AppRouter({ history }) {

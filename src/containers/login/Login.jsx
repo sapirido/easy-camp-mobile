@@ -53,11 +53,6 @@ async function onLogin(){
         }
 
     }
-    setShowGreeting(true)
-    setTimeout(()=>{
-        setShowGreeting(false)
-        history.push('/');
-    }, 3000)
 }
 
 
@@ -76,7 +71,6 @@ history.push('/register');
 const options = masterCamps?.map(camp => camp.campName)
     return(
         <React.Fragment>
-            { showGreeting? <GreetingPopup role={activeUser?.role } /> : null }
             <LoginStyled>
                 <HeaderLogin userType={userType} options={options} handleCampSelected={handleCampSelected} isLogin handleChecked={handleChecked}/>
                 {userType ?

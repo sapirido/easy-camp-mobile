@@ -345,3 +345,10 @@ export async function getAllTransport(){
     console.log(err);
   }
 }
+
+//FEEDBACK
+
+export async function getFeedbacks(){
+
+  return await (await db.ref('kleah/feedbacks').once('value')).val();
+}

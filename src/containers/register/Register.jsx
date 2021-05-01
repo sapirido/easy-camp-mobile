@@ -34,11 +34,12 @@ export default function Register({history}){
 
     function onRegister(){
         if(password === confirmPassword){            
-            const parent ={
+            const parent = {
                 name:fullName,
                 childId,
                 email,
                 password,
+                role:1
             }
             dispatch(registerParent(parent));
             history.push('/');
