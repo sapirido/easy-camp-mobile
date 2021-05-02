@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "easy-camp-mobile": "easy-camp"
+  },
+  "targets": {
+    "easy-camp": {
+      "hosting": {
+        "mobile": [
+          "easy-camp-mobile"
+        ]
+      }
+    }
+  }
+}

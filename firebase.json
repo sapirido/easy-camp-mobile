@@ -2,7 +2,8 @@
   "database": {
     "rules": "database.rules.json"
   },
-  "hosting": {
+  "hosting": [{
+    "target":"mobile",
     "public": "build",
     "rewrites": [
       {
@@ -10,5 +11,5 @@
         "destination": "/index.html"
       }
     ]
-  }
+  }]
 }

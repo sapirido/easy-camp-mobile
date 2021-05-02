@@ -53,8 +53,7 @@ export function updatePointAsDone(transportId,point,report,isLast){
     return async function _(dispatch){ 
          await updatePointStatus(transportId,point,report,isLast);
         const allReports = await getAllPointReports(transportId);
-        dispatch(setPointReports(allReports));
-        
+        dispatch(setPointReports(allReports));   
     }
 }
 
