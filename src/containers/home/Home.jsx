@@ -44,6 +44,9 @@ export default function Home({ history }) {
     const now = moment(+new Date()).format('YYYY-MM-DD');
     dispatch(getAllCamps());
     setCurrentDay(currentDay || now);
+    if(activeUser?.role === 1){
+      setSelectedCampId(activeUser?.campId);
+    }
     if (!allowedToEdit.includes(activeUser.role)) {
       getCampIdByUserRole();
     }
