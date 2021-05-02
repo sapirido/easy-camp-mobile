@@ -49,3 +49,7 @@ flex-direction:column;
 text-align:right;
 align-items: flex-end;
 `
+
+export const QuestionContainer = styled.div`
+padding:25px 0px;
+`

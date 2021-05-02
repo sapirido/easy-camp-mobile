@@ -1,7 +1,7 @@
 import Checkbox from 'antd/lib/checkbox/Checkbox';
 import TextArea from 'antd/lib/input/TextArea';
 import React, {useState} from 'react';
-import {QuestionWrapper ,AnswerWrapper} from './Feedbacks.styled'
+import {QuestionWrapper ,AnswerWrapper, QuestionContainer} from './Feedbacks.styled'
 
 export default function Question({question}){
 
@@ -11,9 +11,10 @@ export default function Question({question}){
 
     }
     return(
-        <>
+        <QuestionContainer>
         <QuestionWrapper>{question.question}</QuestionWrapper>
         <AnswerWrapper>
+        
         {question.questionType === 'multi' ? (
             <>
             {question?.answers?.map(answer =>(
@@ -22,6 +23,6 @@ export default function Question({question}){
             </>
             ) : <TextArea/>}
             </AnswerWrapper>
-        </>
+        </QuestionContainer>
     )
 }
