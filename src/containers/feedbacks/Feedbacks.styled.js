@@ -8,11 +8,11 @@ text-align:center;
 `
 
 export const FeedbacksWrapper = styled.div`
-display:flex;
-flex-direction:column;
 padding:50px 60px;
 justify-content: center;
-align-items: center;
+display:grid;
+grid-template-columns:200px;
+grid-gap:35px;
 `
 
 export const Feedback = styled.div`
@@ -31,10 +31,9 @@ background-color:${WHITE};
 
 export const ContentContainer = styled.div`
 overflow-x: hidden;
-overflow-y: auto;
+overflow-y: scroll;
 text-align:justify;
-height:85%;
-padding:30px;
+padding: 30px;
 `
 
 export const QuestionWrapper = styled.div`
@@ -52,4 +51,11 @@ align-items: flex-end;
 
 export const QuestionContainer = styled.div`
 padding:25px 0px;
+`
+
+export const ContentBox = styled.div`
+display:flex;
+justify-content:center;
+align-items:center;
+height:100%;
 `

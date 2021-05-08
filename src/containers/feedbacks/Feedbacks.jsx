@@ -20,7 +20,6 @@ export default function Feedbacks({history}){
         history.push(`/feedbacks/${feedback.week}`)
     }
 
-    console.log({publishedFeedbacks});
     return (
         <FeedbackContainer>
         <HeaderPage

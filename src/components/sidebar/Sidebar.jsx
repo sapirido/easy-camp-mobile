@@ -143,7 +143,7 @@ function ECSidebar({ history, collapsed, activeUser, setCollapsed }) {
                 text={'דיווח הסעות'}
               />
             </Menu.Item>
-           {activeUser?.role === 1 && <Menu.Item
+           {activeUser?.role === PERMISSIONS.PARENT && <Menu.Item
               style={selectedKey === '4' ? selectedStyled : unSelectedStyled}
               key="4"
               onSelect={handleSelect}

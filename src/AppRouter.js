@@ -43,6 +43,18 @@ const NameStlyed = styled.div`
   margin-right: 5rem;
 `;
 
+const LayoutStyled = styled(Layout)`
+background-color:white;
+display:flex;
+`
+const ContentWrapper = styled(Content)`
+display:grid;
+grid-template-rows:100px auto;
+grid-gap:40px;
+margin-top:20px;
+`
+
+
 const notAuthRoute = [
   {
     component: Login,
@@ -109,27 +121,31 @@ function AppRouter({ history }) {
     e.stopPropagation();
     setCollapsed(!collapsed);
   }
+
+  console.log({history:history.location})
+
   const notAllowedPath = ['/login','/register'];
   const routes = activeUser ? authRoutes : [];
   const { type, title, isVisible, onCancel, content, onOk } = modalState;
   return (
-    <Layout
-      style={{ display: 'flex', background: `${WHITE}`, padding: '20px 0px' }}
-    >
+  <LayoutStyled>
   
       <ECSideBar
         setCollapsed={setCollapsed}
         activeUser={activeUser}
         collapsed={collapsed}
       />
-      <Content onClick={() => setCollapsed(true)} style={{ direction: 'ltr' }}>
-        { !notAllowedPath.includes(history.location.pathname) && (<MenuStyled>
-          <MenuOutlined
-            onClick={handleMenuClicked}
-            style={{ fontSize: 24 }}
-          />
-          <NameStlyed>קייטנת לאה</NameStlyed>
-        </MenuStyled>)}
+      <ContentWrapper onClick={() => setCollapsed(true)} style={{ direction: 'ltr' }}> 
+      {!notAllowedPath.includes(history.location.pathname) && (
+        <MenuStyled>
+        <MenuOutlined
+          onClick={handleMenuClicked}
+          style={{ fontSize: 24 }}
+        />
+        <NameStlyed>קייטנת לאה</NameStlyed>
+      </MenuStyled>
+      )}
+        
         <ECModal
           type={type}
           title={title}
@@ -152,8 +168,8 @@ function AppRouter({ history }) {
             ))}
           </ContentStyled>
         </Switch>
-      </Content>
-    </Layout>
+      </ContentWrapper>
+    </LayoutStyled>
   );
 }
 

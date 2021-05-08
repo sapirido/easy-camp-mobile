@@ -352,3 +352,9 @@ export async function getFeedbacks(){
 
   return await (await db.ref('kleah/feedbacks').once('value')).val();
 }
+
+export async function storeFeedback(campId,week,childId,feedback){
+let update ={};
+update[`/kleah/camps/${campId}/feedbacks/${week}/${childId}`] = feedback;
+return await db.ref().update(update);
+}

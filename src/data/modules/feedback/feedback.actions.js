@@ -1,5 +1,5 @@
 import { SET_PUBLISHED_FEEDBACK, SET_SELECTED_FEEDBACK } from './feedback.types';
-import { getAllPublishedFeedback } from './feedback.service';
+import { getAllPublishedFeedback,saveFeedback } from './feedback.service';
 
 function setPublishedFeedbacks(feedbacks){
     return{
@@ -19,5 +19,11 @@ export function setFeedback(feedback){
     return{
         type:SET_SELECTED_FEEDBACK,
         payload:feedback
+    }
+}
+
+export function sendFeedback(campId,week,childId,feedback){
+    return async function _(dispatch){
+        await saveFeedback(campId,week,childId,feedback);
     }
 }
