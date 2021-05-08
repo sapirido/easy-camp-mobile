@@ -4,9 +4,10 @@ import { SECONDARY, PRIMARY } from '../../common/styles/colors';
 import phone from '../../assets/icons/phone.svg';
 
 const roleMapping = {
-    ADMIN:{role:"מנהל קייטנה",color:PRIMARY},
-    CAMP_MANAGER:{role:"רכז מחנה",color:SECONDARY},
-    INSTRUCTION:{role:"מדריך",color:'#FFB703'}
+    ADMIN:{role:"מנהל קייטנה",color:'#219EBC'},
+    CAMP_MANAGER:{role:"רכז מחנה",color:'#219EBC'},
+    INSTRUCTION:{role:"מדריך",color:'#023047'},
+    CHILDREN: {role:'חניך',color:'#FFB703'}
 }
 
 const Phone = () => (
@@ -24,7 +25,7 @@ const Phone = () => (
 
 )
 
-export default function ContactListItem({name,phone,type}){
+export default function ContactListItem({name,phone,type = 'CHILDREN'}){
 
     return(
         <ContactItemStyled backgroundColor={roleMapping[type]?.color}>

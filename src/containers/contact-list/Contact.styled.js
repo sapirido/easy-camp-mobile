@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { PRIMARY } from '../../common/styles/colors';
+import { PRIMARY, WHITE } from '../../common/styles/colors';
 
 export const ContactStyled = styled.div`
 text-align:center;
@@ -10,8 +10,8 @@ export const ListStyled = styled.div`
 display:flex;
 flex-wrap:wrap;
 justify-content:space-between;
-height:30rem;
-max-height:30rem;
+height:33rem;
+max-height:33rem;
 overflow:scroll;
 padding-top:3rem;
 `
@@ -37,6 +37,7 @@ export const InfoText = styled.span`
 font-size:${({size}) =>size}rem;
 font-weight:${({fontWeight}) => fontWeight || 400};
 text-align:right;
+color:${WHITE};
 `
 
 export const PhoneStyled = styled.a`

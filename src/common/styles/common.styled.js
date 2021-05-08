@@ -58,7 +58,7 @@ font-family:almoni-meduim;
 
 export const BlockContainer = styled.div`
 position:absolute;
-bottom:-10px;
+bottom: -22px;
 height:${props => props.height || '75%' };
 width:100%;
 background-color:${PRIMARY};

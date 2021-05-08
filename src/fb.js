@@ -358,3 +358,45 @@ let update ={};
 update[`/kleah/camps/${campId}/feedbacks/${week}/${childId}`] = feedback;
 return await db.ref().update(update);
 }
+
+
+//CONTACT
+
+export async function getEmployeesContact(){
+  try{
+    return await (await db.ref('kleah/users/employees').once('value')).val();
+  } catch(err){
+    console.error('can not fetch employees contacts',err);
+  }
+}
+
+export async function getGroupContact(campId,instructionId){
+  try{
+     return await (await db.ref(`/kleah/camps/${campId}/groups`).once('value')).val();
+
+  } catch(err){
+    console.error('can not fetch group contacts',err);
+  }
+}
+
+export async function getCampList(campId){
+  try{
+    return await (await db.ref(`/kleah/camps/${campId}/groups`).once('value')).val();
+  } catch(err){
+    console.error('can not fetch camp contacts',err);
+  }
+}
+
+export async function getAllContact(){
+  const allEmployees = await getEmployeesContact();
+  const allChildren = await getChildrensContanct();
+  return { ...allEmployees, ...allChildren };
+}
+
+export async function getChildrensContanct(){
+  try{
+   return await (await db.ref('/kleah/users/childrens').once('value')).val(); 
+  } catch(err){
+    console.error('can not fetch transport contacts',err);
+  }
+}

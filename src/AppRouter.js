@@ -25,7 +25,8 @@ const ContentStyled = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  padding: 2rem;
+  padding: 1.2rem 2rem;
+  align-items:flex-start;
 `;
 
 const MenuStyled = styled.div`
@@ -46,12 +47,13 @@ const NameStlyed = styled.div`
 const LayoutStyled = styled(Layout)`
 background-color:white;
 display:flex;
+grid-gap:0px;
 `
 const ContentWrapper = styled(Content)`
 display:grid;
 grid-template-rows:100px auto;
 grid-gap:40px;
-margin-top:20px;
+/* margin-top:20px; */
 `
 
 

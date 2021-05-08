@@ -7,6 +7,7 @@ import report from './modules/report/report.reducer';
 import masterCamp from './modules/master.camp/masterCamp.reducer';
 import modal from './modules/modal/modal.reducer';
 import feedback from './modules/feedback/feedback.reducer';
+import contact from './modules/contact/contact.reducer';
 
 export default combineReducers({
   auth,
@@ -16,5 +17,6 @@ export default combineReducers({
   report,
   masterCamp,
   modal,
-  feedback
+  feedback,
+  contact
 });

@@ -157,7 +157,6 @@ export default function Home({ history }) {
   }
   return (
     <HomeStyled>
-      {/* <ECModal type={MODAL_TYPES.DANGER} isVisible={true} title={'ערוך משימה'} onCancel={()=>console.log('cancle')} content={renderContent}/> */}
       <HeaderPage title={'- הלוז היומי -'} size={1.6} color={SECONDARY} />
       {renderDailyScheduleSelection()}
       <ContentStyled>
