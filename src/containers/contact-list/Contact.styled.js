@@ -46,18 +46,3 @@ display:flex;
 justify-content:center;
 align-items:center;
 `
-
-export const SearchContainer = styled.div`
-width:100%;
-padding-top:2rem;
-.ant-input-search{
-    border:2px solid ${PRIMARY};
-    border-radius:14px;
-}
-.ant-input-search-icon::after{
-    border-right:none;
-}
-svg{
-    color:${PRIMARY};
-}
-`

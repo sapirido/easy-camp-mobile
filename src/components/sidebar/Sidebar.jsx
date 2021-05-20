@@ -10,6 +10,7 @@ import {
   ReportSVG,
   WeeklyFeefbackSVG,
   ImageSVG,
+  AttendanceSVG,
 } from '../../common/icons/icons';
 import { PRIMARY, SECONDARY, WHITE } from '../../common/styles/colors';
 import { withRouter } from 'react-router';
@@ -143,16 +144,30 @@ function ECSidebar({ history, collapsed, activeUser, setCollapsed }) {
                 text={'דיווח הסעות'}
               />
             </Menu.Item>
+            {activeUser?.role !== PERMISSIONS.PARENT && <Menu.Item 
+            style={selectedKey === '4' ? selectedStyled : unSelectedStyled}
+            key="4"
+            onSelect={handleSelect}
+            onClick={() => handleClicked('/daily-attendance')}>
+            <ContentItem
+            iconComponent={<AttendanceSVG
+              color= {selectedKey === '4' ? SECONDARY : WHITE}
+              />
+            }
+            text={'נוכחות יומית'}
+            />
+            </Menu.Item>
+          }
            {activeUser?.role === PERMISSIONS.PARENT && <Menu.Item
-              style={selectedKey === '4' ? selectedStyled : unSelectedStyled}
-              key="4"
+              style={selectedKey === '5' ? selectedStyled : unSelectedStyled}
+              key="5"
               onSelect={handleSelect}
               onClick={() => handleClicked('/feedbacks')}
             >
               <ContentItem
                 iconComponent={
                   <WeeklyFeefbackSVG
-                    color={selectedKey === '4' ? SECONDARY : WHITE}
+                    color={selectedKey === '5' ? SECONDARY : WHITE}
                   />
                 }
                 text={'משו״ב שבועי'}
@@ -162,8 +177,8 @@ function ECSidebar({ history, collapsed, activeUser, setCollapsed }) {
               <Divider style={{ 'background-color': 'white' }} />
             </DividerWrapper>
             <Menu.Item
-              style={selectedKey === '5' ? selectedStyled : unSelectedStyled}
-              key="5"
+              style={selectedKey === '6' ? selectedStyled : unSelectedStyled}
+              key="6"
               onSelect={handleSelect}
             >
               <ContentItem
@@ -174,10 +189,10 @@ function ECSidebar({ history, collapsed, activeUser, setCollapsed }) {
               />
             </Menu.Item>
             <Menu.Item
-              style={selectedKey === '6' ? selectedStyled : unSelectedStyled}
+              style={selectedKey === '7' ? selectedStyled : unSelectedStyled}
               onSelect={handleSelect}
               onClick={() => handleClicked('/contact-list')}
-              key="6"
+              key="7"
             >
               <ContentItem
                 iconComponent={

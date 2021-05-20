@@ -147,6 +147,15 @@ export async function getAllCamps(){
   }
 }
 
+export async function getCampInstructions(campId){
+  try{
+    const instructions = await (await db.ref(`/kleah/camps/${campId}/instructions`).once('value')).val();
+    return instructions.filter(Boolean);
+  } catch(err){
+    console.error('can not fetch instruction data',err);
+  }
+}
+
 export async function getParentByChildId(childId){
   try{
     const masterCamp = localStorage.getItem('campCode');
@@ -398,5 +407,22 @@ export async function getChildrensContanct(){
    return await (await db.ref('/kleah/users/childrens').once('value')).val(); 
   } catch(err){
     console.error('can not fetch transport contacts',err);
+  }
+}
+
+//attendance
+
+export async function updateAttendance(date,childId,attended,isGroup){
+console.log({isGroup});
+  try{
+  let update ={};
+if(isGroup){
+  update[`/kleah/users/childrens/${childId}/attendance/${date}/group`] = attended;
+}else{
+  update[`/kleah/users/childrens/${childId}/attendance/${date}/transport`] = attended;
+}
+return await db.ref().update(update);
+  }catch(err){
+    console.error(err);
   }
 }

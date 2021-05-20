@@ -17,6 +17,7 @@ import TransferReport from './containers/transfer-reports/TransferReport';
 import ECModal from './components/modal/ECModal';
 import Feedbacks from './containers/feedbacks/Feedbacks';
 import Feedback  from './containers/feedbacks/Feedback';
+import DailyAttendance from './containers/daily-attendance/DailyAttendance';
 
 const { Content } = Layout;
 
@@ -30,7 +31,8 @@ const ContentStyled = styled.div`
 `;
 
 const MenuStyled = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns:17% 70%;
   justify-content: flex-start;
   width: 100%;
   align-items: center;
@@ -41,7 +43,7 @@ const MenuStyled = styled.div`
 const NameStlyed = styled.div`
   font-size: 2rem;
   color: ${PRIMARY};
-  margin-right: 5rem;
+  text-align: center;
 `;
 
 const LayoutStyled = styled(Layout)`
@@ -51,8 +53,7 @@ grid-gap:0px;
 `
 const ContentWrapper = styled(Content)`
 display:grid;
-grid-template-rows:100px auto;
-grid-gap:40px;
+grid-template-rows:10% 90%;
 /* margin-top:20px; */
 `
 
@@ -100,6 +101,11 @@ const authRoutes = [
     component:Feedback,
     isExact:true,
     path:'/feedbacks/:week'
+  },
+  {
+    component: DailyAttendance,
+    isExact:true,
+    path:'/daily-attendance'
   }
 ];
 

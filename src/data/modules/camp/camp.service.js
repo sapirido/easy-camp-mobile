@@ -1,4 +1,4 @@
-import {saveCamp,saveEmpolyee,saveChildren,getAllCamps,updateCampManager,updateInstruction,updateChildren,getChildById} from '../../../fb';
+import {saveCamp,saveEmpolyee,saveChildren,getAllCamps,updateCampManager,updateInstruction,updateChildren,getChildById,getCampInstructions} from '../../../fb';
 
 export async function storeCamp(camp){
 
@@ -87,4 +87,8 @@ export async function getChild(childeId){
     }catch (err) {
         throw new Error('can not fetch childId',err);
     }
+}
+
+export async function getInstructions(campId){
+return await getCampInstructions(campId);
 }

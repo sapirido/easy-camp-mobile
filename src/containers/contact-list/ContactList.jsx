@@ -1,20 +1,18 @@
 import React,{useState,useEffect} from 'react';
-import {Col,Row} from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { getEmployees } from '../../data/modules/employee/employee.action';
-import { ContactStyled, ListStyled,SearchContainer } from './Contact.styled';
+import { ContactStyled, ListStyled } from './Contact.styled';
+import { SearchContainer } from '../../common/styles/common.styled';
 import HeaderPage from '../../components/header-page/HeaderPage';
 import { SECONDARY } from '../../common/styles/colors';
 import ContactListItem from './ContactItem';
-import {Input} from 'antd';
 import { PERMISSIONS } from '../../common/constants';
 import {getAllContacts,getCampContacts,getEmployeesContacts,getGroupContacts,getTransportContacts} from '../../data/modules/contact/contact.actions';
+import {Input} from 'antd';
 const {Search} = Input;
 
 export default function ContactList({}){
 
     const dispatch = useDispatch();
-    const { employees } = useSelector(({employee}) => employee);
     const { contacts } = useSelector(({contact}) => contact);
     const { activeUser } = useSelector(({auth}) => auth);
     const [contactArray,setContact] = useState([]);

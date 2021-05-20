@@ -11,7 +11,7 @@ export async function getEmployeesContactList(){
 export async function getGroupContactList(campId,instructionId){
     const groupList = await getGroupContact(campId,instructionId);
     console.log({groupList})
-    const selectedGroup = groupList.find(group => group.instruction.id === '121212125');
+    const selectedGroup = groupList.find(group => group.instruction.id === instructionId);
     if(selectedGroup?.childrens){
         return Object.values(selectedGroup.childrens);
     } 
@@ -39,8 +39,12 @@ export async function getCampContactList(campId){
     return [];
 }
 
-export async function getAllContactList(){
+export async function getAllContactList(transportList = null){
     const allContactList = await getAllContact();
+    if(transportList?.length && allContactList){
+        const transportChildrens = Object.values(allContactList).filter(children => transportList.includes(children.transport?.toString()));
+        return transportChildrens;
+    }
     if(allContactList){
         return Object.values(allContactList);
     }

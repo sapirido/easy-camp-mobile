@@ -22,9 +22,9 @@ export function getGroupContacts(campId,instructionId){
     }
 }
 
-export function getTransportContacts(transportNumber){
+export function getTransportContacts(transportList){
     return async function _(dispatch){
-        const contacts = await getTransportContactList(transportNumber);
+        const contacts = await getAllContactList(transportList);
         dispatch(setContacts(contacts));
     }
 }
