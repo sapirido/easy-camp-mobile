@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useRef } from 'react';
 import styled from 'styled-components';
-import {DailyAttendanceWrapper} from './DailyAttendance.styled'
+import {DailyAttendanceWrapper,Wrapper,CounterWrapper} from './DailyAttendance.styled'
 import { PRIMARY, SECONDARY,WHITE } from '../../common/styles/colors';
 import HeaderPage from '../../components/header-page/HeaderPage';
 import Switch from "react-switch";
@@ -8,13 +8,16 @@ import moment from 'moment';
 import { SearchContainer } from '../../common/styles/common.styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { PERMISSIONS } from '../../common/constants';
-import {Input} from 'antd';
+import { Input,DatePicker } from 'antd';
 import { getCampContacts, getGroupContacts, getTransportContacts } from '../../data/modules/contact/contact.actions';
 import { getAllCamps, getInstructionCamp } from '../../data/modules/camp/camp.action';
 import { AttendancesWrapper,ButtonWrapper } from './Attendance.styled';
 import AttendanceItem from './AttendanceItem';
 import ECButton from '../../components/button/ECButton';
 import {updateChildrensAttendance} from '../../data/modules/attandance/attendance.action'
+import {Select} from 'antd';
+
+const  { Option } = Select; 
 
 
 const {Search} = Input;
@@ -30,8 +33,13 @@ export default function DailyAttendance({}){
     const [isGroup,setIsGroup] = useState(true);
     const [selectedInstruction,setSelectedInstruction] = useState(null);
     const [selectedCamp,setSelectedCamp] = useState(null);
+    const [selectedStation,setSelectedStation] = useState('ALL');
+    const [isMorning,setIsMorning] = useState(true);
+
+    const prevDate = useRef();
 
     useEffect(() => {
+        prevDate.current = date;
         if(activeUser?.role === PERMISSIONS.ADMIN || activeUser.role === PERMISSIONS.GENERAL_MANAGER){
             dispatch(getAllCamps());
         }
@@ -44,18 +52,49 @@ export default function DailyAttendance({}){
     },[isGroup])
 
     useEffect(() => {
-        getContactsByRole();
-    },[isGroup,selectedInstruction,selectedCamp])
+     if(selectedStation === 'ALL'){
+         setContact(contacts);
+     }else{
+         const filteredChildren = rootContacts?.filter(child => child.transport == selectedStation);
+         setContact(filteredChildren);
+     }
+
+    },[selectedStation])
 
     useEffect(() => {
+        if(selectedCamp){
+            setSelectedInstruction(null);
+            dispatch(getInstructionCamp(selectedCamp));
+        }
+    },[selectedCamp])
+
+    useEffect(() => {   
+        console.log('here!!!',contacts);
         if(contacts.length){
+            console.log({contacts})
             setRootContacts(contacts);
             setContact(contacts)
         }
     },[contacts])
 
+    useEffect(()=>{
+        console.log({date,prevDate:prevDate.current})
+        if(date !== prevDate.current){
+            if(selectedInstruction){
+                const instruction = instructions.find(ins => ins.id === selectedInstruction);
+                dispatch(getGroupContacts(instruction.campId,selectedInstruction))
+            }
+        }
+    },[date])
+
+    useEffect(() => {
+        if(selectedInstruction){
+            const instruction = instructions.find(ins => ins.id === selectedInstruction);
+            dispatch(getGroupContacts(instruction.campId,selectedInstruction))
+        }
+    },[selectedInstruction])
+
     function getContactsByRole(){
-        console.log({activeUser,isGroup});
         switch(activeUser.role){
             case PERMISSIONS.INSTRUCTION:
                 dispatch(getGroupContacts(activeUser.campId,activeUser.id));
@@ -79,7 +118,6 @@ export default function DailyAttendance({}){
     } 
 
     function searchHandler(value){
-        console.log({value});
         if(value === ''){
             setContact(rootContacts);
             return;
@@ -89,33 +127,178 @@ export default function DailyAttendance({}){
         setContact(filteredContacts);
     }
 
-    console.log({instructions,camps,contacts,activeUser})
-    console.log({rootContacts,contactList});
+
+    const Counter = () => (
+        <CounterWrapper>{isGroup ? contactList.filter(child => !!child.id && (child?.attended || child.attendance[date]?.group)).length : contactList.filter(child => child.attendance[date]?.transport?.morning).length }</CounterWrapper>
+    )
+    
+
 
     function renderContentByRole(){
         switch(activeUser?.role){
             case PERMISSIONS.INSTRUCTION:
                 return(
+                    <>
                     <HeaderPage
                     title={moment(Date.now()).format('DD.MM.YYYY')}
                     size={1.2}
                     color={PRIMARY}
                     style={{ paddingTop: '2rem', paddingBottom: '2rem' }}
                   />
+                  <Counter/>
+                  </>
+
                 )
+
+            case PERMISSIONS.TRANSPORT_MANAGER:
+                return (
+                    
+                    <React.Fragment>
+                    <HeaderPage
+                    title={moment(Date.now()).format('DD.MM.YYYY')}
+                    size={1.2}
+                    color={PRIMARY}
+                    style={{ paddingTop: '1rem', paddingBottom: '0.7rem' }}
+                  />
+                    <Switch 
+                    width={167}
+                    height={32}
+                    onChange={handleChecked}
+                    checked={isGroup} 
+                    offColor={PRIMARY} 
+                    onColor={PRIMARY} 
+                    borderRadius={16} 
+                    uncheckedIcon={<Icon justifyContent={'left'} width={'3rem'} label={'הסעה'}/>} 
+                    checkedIcon={<Icon label={'קבוצה'}/>}
+                    />
+                
+                  {!isGroup && 
+                    <>
+                    <Select
+                  style={{ width: '100%', marginTop: '0.7rem',marginBottom:'0.7rem'}}
+                  placeholder={'בחר תחנה'}
+                  onChange={(stationId) => setSelectedStation(stationId)}
+                >
+                 <Option value={'ALL'}>כל התחנות</Option>
+                  {activeUser?.transports?.map((station) => (
+                    <Option value={station} key={station}>תחנה מס׳ {station}</Option>
+                  ))}
+                </Select>
+                <Switch 
+                width={167}
+                height={32}
+                onChange={() => setIsMorning(!isMorning)}
+                checked={isMorning} 
+                offColor={PRIMARY} 
+                onColor={PRIMARY}
+                borderRadius={16} 
+                uncheckedIcon={<Icon justifyContent={'left'} width={'3rem'} label={'צהריים'}/>} 
+                checkedIcon={<Icon label={'בוקר'}/>}
+                />
+                </>
+            }
+                 
+                <Counter/>
+              </React.Fragment>
+                )
+
+                case PERMISSIONS.CAMP_MANAGER:
+                    return (
+                        <>
+                            <DatePicker
+                            defaultValue={moment(date, 'YYYY-MM-DD')}
+                            style={{
+                              display: 'flex',
+                              alignSelf: 'center',
+                              marginTop: '2rem',
+                              marginBottom: '1rem',
+                            }}
+                            onChange={currentDateChanged}
+                          />
+                          <Select
+                          style={{ width: '100%', marginTop: '0.7rem',marginBottom:'0.7rem'}}
+                          placeholder={'בחר מדריך'}
+                          onChange={(instruction) => setSelectedInstruction(instruction)}
+                        >
+                          {instructions?.map((instruction) => (
+                            <Option value={instruction.id} key={instruction.id}>{instruction.name}</Option>
+                          ))}
+                        </Select> 
+                        <Counter/>
+                        </>
+                    )
+                case PERMISSIONS.ADMIN:
+                case PERMISSIONS.GENERAL_MANAGER:
+                    return(
+                        <>
+                        <DatePicker
+                        defaultValue={moment(date, 'YYYY-MM-DD')}
+                        style={{
+                          display: 'flex',
+                          alignSelf: 'center',
+                          marginTop: '2rem',
+                          marginBottom: '1rem',
+                        }}
+                        onChange={currentDateChanged}
+                      />
+                      <Select
+                      style={{ width: '100%', marginTop: '0.7rem',marginBottom:'0.7rem'}}
+                      placeholder={'בחר מחנה'}
+                      onChange={(campId) => setSelectedCamp(campId)}
+                    >
+                      {camps?.map((camp) => (
+                        <Option value={camp.camp_id} key={camp.camp_id}>{camp.camp_name}</Option>
+                      ))}
+                    </Select>
+                    {selectedCamp &&
+                        <>
+                        <Select
+                        style={{ width: '100%', marginTop: '0.7rem',marginBottom:'0.7rem'}}
+                        placeholder={'בחר מדריך'}
+                        value={selectedInstruction}
+                        onChange={(instruction) => setSelectedInstruction(instruction)}
+                      >
+                        {instructions?.map((instruction) => (
+                          <Option value={instruction.id} key={instruction.id}>{instruction.name}</Option>
+                        ))}
+                      </Select> 
+                      <Counter/>
+                      </>
+                     }
+
+                        </>
+                    )
             
         }
     }
 
+    function currentDateChanged(date, dateString) {
+        setDate(moment(date).format('DD-MM-YYYY'));
+    }
+  
    function handleChecked(){
        setIsGroup(!isGroup);
    }
 
-   async function updateAttendance(){
-       console.log('updates');
-       dispatch(updateChildrensAttendance(date,rootContacts,isGroup))
-       
+   function updateAttendance(){
+    switch(activeUser.role){
+      
+        case PERMISSIONS.TRANSPORT_MANAGER:
+        case PERMISSIONS.INSTRUCTION:
+        dispatch(updateChildrensAttendance(activeUser.campId,activeUser.id,date,rootContacts,isGroup,isMorning))
+            break;
+        case PERMISSIONS.CAMP_MANAGER:
+            dispatch(getGroupContacts(activeUser.campId,selectedInstruction));
+            break;
+        case PERMISSIONS.GENERAL_MANAGER:
+        case PERMISSIONS.ADMIN:
+            dispatch(updateChildrensAttendance(selectedCamp,selectedInstruction,date,rootContacts,isGroup,isMorning))
+            break;
+    }
+   }
 
+   function isAllowedToChange(role){
+    return role === PERMISSIONS.INSTRUCTION || role === PERMISSIONS.TRANSPORT_MANAGER || role === PERMISSIONS.GENERAL_MANAGER || role === PERMISSIONS.ADMIN 
    }
 
    function handleUpdateAttendance(id,checked){
@@ -127,32 +310,23 @@ export default function DailyAttendance({}){
         setRootContacts(updatedChildrenList);
    }
 
-   
+   console.log({contactList});
 
+   
     return (
      <DailyAttendanceWrapper>
      <HeaderPage  title={'- נוכחות יומית -'} size={1.6} color={SECONDARY}/>
-     { activeUser?.leader && <Switch 
-        width={167}
-        height={32}
-        onChange={handleChecked}
-        checked={isGroup} 
-        offColor={PRIMARY} 
-        onColor={PRIMARY} 
-        borderRadius={16} 
-        uncheckedIcon={<Icon justifyContent={'left'} width={'3rem'} label={'הסעה'}/>} 
-        checkedIcon={<Icon label={'קבוצה'}/>}
-        />}
+
      {renderContentByRole()}
-     <SearchContainer>
-     <SearchWrapper onChange={e => searchHandler(e.target.value)} placeholder={'חיפוש'} onSearch={searchHandler}/>
-     </SearchContainer>
+   
      <AttendancesWrapper>
-     {contactList?.map(children => <AttendanceItem handleUpdateAttendance={handleUpdateAttendance} children={children} key={children.id}/>)}
+     {contactList?.filter(children => !!children?.id)?.map(children => <AttendanceItem isGroup={isGroup} isEnabledChange={isAllowedToChange(activeUser?.role)} date={date} handleUpdateAttendance={handleUpdateAttendance} isMorning={isMorning} children={children} key={children.id}/>)}
+     {isAllowedToChange(activeUser?.role) && contactList.length > 0 && <ButtonWrapper>
+     <Wrapper>
+    <ECButton handleClicked={updateAttendance} buttonText={'עדכן נוכחות'} backgroundColor={WHITE} textColor={PRIMARY}/>
+    </Wrapper>
+    </ButtonWrapper>}
      </AttendancesWrapper>
-     <ButtonWrapper>
-     <ECButton handleClicked={updateAttendance} buttonText={'עדכן נוכחות'} backgroundColor={WHITE} textColor={PRIMARY}/>
-     </ButtonWrapper>
      </DailyAttendanceWrapper>
     )
 }
@@ -173,3 +347,7 @@ font-size:1rem;
 font-weight:600;
 width:${({width}) => width ? width : '3rem'};
 `
+
+// <SearchContainer>
+// <SearchWrapper onChange={e => searchHandler(e.target.value)} placeholder={'חיפוש'} onSearch={searchHandler}/>
+// </SearchContainer>

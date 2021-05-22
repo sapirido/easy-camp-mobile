@@ -11,9 +11,14 @@ export const GlobalStyle = createGlobalStyle`
 
   #root{
     font-family:almoni-regular;
+  height: 120vh;
+
   }
   .title{
       font-family:rivkabau-bold;
+  }
+  .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    border-radius:16px;
   }
 `
 export const AppStyled = styled.div`

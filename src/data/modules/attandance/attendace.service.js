@@ -1,8 +1,9 @@
-import {updateAttendance} from '../../../fb';
+import {getGroupContact, updateAttendance} from '../../../fb';
 
-export async function updateChildrenAttendance(date,childId,attended,isGroup){
+export async function updateChildrenAttendance(campId,instructionId,date,childId,attended,isGroup,selectedGroupNumber,isMorning){
 try{
-return await updateAttendance(date,childId,attended,isGroup);
+
+return await updateAttendance(campId,instructionId,date,childId,attended,isGroup,selectedGroupNumber,isMorning);
 }catch(err){
     console.log(err);
 }

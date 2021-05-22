@@ -9,9 +9,9 @@ export async function getEmployeesContactList(){
 }
 
 export async function getGroupContactList(campId,instructionId){
-    const groupList = await getGroupContact(campId,instructionId);
+    const groupList = await getGroupContact(campId);
     console.log({groupList})
-    const selectedGroup = groupList.find(group => group.instruction.id === instructionId);
+    const selectedGroup = Object.values(groupList).filter(Boolean).find(group => group.instruction?.id === instructionId);
     if(selectedGroup?.childrens){
         return Object.values(selectedGroup.childrens);
     } 

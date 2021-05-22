@@ -379,7 +379,7 @@ export async function getEmployeesContact(){
   }
 }
 
-export async function getGroupContact(campId,instructionId){
+export async function getGroupContact(campId){
   try{
      return await (await db.ref(`/kleah/camps/${campId}/groups`).once('value')).val();
 
@@ -412,14 +412,20 @@ export async function getChildrensContanct(){
 
 //attendance
 
-export async function updateAttendance(date,childId,attended,isGroup){
-console.log({isGroup});
+export async function updateAttendance(campId,instructionId,date,childId,attended,isGroup,selectedGroupNumber,isMorning){
+console.log({isGroup,isMorning});
   try{
   let update ={};
 if(isGroup){
-  update[`/kleah/users/childrens/${childId}/attendance/${date}/group`] = attended;
+  console.log(`/kleah/camps/${campId}/groups/${selectedGroupNumber}/childrens/${childId}/attendance/group`)
+  update[`/kleah/camps/${campId}/groups/${selectedGroupNumber}/childrens/${childId}/attendance/${date}/group`] = attended;
 }else{
-  update[`/kleah/users/childrens/${childId}/attendance/${date}/transport`] = attended;
+  if(isMorning){
+    update[`/kleah/users/childrens/${childId}/attendance/${date}/transport/morning`] = attended;
+  }else{
+    update[`/kleah/users/childrens/${childId}/attendance/${date}/transport/noon`] = attended;
+
+  }
 }
 return await db.ref().update(update);
   }catch(err){

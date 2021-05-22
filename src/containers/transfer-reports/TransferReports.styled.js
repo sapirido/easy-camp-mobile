@@ -1,11 +1,12 @@
 import styled from 'styled-components';
 
 export const TrasferReportsContainer = styled.div`
-width:100%;
-height:100%;
-text-align:center;
+display:flex;
+flex-direction:column;
+align-items:center;
+height:fit-content;
+overflow:scroll;
 `
-
 export const ReportContainer = styled.div`
 `
 
@@ -32,10 +33,11 @@ export const DashedRight = styled.div`
 export const PointContainer = styled.div`
 display:flex;
 justify-content:space-between;
-align-item:baseline;
+align-items:baseline;
 `
 export const TextWrapper = styled.div`
 display:flex;
 flex-direction:column;
 justify-content:center;
+height: 100%;
 `
