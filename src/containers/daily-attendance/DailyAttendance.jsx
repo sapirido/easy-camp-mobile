@@ -35,6 +35,7 @@ export default function DailyAttendance({}){
     const [selectedCamp,setSelectedCamp] = useState(null);
     const [selectedStation,setSelectedStation] = useState('ALL');
     const [isMorning,setIsMorning] = useState(true);
+    const [counter,setCounter] = useState(0);
 
     const prevDate = useRef();
 
@@ -53,7 +54,8 @@ export default function DailyAttendance({}){
 
     useEffect(() => {
      if(selectedStation === 'ALL'){
-         setContact(contacts);
+         setContact(contacts.filter(children => !!children.id));
+         
      }else{
          const filteredChildren = rootContacts?.filter(child => child.transport == selectedStation);
          setContact(filteredChildren);
@@ -69,16 +71,13 @@ export default function DailyAttendance({}){
     },[selectedCamp])
 
     useEffect(() => {   
-        console.log('here!!!',contacts);
         if(contacts.length){
-            console.log({contacts})
-            setRootContacts(contacts);
-            setContact(contacts)
+            setRootContacts(contacts.filter(children => !!children.id));
+            setContact(contacts.filter(children => !!children.id));
         }
     },[contacts])
 
     useEffect(()=>{
-        console.log({date,prevDate:prevDate.current})
         if(date !== prevDate.current){
             if(selectedInstruction){
                 const instruction = instructions.find(ins => ins.id === selectedInstruction);
@@ -93,6 +92,34 @@ export default function DailyAttendance({}){
             dispatch(getGroupContacts(instruction.campId,selectedInstruction))
         }
     },[selectedInstruction])
+
+    useEffect(()=> {
+        if(contactList.length){
+            setCounterFromDbData();
+        }
+    },[contactList.length,isMorning])
+
+    function setCounterFromDbData(){
+        let count = 0;
+        contactList.forEach(child => {
+            if(isGroup){
+                if(child?.attendance?.[date]?.group){
+                    count = count + 1;
+                }
+            }else{
+                if(isMorning){
+                    if(child?.attendance?.[date]?.transport?.morning){
+                        count = count + 1;
+                    }
+                }else{
+                    if(child?.attendance?.[date]?.transport?.noon){
+                        count = count + 1;
+                    }
+                }
+            }
+        })
+        setCounter(count);
+    }
 
     function getContactsByRole(){
         switch(activeUser.role){
@@ -129,7 +156,7 @@ export default function DailyAttendance({}){
 
 
     const Counter = () => (
-        <CounterWrapper>{isGroup ? contactList.filter(child => !!child.id && (child?.attended || child.attendance[date]?.group)).length : contactList.filter(child => child.attendance[date]?.transport?.morning).length }</CounterWrapper>
+        <CounterWrapper>{counter}</CounterWrapper>
     )
     
 
@@ -308,17 +335,15 @@ export default function DailyAttendance({}){
         }) : children)
 
         setRootContacts(updatedChildrenList);
+        checked ? setCounter(counter + 1) : counter ? setCounter(counter - 1) : setCounter(0);
    }
 
-   console.log({contactList});
 
    
     return (
      <DailyAttendanceWrapper>
      <HeaderPage  title={'- נוכחות יומית -'} size={1.6} color={SECONDARY}/>
-
      {renderContentByRole()}
-   
      <AttendancesWrapper>
      {contactList?.filter(children => !!children?.id)?.map(children => <AttendanceItem isGroup={isGroup} isEnabledChange={isAllowedToChange(activeUser?.role)} date={date} handleUpdateAttendance={handleUpdateAttendance} isMorning={isMorning} children={children} key={children.id}/>)}
      {isAllowedToChange(activeUser?.role) && contactList.length > 0 && 

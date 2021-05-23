@@ -17,7 +17,7 @@ padding: 0 0 0 15px;
 export const AttendancesWrapper = styled.div`
 width:100%;
 display: grid;
-grid-gap: 20px;
+grid-gap: 15px;
 grid-template-columns: 1fr;
 padding:25px 0;
 overflow:scroll;

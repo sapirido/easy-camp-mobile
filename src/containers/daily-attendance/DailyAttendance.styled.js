@@ -7,6 +7,7 @@ flex-direction:column;
 align-items:center;
 height:fit-content;
 overflow:scroll;
+width: 100%;
 `
 
 export const Wrapper = styled.div`

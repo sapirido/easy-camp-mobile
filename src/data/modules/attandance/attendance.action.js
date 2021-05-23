@@ -10,13 +10,12 @@ export function updateChildrensAttendance(campId,instructionId,date,childrens,is
             let groupNumber;
             const groupList = await getGroupContact(campId);
              Object.values(groupList).forEach((group,index) => {
-                 console.log({index});
                 if(group.instruction?.id === instructionId){
                     groupNumber = index;
                 }
             });
             return childrens.forEach(async (children,index) => {
-                const attended = !!children.attended || children?.attendance[date]?.group;
+                const attended = !!children.attended || !!children?.attendance[date]?.group;
                 await updateChildrenAttendance(campId,instructionId,date,index,!!attended,isGroup,groupNumber);
             })
         }else{
