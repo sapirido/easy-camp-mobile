@@ -11,6 +11,7 @@ import {
   WeeklyFeefbackSVG,
   ImageSVG,
   AttendanceSVG,
+  WaterSVG
 } from '../../common/icons/icons';
 import { PRIMARY, SECONDARY, WHITE } from '../../common/styles/colors';
 import { withRouter } from 'react-router';
@@ -173,6 +174,25 @@ function ECSidebar({ history, collapsed, activeUser, setCollapsed }) {
                 text={'משו״ב שבועי'}
               />
             </Menu.Item>}
+            {
+              (activeUser?.role === PERMISSIONS.INSTRUCTION || activeUser?.role === PERMISSIONS.TRANSPORT_MANAGER) && (
+                <Menu.Item
+              style={selectedKey === '11' ? selectedStyled : unSelectedStyled}
+              key="11"
+              onSelect={handleSelect}
+              onClick={() => handleClicked('/water-report')}
+            >
+              <ContentItem
+                iconComponent={
+                  <WaterSVG
+                    color={selectedKey === '11' ? SECONDARY : WHITE}
+                  />
+                }
+                text={'דו״ח בקרת שתייה'}
+              />
+            </Menu.Item>
+              ) 
+            }
             <DividerWrapper>
               <Divider style={{ 'background-color': 'white' }} />
             </DividerWrapper>
@@ -189,14 +209,14 @@ function ECSidebar({ history, collapsed, activeUser, setCollapsed }) {
               />
             </Menu.Item>
             <Menu.Item
-              style={selectedKey === '7' ? selectedStyled : unSelectedStyled}
+              style={selectedKey === '10' ? selectedStyled : unSelectedStyled}
               onSelect={handleSelect}
               onClick={() => handleClicked('/contact-list')}
-              key="7"
+              key="10"
             >
               <ContentItem
                 iconComponent={
-                  <ContactSVG color={selectedKey === '6' ? SECONDARY : WHITE} />
+                  <ContactSVG color={selectedKey === '10' ? SECONDARY : WHITE} />
                 }
                 text={'צור קשר'}
               />

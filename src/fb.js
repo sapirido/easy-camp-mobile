@@ -165,6 +165,15 @@ export async function getParentByChildId(childId){
   }
 }
 
+export async function getCampById(campId){
+
+  try{
+    return await (await db.ref(`/kleah/camps/${campId}`).once('value')).val();
+  }catch(err){
+    console.error(err);
+  }
+}
+
 export async function updateCampManager(managerId,campId,updatedData){
   try{
     let updates = {};
@@ -428,6 +437,16 @@ if(isGroup){
   }
 }
 return await db.ref().update(update);
+  }catch(err){
+    console.error(err);
+  }
+}
+
+export async function saveChildReport(campId,groupNumber,childId,date,selectedTime,isDrink){
+  try{
+    let update = {};
+    update[`kleah/camps/${campId}/groups/${groupNumber}/childrens/${childId}/reports/${date}/${selectedTime}/isDrinkWater`] = isDrink;
+    return await db.ref().update(update);
   }catch(err){
     console.error(err);
   }

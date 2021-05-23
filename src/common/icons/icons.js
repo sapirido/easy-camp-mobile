@@ -225,3 +225,14 @@ export const AttendanceIconSVG = ({checked}) => (
 </svg>
 
 )
+
+export const WaterSVG = ({color}) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="13.772" height="22.067" viewBox="0 0 13.772 22.067">
+  <g id="Group_519" data-name="Group 519" transform="translate(-279.279 -272.348)">
+    <path id="Path_1829" data-name="Path 1829" d="M279.779,276.087c.007.033.03.162.059.325.6,3.345,2.019,13.379,2.118,15.467a1.144,1.144,0,0,0,.353.894,1.161,1.161,0,0,0,.689.141l5.978-.034a1.424,1.424,0,0,0,1.762-1.537q.9-7.168,1.8-14.337a.653.653,0,0,0-.783-.88l-7.6-.1c-.576-.008-1.181.022-1.415.024-.942.005-1.44-.011-1.685-.02-.444-.017-.811-.042-1.067-.061Z" transform="translate(0 1.001)" fill="none" stroke={color} stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1"/>
+    <path id="Path_1830" data-name="Path 1830" d="M290.879,273l-3.015-.147a1.247,1.247,0,0,0-1.638,1.268q-.973,6.355-1.5,12.769" transform="translate(1.586 0)" fill="none" stroke={color} stroke-linecap="round" stroke-miterlimit="10" stroke-width="1"/>
+    <path id="Path_1831" data-name="Path 1831" d="M281.227,281.039a6.32,6.32,0,0,1,3.9.3,9.485,9.485,0,0,0,1.658.666c1.424.3,2.935-.564,4.338-.187" transform="translate(0.111 2.571)" fill="none" stroke={color} stroke-miterlimit="10" stroke-width="1"/>
+  </g>
+</svg>
+
+)

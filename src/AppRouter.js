@@ -18,6 +18,7 @@ import ECModal from './components/modal/ECModal';
 import Feedbacks from './containers/feedbacks/Feedbacks';
 import Feedback  from './containers/feedbacks/Feedback';
 import DailyAttendance from './containers/daily-attendance/DailyAttendance';
+import DailyReports from './containers/daily-reports/DailyReports';
 
 const { Content } = Layout;
 
@@ -106,6 +107,11 @@ const authRoutes = [
     component: DailyAttendance,
     isExact:true,
     path:'/daily-attendance'
+  },
+  {
+    component:DailyReports,
+    isExact:true,
+    path:'/water-report'
   }
 ];
 

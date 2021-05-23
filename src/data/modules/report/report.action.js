@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import {createPointReport,getAllPointReports, deletePointReport,createParentReport,getAllParentReportById,updatePointStatus} from './report.service';
+import {createPointReport,getAllPointReports, deletePointReport,createParentReport,getAllParentReportById,updatePointStatus,storeWaterChildReport} from './report.service';
 import {SET_REPORT_POINTS,SET_SELCTED_PARENT_REPORTS,SET_SELECTED_REPORT} from './report.types';
 
 export function setPointReports(reports){
@@ -61,5 +61,11 @@ export function setSelectedReport(selectedReport){
     return{
         type:SET_SELECTED_REPORT,
         payload:selectedReport
+    }
+}
+
+export function setWaterChildReport(campId,groupNumber,childId,date,selectedTime,isDrink){
+    return async function _(dispatch){
+        storeWaterChildReport(campId,groupNumber,childId,date,selectedTime,isDrink);
     }
 }
