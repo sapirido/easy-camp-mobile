@@ -364,6 +364,14 @@ export async function getAllTransport(){
   }
 }
 
+export async function checkChildrenReport(campId,groupNumber,childIndex,date){
+try{
+return await (await db.ref(`/kleah/camps/${campId}/groups/${groupNumber}/childrens/${childIndex}/reports/${date}`).once('value')).val();
+}catch(err){
+  console.error(err);
+}
+}
+
 //FEEDBACK
 
 export async function getFeedbacks(){

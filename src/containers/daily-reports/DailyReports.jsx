@@ -24,20 +24,45 @@ export default function DailyReports({}){
     const [selectedTime,setSelectedTime] = useState('9:00');
     const [counter,setCounter] = useState(0)
     const [childrenList,setChildrenList] = useState([]);
+    const [loading,setLoading] = useState(false);
+    const [groupNum,setGroupNum] = useState();
     const prevTime = useRef();
 
     useEffect(()=> {
         dispatch(getGroupContacts(activeUser.campId,activeUser.id));
         dispatch(getCampById(activeUser?.campId));
+
         prevTime.current = selectedTime;
     },[])
+
+    useEffect(() => {
+        let groupNumber;
+        if(selectedCamp && selectedCamp.groups?.length){
+            selectedCamp.groups.forEach((group,index) => {
+                if(group.instruction.id == activeUser?.id){
+                    groupNumber = index;
+                }
+            })
+            setGroupNum(groupNumber);
+        }
+    },[selectedCamp])
 
     useEffect(()=>{
         setChildrenList(contacts.filter(child => !!child.id));
     },[contacts])
 
+    useEffect(() => {
+    setCountByDbData();
+    },[childrenList.length])
+
     useEffect(()=> {
         if(prevTime !== selectedTime && childrenList.length){
+            dispatch(getGroupContacts(activeUser.campId,activeUser.id));
+            setCountByDbData();
+        }
+    },[selectedTime])
+
+    function setCountByDbData(){
             let count = 0;
             const date = moment(Date.now()).format('DD-MM-YYYY');
             childrenList.forEach(child => {
@@ -46,11 +71,10 @@ export default function DailyReports({}){
                 }
             })
             setCounter(count);
-        }
-    },[selectedTime])
+    }
 
     function handleCheckedClicked(checked){
-        checked ? setCounter(counter + 1) : setCounter(counter - 1);
+        checked ? setCounter(counter + 1) : counter ? setCounter(counter - 1) : setCounter(0);
     }
 
     const Counter = ({count}) => (
@@ -60,7 +84,7 @@ export default function DailyReports({}){
     function handleReport(childId,checked){
         const mappedChildrends = childrenList.map(child => child.id == childId ? ({
             ...child,
-            isDrinkedWatter:checked
+            isDrinkWater:checked
         }) : child)
         setChildrenList(mappedChildrends);
     }
@@ -71,26 +95,19 @@ export default function DailyReports({}){
     
     
     async function handleAllReport(){
-        let groupNumber;
-        console.log({selectedCamp});
-        if(selectedCamp && selectedCamp.groups?.length){
-            selectedCamp.groups.forEach((group,index) => {
-                if(group.instruction.id == activeUser?.id){
-                    groupNumber = index;
-                }
-            })
-        }
         const date = moment(Date.now()).format('DD-MM-YYYY');
         if(childrenList.length){
-
-            childrenList.forEach(child => {
-                dispatch(setWaterChildReport(activeUser?.campId, groupNumber, child.id, date, selectedTime, !!child.isDrinkedWatter));
+            childrenList.forEach((child,index) => {
+                let isDrink;
+                if(child?.reports && child.reports[date] && child.reports[date][selectedTime]){
+                    isDrink = child.reports[date][selectedTime].isDrinkWater;
+                }
+                isDrink = !!isDrink || !!child.isDrinkWater;
+                
+                dispatch(setWaterChildReport(activeUser?.campId, groupNum, index, date, selectedTime, isDrink));
             })
-            
         }
     }
-
-    
 
     return(
         <DailyReportContainer>
@@ -99,6 +116,7 @@ export default function DailyReports({}){
           style={{ width: '100%', marginTop: '0.7rem',marginBottom:'0.7rem'}}
           placeholder={'שעת דיווח'}
           onChange={(time) => setSelectedTime(time)}
+          value={selectedTime}
         >
           {timeToReport.map((time) => (
             <Option value={time} key={time}>{time}</Option>
@@ -106,10 +124,10 @@ export default function DailyReports({}){
         </Select>
         <Counter count={counter}/>
         <ChildrenReportWrapper>
-        {childrenList?.filter(children => !!children.id).map(children => <ReportItem date={moment(Date.now()).format('DD-MM-YYYY')} selectedTime={selectedTime} handleChecked={handleCheckedClicked} handleReport={handleReport} children={children}/>)}
+        {childrenList?.filter(children => !!children.id).map((children,index) => <ReportItem groupNumber={groupNum} childIndex={index} key={children.id} date={moment(Date.now()).format('DD-MM-YYYY')} selectedTime={selectedTime} handleChecked={handleCheckedClicked} handleReport={handleReport} children={children}/>)}
         <ButtonWrapper>
             <Wrapper>
-              <ECButton handleClicked={handleAllReport} buttonText={'עדכן נוכחות'} backgroundColor={WHITE} textColor={PRIMARY}/>
+              <ECButton  handleClicked={handleAllReport} buttonText={'עדכן דוח'} backgroundColor={WHITE} textColor={PRIMARY}/>
             </Wrapper>
         </ButtonWrapper>
         </ChildrenReportWrapper>

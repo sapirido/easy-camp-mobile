@@ -1,6 +1,6 @@
 import _ from 'lodash';
-import {createPointReport,getAllPointReports, deletePointReport,createParentReport,getAllParentReportById,updatePointStatus,storeWaterChildReport} from './report.service';
-import {SET_REPORT_POINTS,SET_SELCTED_PARENT_REPORTS,SET_SELECTED_REPORT} from './report.types';
+import {createPointReport,getAllPointReports, deletePointReport,createParentReport,getAllParentReportById,updatePointStatus,storeWaterChildReport,checkDailyReport} from './report.service';
+import {SET_REPORT_POINTS,SET_SELCTED_PARENT_REPORTS,SET_SELECTED_REPORT, SET_WATER_REPORTS} from './report.types';
 
 export function setPointReports(reports){
     return{
@@ -67,5 +67,24 @@ export function setSelectedReport(selectedReport){
 export function setWaterChildReport(campId,groupNumber,childId,date,selectedTime,isDrink){
     return async function _(dispatch){
         storeWaterChildReport(campId,groupNumber,childId,date,selectedTime,isDrink);
+    }
+}
+
+function setWaterReports(report){
+return {
+    type:SET_WATER_REPORTS,
+    payload:report
+}
+}
+
+export function checkWaterReport(campId,groupNumber,childIndex,childId,date,selectedTime){
+    return async function _(dispatch){
+        let checked = false;
+        const dailyReport = await checkDailyReport(campId,groupNumber,childIndex,date);
+        console.log({dailyReport});
+        if(dailyReport && dailyReport[selectedTime]){
+            checked = dailyReport[selectedTime].isDrinkWater;
+        }
+        dispatch(setWaterReports({id:childId,isDrink:checked}));
     }
 }

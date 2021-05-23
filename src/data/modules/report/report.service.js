@@ -1,5 +1,5 @@
 
-import {addReportPoint,getReportPoints, removeReportPoint,getParentReportById,addParentReport,updateTransportPoint,saveChildReport} from '../../../fb';
+import {addReportPoint,getReportPoints, removeReportPoint,getParentReportById,addParentReport,updateTransportPoint,saveChildReport,checkChildrenReport} from '../../../fb';
 
 export async function createPointReport(report){
     try{
@@ -61,4 +61,8 @@ export async function updatePointStatus(transportId,point,report = {},isLast){
 
 export async function storeWaterChildReport(campId,groupNumber,childId,date,selectedTime,isDrink){
     return await saveChildReport(campId,groupNumber,childId,date,selectedTime,isDrink)
+}
+
+export async function checkDailyReport(campId,groupNumber,childIndex,date){
+    return await checkChildrenReport(campId,groupNumber,childIndex,date);
 }

@@ -1,10 +1,19 @@
-import moment from 'moment';
-import React,{useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { AttendanceIconSVG } from '../../common/icons/icons';
-import { AttendanceItemWrapper, TrasnportNumber,Name } from '../../containers/daily-attendance/Attendance.styled';
+import { AttendanceItemWrapper, Name, TrasnportNumber } from '../../containers/daily-attendance/Attendance.styled';
+import { checkWaterReport } from '../../data/modules/report/report.action';
 
-export default function ReportItem({children,handleChecked,handleReport,selectedTime,date}){
+export default function ReportItem({children,handleChecked,handleReport,selectedTime,date,childIndex,groupNumber}){
 
+
+    useEffect(()=> {
+        if(children?.reports && children.id &&children?.reports[date] && children?.reports[date][selectedTime]){
+            setChecked(!!children?.reports[date][selectedTime].isDrinkWater);
+        }else{
+            setChecked(false);
+        }
+    },[selectedTime])
     const [checked,setChecked]  = useState(false);
     function handleClicked(){
         handleChecked(!checked);
@@ -12,11 +21,6 @@ export default function ReportItem({children,handleChecked,handleReport,selected
         setChecked(!checked);
     }
 
-    useEffect(()=> {
-        if(children?.reports && children.id &&children?.reports[date] && children?.reports[date][selectedTime]){
-            setChecked(!!children?.reports[date][selectedTime].isDrinkWater);
-        }
-    },[])
 
     
 

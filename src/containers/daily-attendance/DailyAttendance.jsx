@@ -321,11 +321,13 @@ export default function DailyAttendance({}){
    
      <AttendancesWrapper>
      {contactList?.filter(children => !!children?.id)?.map(children => <AttendanceItem isGroup={isGroup} isEnabledChange={isAllowedToChange(activeUser?.role)} date={date} handleUpdateAttendance={handleUpdateAttendance} isMorning={isMorning} children={children} key={children.id}/>)}
-     {isAllowedToChange(activeUser?.role) && contactList.length > 0 && <ButtonWrapper>
+     {isAllowedToChange(activeUser?.role) && contactList.length > 0 && 
+    <ButtonWrapper>
      <Wrapper>
     <ECButton handleClicked={updateAttendance} buttonText={'עדכן נוכחות'} backgroundColor={WHITE} textColor={PRIMARY}/>
     </Wrapper>
-    </ButtonWrapper>}
+    </ButtonWrapper>
+}
      </AttendancesWrapper>
      </DailyAttendanceWrapper>
     )
