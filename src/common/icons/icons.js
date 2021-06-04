@@ -236,3 +236,15 @@ export const WaterSVG = ({color}) => (
 </svg>
 
 )
+
+export const SelfTransportSVG = ({color}) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="15.357" height="18.85" viewBox="0 0 15.357 18.85">
+  <g id="Component_36_1" data-name="Component 36 – 1" transform="translate(0.507 0.499)">
+    <path id="Path_1961" data-name="Path 1961" d="M282.628,125.358l.091-6.146a1.713,1.713,0,0,1,.421-1.345,1.694,1.694,0,0,1,1.092-.256l5.158-.022a6.244,6.244,0,0,1,5.449,2.085,5.8,5.8,0,0,1,1.948,2.5,5.621,5.621,0,0,1,.167,1.505q.093,5.013-.183,10.024a2.048,2.048,0,0,1-.366,1.279,2.083,2.083,0,0,1-1.644.452l-10.853-.19a.909.909,0,0,1-1.095-1.108l-.083-6.122" transform="translate(-282.628 -117.588)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+    <path id="Path_1962" data-name="Path 1962" d="M292.6,118.214l-.021,2.653a.532.532,0,0,0,.644.666l2.677-.016" transform="translate(-282.465 -117.578)" fill="none" stroke={color} stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+    <path id="Path_1963" data-name="Path 1963" d="M284.806,119.514a47.941,47.941,0,0,1,5.128-.076" transform="translate(-282.592 -117.558)" fill="none" stroke={color} stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+    <path id="Path_1964" data-name="Path 1964" d="M284.806,121.514a47.943,47.943,0,0,1,5.128-.076" transform="translate(-282.592 -117.526)" fill="none" stroke={color} stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+  </g>
+</svg>
+
+)

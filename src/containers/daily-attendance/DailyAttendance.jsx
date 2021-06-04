@@ -6,7 +6,7 @@ import HeaderPage from '../../components/header-page/HeaderPage';
 import Switch from "react-switch";
 import moment from 'moment';
 import { SearchContainer } from '../../common/styles/common.styled';
-import { useDispatch, useSelector } from 'react-redux';
+import { batch, useDispatch, useSelector } from 'react-redux';
 import { PERMISSIONS } from '../../common/constants';
 import { Input,DatePicker } from 'antd';
 import { getCampContacts, getGroupContacts, getTransportContacts } from '../../data/modules/contact/contact.actions';
@@ -53,25 +53,22 @@ export default function DailyAttendance({}){
     },[isGroup])
 
     useEffect(() => {
-     if(selectedStation === 'ALL'){
+     if ( selectedStation === 'ALL' ) {
          setContact(contacts.filter(children => !!children.id));
          
-     }else{
+     } else {
          const filteredChildren = rootContacts?.filter(child => child.transport == selectedStation);
          setContact(filteredChildren);
      }
-
-     return () => {
-         dispatch(setCounter)
-     }
-
     },[selectedStation])
 
     useEffect(() => {
         if(selectedCamp){
-            setSelectedInstruction(null);
-            setContact([]);
-            dispatch(getInstructionCamp(selectedCamp));
+            batch(() => {
+                setSelectedInstruction(null);
+                setContact([]);
+                dispatch(getInstructionCamp(selectedCamp));
+            })
         }
     },[selectedCamp])
 

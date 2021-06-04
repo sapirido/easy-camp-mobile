@@ -19,6 +19,7 @@ import Feedbacks from './containers/feedbacks/Feedbacks';
 import Feedback  from './containers/feedbacks/Feedback';
 import DailyAttendance from './containers/daily-attendance/DailyAttendance';
 import DailyReports from './containers/daily-reports/DailyReports';
+import SelfTransport from './containers/self-transport/SelfTransport';
 
 const { Content } = Layout;
 
@@ -112,6 +113,11 @@ const authRoutes = [
     component:DailyReports,
     isExact:true,
     path:'/water-report'
+  },
+  {
+    component:SelfTransport,
+    isExact:true,
+    path:'/self-transport'
   }
 ];
 

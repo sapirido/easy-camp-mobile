@@ -11,7 +11,8 @@ import {
   WeeklyFeefbackSVG,
   ImageSVG,
   AttendanceSVG,
-  WaterSVG
+  WaterSVG,
+  SelfTranportSVG
 } from '../../common/icons/icons';
 import { PRIMARY, SECONDARY, WHITE } from '../../common/styles/colors';
 import { withRouter } from 'react-router';
@@ -222,6 +223,23 @@ function ECSidebar({ history, collapsed, activeUser, setCollapsed }) {
                 text={'צור קשר'}
               />
             </Menu.Item>
+            {(activeUser?.role === PERMISSIONS.ADMIN || activeUser?.role === PERMISSIONS.GENERAL_MANAGER) && (
+              <React.Fragment>
+                <Menu.Item
+                key="9"
+                onSelect={handleSelect}
+                onClick={() => handleClicked('/self-transport')}
+                style={selectedKey === '9' ? selectedStyled : unSelectedStyled}
+                >
+                <ContentItem
+                 iconComponent={
+                   <SelfTranportSVG color={selectedKey === '9' ? SECONDARY : WHITE}/>
+                 }
+                 text={'הגעה ואיסוף עצמי'}
+                 />
+                </Menu.Item>
+              </React.Fragment>
+            )}
           </React.Fragment>
         {activeUser?.role === PERMISSIONS.INSTRUCTION && (
           <Menu.Item

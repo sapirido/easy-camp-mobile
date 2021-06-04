@@ -12,10 +12,6 @@ export function updateChildrensAttendance(campId,instructionId,date,childrens,is
                     groupNumber = index;
                 }
             });
-            // return childrens.forEach(async (children,index) => {
-            //     const attended = !!children.attended || !!children?.attendance[date]?.group;
-            //     await updateChildrenAttendance(campId,instructionId,date,index,!!attended,isGroup,groupNumber);
-            // })
             let index = 0;
             for(let child of childrens){
                 const attended = !!child.attended || !!child?.attendance?.[date]?.group;
