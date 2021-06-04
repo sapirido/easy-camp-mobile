@@ -1,4 +1,5 @@
 import {getAllContact,getGroupContact,getCampList,getChildrensContanct,getEmployeesContact} from '../../../fb';
+import { isEmpty } from 'lodash';
 
 export async function getEmployeesContactList(){
         const employeeList = await getEmployeesContact()
@@ -10,8 +11,8 @@ export async function getEmployeesContactList(){
 
 export async function getGroupContactList(campId,instructionId){
     const groupList = await getGroupContact(campId);
-    console.log({groupList})
-    const selectedGroup = Object.values(groupList).filter(Boolean).find(group => group.instruction?.id === instructionId);
+    console.log({groupList});
+    const selectedGroup = !isEmpty(groupList) && !isEmpty(Object.values(groupList).filter(Boolean)) && Object.values(groupList).filter(Boolean).find(group => group.instruction?.id === instructionId);
     if(selectedGroup?.childrens){
         return Object.values(selectedGroup.childrens);
     } 

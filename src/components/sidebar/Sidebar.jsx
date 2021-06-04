@@ -63,6 +63,7 @@ function ECSidebar({ history, collapsed, activeUser, setCollapsed }) {
     localStorage.removeItem('activeUser');
     localStorage.removeItem('expired');
     dispatch(setActiveUser(null));
+    setCollapsed(true);
     history.push('/login');
   }
   const SideBarHeader = () => (

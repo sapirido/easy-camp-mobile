@@ -61,11 +61,16 @@ export default function DailyAttendance({}){
          setContact(filteredChildren);
      }
 
+     return () => {
+         dispatch(setCounter)
+     }
+
     },[selectedStation])
 
     useEffect(() => {
         if(selectedCamp){
             setSelectedInstruction(null);
+            setContact([]);
             dispatch(getInstructionCamp(selectedCamp));
         }
     },[selectedCamp])
@@ -78,16 +83,18 @@ export default function DailyAttendance({}){
     },[contacts])
 
     useEffect(()=>{
-        if(date !== prevDate.current){
-            if(selectedInstruction){
-                const instruction = instructions.find(ins => ins.id === selectedInstruction);
-                dispatch(getGroupContacts(instruction.campId,selectedInstruction))
+        let counter = 0;
+            for(let children of contactList){
+                if(children?.attendance && children?.attendance[date]?.group){
+                    counter = counter + 1;
+                }
             }
-        }
+        setCounter(counter);
     },[date])
 
     useEffect(() => {
         if(selectedInstruction){
+            console.log({instructions});
             const instruction = instructions.find(ins => ins.id === selectedInstruction);
             dispatch(getGroupContacts(instruction.campId,selectedInstruction))
         }
@@ -130,6 +137,7 @@ export default function DailyAttendance({}){
                 isGroup ?  dispatch(getGroupContacts(activeUser.campId,activeUser.id)) : dispatch(getTransportContacts(activeUser.transports));
                 break;
             case PERMISSIONS.CAMP_MANAGER:
+                console.log({activeUser});
                 dispatch(getGroupContacts(activeUser.campId,selectedInstruction));
                 break;
             case PERMISSIONS.GENERAL_MANAGER:
@@ -345,7 +353,7 @@ export default function DailyAttendance({}){
      <HeaderPage  title={'- נוכחות יומית -'} size={1.6} color={SECONDARY}/>
      {renderContentByRole()}
      <AttendancesWrapper>
-     {contactList?.filter(children => !!children?.id)?.map(children => <AttendanceItem isGroup={isGroup} isEnabledChange={isAllowedToChange(activeUser?.role)} date={date} handleUpdateAttendance={handleUpdateAttendance} isMorning={isMorning} children={children} key={children.id}/>)}
+     {contactList?.map(children => <AttendanceItem isGroup={isGroup} isEnabledChange={isAllowedToChange(activeUser?.role)} date={date} handleUpdateAttendance={handleUpdateAttendance} isMorning={isMorning} children={children} key={children.id}/>)}
      {isAllowedToChange(activeUser?.role) && contactList.length > 0 && 
     <ButtonWrapper>
      <Wrapper>

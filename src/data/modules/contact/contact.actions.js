@@ -16,6 +16,7 @@ export function getEmployeesContacts(){
 }
 
 export function getGroupContacts(campId,instructionId){
+    console.log({campId,instructionId});
     return async function _(dispatch){
         const contacts = await getGroupContactList(campId,instructionId);
         dispatch(setContacts(contacts));

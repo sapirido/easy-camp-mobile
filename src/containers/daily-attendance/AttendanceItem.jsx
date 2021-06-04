@@ -1,11 +1,11 @@
 import React,{useEffect, useState} from 'react';
 import { AttendanceItemWrapper,Name,TrasnportNumber } from './Attendance.styled';
 import { AttendanceIconSVG} from '../../common/icons/icons';
+import _, { isElement } from 'lodash';
 
 
 export default function AttendanceItem({children,date,handleUpdateAttendance,isGroup,isMorning,isEnabledChange}){
 const [checked,setChecked]  = useState(false);
-console.log({date,isGroup,isMorning});
 useEffect(() => {
 if(isGroup){
   children?.attendance && children?.attendance[date]?.group ? setChecked(true) :setChecked(false);
@@ -16,7 +16,7 @@ if(isGroup){
     children?.attendance && children?.attendance[date]?.transport?.noon ? setChecked(true) : setChecked(false);
   }
 }
-},[isGroup])
+},[isGroup,date])
 
 function handleClicked(){
   handleUpdateAttendance(children.id,!checked);

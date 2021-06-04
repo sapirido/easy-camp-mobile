@@ -8,7 +8,6 @@ const defaultState = {
 }
 
 export default function reportReducer(state = defaultState,action){
-    console.log({action,state});
     switch(action.type){
         case SET_REPORT_POINTS:
             return {...state,reportPoints:action.payload}

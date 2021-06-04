@@ -398,6 +398,7 @@ export async function getEmployeesContact(){
 
 export async function getGroupContact(campId){
   try{
+    console.log({path:`/kleah/camps/${campId}/groups`})
      return await (await db.ref(`/kleah/camps/${campId}/groups`).once('value')).val();
 
   } catch(err){
