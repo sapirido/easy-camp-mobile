@@ -1,5 +1,5 @@
 
-import {addReportPoint,getReportPoints, removeReportPoint,getParentReportById,addParentReport,updateTransportPoint,saveChildReport,checkChildrenReport,getChildrensContanct} from '../../../fb';
+import {addReportPoint,getReportPoints, removeReportPoint,getParentReportById,addParentReport,updateTransportPoint,saveChildReport,checkChildrenReport,getChildrensContanct,updateChildrenTransport} from '../../../fb';
 
 export async function createPointReport(report){
     try{
@@ -70,4 +70,8 @@ export async function checkDailyReport(campId,groupNumber,childIndex,date){
 export async function getChildrens(){
    const childrens = await getChildrensContanct();
    return Object.values(childrens);
+}
+
+export async function updateChildTransport(child,date,type){
+    return await updateChildrenTransport(child,date,type);
 }

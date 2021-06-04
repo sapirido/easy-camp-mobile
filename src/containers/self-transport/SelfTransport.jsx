@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import {DatePicker,Select} from 'antd';
+import { DatePicker } from 'antd';
 import moment from 'moment';
-import styled from 'styled-components';
-import HeaderPage from '../../components/header-page/HeaderPage';
-import { PRIMARY, SECONDARY } from '../../common/styles/colors';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllContacts } from '../../data/modules/contact/contact.actions';
 import Switch from "react-switch";
-import {IconStyled } from '../daily-attendance/DailyAttendance.styled'
+import styled from 'styled-components';
+import { PRIMARY, SECONDARY, WHITE } from '../../common/styles/colors';
+import HeaderPage from '../../components/header-page/HeaderPage';
+import { getAllChildrens,updateChildTransportArrived,updatedChildTransportCollect} from '../../data/modules/report/report.action';
+import { IconStyled, Wrapper } from '../daily-attendance/DailyAttendance.styled';
 import SelfTransportItem from './SelfTrasportItem';
-import { getAllChildrens } from '../../data/modules/report/report.action';
+import { ButtonWrapper } from '../daily-attendance/Attendance.styled';
+import ECButton from '../../components/button/ECButton';
+
 
 export default function SelfTransport({}){
 
@@ -39,12 +41,34 @@ export default function SelfTransport({}){
     } 
 
     function handleReport(id,checked){
-
-        const updatedChildrenList = childrenList.map(children => children.id === id ? ({
-            ...children,
-            attended: checked
-        }) : children)
+        let updatedChildrens;
+        if(isArrived){
+            updatedChildrens = childrenList.map(child => child.id === id ? ({
+                ...child,
+                collect: checked
+            }) : child)
+        }else{
+            updatedChildrens = childrenList.map(child => child.id === id ? ({
+                ...child,
+                arrived: checked
+            }) : child)
+        }
+        console.log({updatedChildrens});
+        setChildrenList(updatedChildrens);
   
+   }
+
+  function handleAllReport(){
+    for(let child of childrenList){
+        if(child.arrived){
+            console.log({child});
+             dispatch(updateChildTransportArrived(child,date));
+        }
+        if(child.collect){
+            console.log({child});
+             dispatch(updatedChildTransportCollect(child,date));
+        }
+    }
    }
 
 
@@ -77,6 +101,11 @@ console.log({childrenList})
       />
       <ListWrapper>
         {childrenList?.filter(child => !!child.id).map(children => <SelfTransportItem key={children.id} children={children} date={date} handleUpdateReport={handleReport} isArrived={isArrived}/>) }
+        <ButtonWrapper>
+        <Wrapper>
+          <ECButton  handleClicked={handleAllReport} buttonText={'עדכן דוח'} backgroundColor={WHITE} textColor={PRIMARY}/>
+        </Wrapper>
+    </ButtonWrapper>
       </ListWrapper>
     </SelfTransportWrapper>
     )

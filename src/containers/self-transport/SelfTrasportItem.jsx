@@ -7,18 +7,17 @@ export default function({children,date,handleUpdateReport,isArrived}){
 
     useEffect(() => {
         if(isArrived){
-            children?.selfTransports && children?.selfTransports?.[date]?.noon ? setChecked(true) : setChecked(false)
+            children?.selfTransports && children?.selfTransports?.[date]?.collect ? setChecked(true) : setChecked(false)
         }else{
-            children?.selfTransports && children?.selfTransports?.[date]?.morning ? setChecked(true) : setChecked(false)
+            children?.selfTransports && children?.selfTransports?.[date]?.arrived ? setChecked(true) : setChecked(false)
         }
-    },[])
+    },[isArrived])
 
     function handleClicked(){
         handleUpdateReport(children.id,!checked);
         setChecked(!checked);
       }
 
-      console.log({children})
 
     return(
         <AttendanceItemWrapper>

@@ -345,6 +345,20 @@ export async function getParentReportById(instructionId){
   }
 }
 
+export async function updateChildrenTransport(child,date,type){
+  try{
+    let update = {};
+    if(type === 'collect'){
+      update[`/kleah/users/childrens/${child.id}/selfTransports/${date}/collect`] = child.collect;
+    }else{
+      update[`/kleah/users/childrens/${child.id}/selfTransports/${date}/arrived`] = child.arrived;
+    }
+    return await db.ref().update(update);
+  }catch(err){
+    console.error(err);
+  }
+}
+
 
 //MASTER_CAMP
 

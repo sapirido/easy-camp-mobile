@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import {createPointReport,getAllPointReports, deletePointReport,createParentReport,getAllParentReportById,updatePointStatus,storeWaterChildReport,checkDailyReport,getChildrens} from './report.service';
+import {createPointReport,getAllPointReports, deletePointReport,createParentReport,getAllParentReportById,updatePointStatus,storeWaterChildReport,checkDailyReport,getChildrens,updateChildTransport} from './report.service';
 import {SET_REPORT_POINTS,SET_SELCTED_PARENT_REPORTS,SET_SELECTED_REPORT, SET_WATER_REPORTS,SET_ALL_CHILDRENS} from './report.types';
 
 export function setPointReports(reports){
@@ -100,5 +100,17 @@ export function getAllChildrens(){
     return async function _(dispatch){
         const allChildrens = await getChildrens();
         dispatch(setAllChildrens(allChildrens));
+    }
+}
+
+export function updatedChildTransportCollect(children,date){
+ return async function _(){
+     await updateChildTransport(children,date,'collect');
+ }
+}
+
+export function updateChildTransportArrived(children,date){
+    return async function _(){
+        await updateChildTransport(children,date,'arrived');
     }
 }
