@@ -1,5 +1,5 @@
+import { getAllContactList, getCampContactList, getEmployeesContactList, getGroupContactList } from './contact.service';
 import { SET_CONTACTS } from './contact.types';
-import {getTransportContactList,getAllContactList,getCampContactList,getEmployeesContactList,getGroupContactList} from './contact.service';
 
 function setContacts(contacts){
 return {

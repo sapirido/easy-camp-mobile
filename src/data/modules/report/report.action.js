@@ -1,6 +1,6 @@
 import _ from 'lodash';
-import {createPointReport,getAllPointReports, deletePointReport,createParentReport,getAllParentReportById,updatePointStatus,storeWaterChildReport,checkDailyReport} from './report.service';
-import {SET_REPORT_POINTS,SET_SELCTED_PARENT_REPORTS,SET_SELECTED_REPORT, SET_WATER_REPORTS} from './report.types';
+import {createPointReport,getAllPointReports, deletePointReport,createParentReport,getAllParentReportById,updatePointStatus,storeWaterChildReport,checkDailyReport,getChildrens} from './report.service';
+import {SET_REPORT_POINTS,SET_SELCTED_PARENT_REPORTS,SET_SELECTED_REPORT, SET_WATER_REPORTS,SET_ALL_CHILDRENS} from './report.types';
 
 export function setPointReports(reports){
     return{
@@ -86,5 +86,19 @@ export function checkWaterReport(campId,groupNumber,childIndex,childId,date,sele
             checked = dailyReport[selectedTime].isDrinkWater;
         }
         dispatch(setWaterReports({id:childId,isDrink:checked}));
+    }
+}
+
+function setAllChildrens(childrens){
+    return {
+        type:SET_ALL_CHILDRENS,
+        payload:childrens
+    }
+}
+
+export function getAllChildrens(){
+    return async function _(dispatch){
+        const allChildrens = await getChildrens();
+        dispatch(setAllChildrens(allChildrens));
     }
 }

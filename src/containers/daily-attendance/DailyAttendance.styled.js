@@ -30,3 +30,15 @@ align-items: center;
 justify-content: center;
 margin-top:0.7rem;
 `
+
+export const IconStyled = styled.div`
+color:${WHITE};
+display:flex;
+text-align:center;
+align-items:center;
+justify-content:${({justifyContent}) => justifyContent ? justifyContent : 'center'};
+padding-top:0.4rem;
+font-size:1rem;
+font-weight:600;
+width:${({width}) => width ? width : '3rem'};
+`

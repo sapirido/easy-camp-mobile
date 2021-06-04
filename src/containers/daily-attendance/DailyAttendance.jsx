@@ -1,6 +1,6 @@
 import React, { useEffect, useState,useRef } from 'react';
 import styled from 'styled-components';
-import {DailyAttendanceWrapper,Wrapper,CounterWrapper} from './DailyAttendance.styled'
+import {DailyAttendanceWrapper,Wrapper,CounterWrapper,IconStyled} from './DailyAttendance.styled'
 import { PRIMARY, SECONDARY,WHITE } from '../../common/styles/colors';
 import HeaderPage from '../../components/header-page/HeaderPage';
 import Switch from "react-switch";
@@ -363,23 +363,4 @@ export default function DailyAttendance({}){
     )
 }
 
-const SearchWrapper = styled(Search)`
-width: 100%;
-min-width: 100%;
-`
 
-const IconStyled = styled.div`
-color:${WHITE};
-display:flex;
-text-align:center;
-align-items:center;
-justify-content:${({justifyContent}) => justifyContent ? justifyContent : 'center'};
-padding-top:0.4rem;
-font-size:1rem;
-font-weight:600;
-width:${({width}) => width ? width : '3rem'};
-`
-
-// <SearchContainer>
-// <SearchWrapper onChange={e => searchHandler(e.target.value)} placeholder={'חיפוש'} onSearch={searchHandler}/>
-// </SearchContainer>
