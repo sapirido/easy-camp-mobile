@@ -142,8 +142,6 @@ function AppRouter({ history }) {
     setCollapsed(!collapsed);
   }
 
-  console.log({history:history.location})
-
   const notAllowedPath = ['/login','/register'];
   const routes = activeUser ? authRoutes : [];
   const { type, title, isVisible, onCancel, content, onOk } = modalState;

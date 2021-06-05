@@ -11,7 +11,7 @@ import { PERMISSIONS } from '../../common/constants';
 import { Input,DatePicker } from 'antd';
 import { getCampContacts, getGroupContacts, getTransportContacts } from '../../data/modules/contact/contact.actions';
 import { getAllCamps, getInstructionCamp } from '../../data/modules/camp/camp.action';
-import { AttendancesWrapper,ButtonWrapper } from './Attendance.styled';
+import { AttendancesWrapper,ButtonWrapper,SwitcherWrapper } from './Attendance.styled';
 import AttendanceItem from './AttendanceItem';
 import ECButton from '../../components/button/ECButton';
 import {updateChildrensAttendance} from '../../data/modules/attandance/attendance.action'
@@ -192,8 +192,9 @@ export default function DailyAttendance({}){
                     color={PRIMARY}
                     style={{ paddingTop: '1rem', paddingBottom: '0.7rem' }}
                   />
+                  <SwitcherWrapper>
                     <Switch 
-                    width={167}
+                    width={150}
                     height={32}
                     onChange={handleChecked}
                     checked={isGroup} 
@@ -203,7 +204,18 @@ export default function DailyAttendance({}){
                     uncheckedIcon={<Icon justifyContent={'left'} width={'3rem'} label={'הסעה'}/>} 
                     checkedIcon={<Icon label={'קבוצה'}/>}
                     />
-                
+                    <Switch 
+                    width={150}
+                    height={32}
+                    onChange={() => setIsMorning(!isMorning)}
+                    checked={isMorning} 
+                    offColor={PRIMARY} 
+                    onColor={PRIMARY}
+                    borderRadius={16} 
+                    uncheckedIcon={<Icon justifyContent={'left'} width={'3rem'} label={'צהריים'}/>} 
+                    checkedIcon={<Icon label={'בוקר'}/>}
+                    />
+                    </SwitcherWrapper>
                   {!isGroup && 
                     <>
                     <Select
@@ -216,17 +228,7 @@ export default function DailyAttendance({}){
                     <Option value={station} key={station}>תחנה מס׳ {station}</Option>
                   ))}
                 </Select>
-                <Switch 
-                width={167}
-                height={32}
-                onChange={() => setIsMorning(!isMorning)}
-                checked={isMorning} 
-                offColor={PRIMARY} 
-                onColor={PRIMARY}
-                borderRadius={16} 
-                uncheckedIcon={<Icon justifyContent={'left'} width={'3rem'} label={'צהריים'}/>} 
-                checkedIcon={<Icon label={'בוקר'}/>}
-                />
+              
                 </>
             }
                  
@@ -344,13 +346,11 @@ export default function DailyAttendance({}){
    }
 
 
-   
+   console.log({contactList});
     return (
      <DailyAttendanceWrapper>
      <HeaderPage  title={'- נוכחות יומית -'} size={1.6} color={SECONDARY}/>
      {renderContentByRole()}
-     <AttendancesWrapper>
-     {contactList?.map(children => <AttendanceItem isGroup={isGroup} isEnabledChange={isAllowedToChange(activeUser?.role)} date={date} handleUpdateAttendance={handleUpdateAttendance} isMorning={isMorning} children={children} key={children.id}/>)}
      {isAllowedToChange(activeUser?.role) && contactList.length > 0 && 
     <ButtonWrapper>
      <Wrapper>
@@ -358,6 +358,8 @@ export default function DailyAttendance({}){
     </Wrapper>
     </ButtonWrapper>
 }
+     <AttendancesWrapper>
+     {contactList?.map(children => <AttendanceItem isGroup={isGroup} isEnabledChange={isAllowedToChange(activeUser?.role)} date={date} handleUpdateAttendance={handleUpdateAttendance} isMorning={isMorning} children={children} key={children.id}/>)}
      </AttendancesWrapper>
      </DailyAttendanceWrapper>
     )

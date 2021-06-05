@@ -64,6 +64,7 @@ function ECSidebar({ history, collapsed, activeUser, setCollapsed }) {
     localStorage.removeItem('activeUser');
     localStorage.removeItem('expired');
     dispatch(setActiveUser(null));
+    setSelectedKey('0');
     setCollapsed(true);
     history.push('/login');
   }

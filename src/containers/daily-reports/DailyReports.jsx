@@ -123,13 +123,14 @@ export default function DailyReports({}){
           ))}
         </Select>
         <Counter count={counter}/>
-        <ChildrenReportWrapper>
-        {childrenList?.filter(children => !!children.id).map((children,index) => <ReportItem groupNumber={groupNum} childIndex={index} key={children.id} date={moment(Date.now()).format('DD-MM-YYYY')} selectedTime={selectedTime} handleChecked={handleCheckedClicked} handleReport={handleReport} children={children}/>)}
         <ButtonWrapper>
             <Wrapper>
               <ECButton  handleClicked={handleAllReport} buttonText={'עדכן דוח'} backgroundColor={WHITE} textColor={PRIMARY}/>
             </Wrapper>
         </ButtonWrapper>
+        <ChildrenReportWrapper>
+        {childrenList?.filter(children => !!children.id).map((children,index) => <ReportItem groupNumber={groupNum} childIndex={index} key={children.id} date={moment(Date.now()).format('DD-MM-YYYY')} selectedTime={selectedTime} handleChecked={handleCheckedClicked} handleReport={handleReport} children={children}/>)}
+
         </ChildrenReportWrapper>
         </DailyReportContainer>
     )

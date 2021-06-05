@@ -53,7 +53,6 @@ export default function Home({ history }) {
   }, []);
 
   useEffect(() => {
-    console.log({ taskNum: selectedDailyCalander?.tasks?.length });
     if (!!selectedCampId && currentDay) {
       dispatch(getDailyByDate(selectedCampId, currentDay));
       return;

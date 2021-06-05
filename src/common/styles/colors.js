@@ -7,3 +7,4 @@ export const BLUE_CARD = '#023047';
 export const RED_CARD = '#A63F65';
 export const ORANGE_CARD = '#FB8500';
 export const YELLOW_CARD = '#FFB703';
+export const ERROR = '#ff0033';

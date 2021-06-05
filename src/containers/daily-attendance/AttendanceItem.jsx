@@ -22,13 +22,17 @@ function handleClicked(){
   handleUpdateAttendance(children.id,!checked);
   setChecked(!checked);
 }
+
+const isArrived = !isGroup && isMorning && children?.selfTransports?.[date]?.arrived;
+const isCollect = !isGroup && !isMorning && children?.selfTransports?.[date]?.collect;
+const isNotNeedToCome = !isGroup && !isMorning && !children?.selfTransports?.[date]?.arrived && !children?.attendance?.[date]?.transport?.morning
 return(
-    <AttendanceItemWrapper>
+    <AttendanceItemWrapper disabled={isArrived || isCollect} isNotNeedToCome={isNotNeedToCome}>
     <TrasnportNumber>תחנה מס׳ {children?.transport || 'לא קיים'}</TrasnportNumber>
     <Name>
     {`${children.childrenName} ${children.familyName}`}
     </Name>
-    <span onClick={() => isEnabledChange ?  handleClicked() : {}}>
+    <span onClick={() => isEnabledChange && !(isArrived || isCollect || isNotNeedToCome) ?  handleClicked() : {}}>
     <AttendanceIconSVG checked={checked} />
     </span>
     </AttendanceItemWrapper>
