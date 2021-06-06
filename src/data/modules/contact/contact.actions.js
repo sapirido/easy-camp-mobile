@@ -1,4 +1,4 @@
-import { getAllContactList, getCampContactList, getEmployeesContactList, getGroupContactList } from './contact.service';
+import { getAllContactList, getCampContactList, getEmployeesContactList, getGroupContactList, getCampChilds } from './contact.service';
 import { SET_CONTACTS } from './contact.types';
 
 function setContacts(contacts){
@@ -41,5 +41,12 @@ export function getAllContacts(){
     return async function _(dispatch){
         const contacts = await getAllContactList();
         dispatch(setContacts(contacts));
+    }
+}
+
+export function getCampChildren(campId){
+    return async function _(dispatch){
+        const childrens = await getCampChilds(campId);
+        dispatch(setContacts(childrens));
     }
 }

@@ -4,7 +4,7 @@ import { AttendanceIconSVG } from '../../common/icons/icons';
 import { AttendanceItemWrapper, Name, TrasnportNumber } from '../../containers/daily-attendance/Attendance.styled';
 import { checkWaterReport } from '../../data/modules/report/report.action';
 
-export default function ReportItem({children,handleChecked,handleReport,selectedTime,date,childIndex,groupNumber}){
+export default function ReportItem({children,handleChecked,handleReport,selectedTime,date,childIndex,groupNumber,isAllowedToEdit}){
 
 
     useEffect(()=> {
@@ -30,7 +30,7 @@ export default function ReportItem({children,handleChecked,handleReport,selected
         <Name>
         {`${children.childrenName} ${children.familyName}`}
         </Name>
-        <span onClick={() => handleClicked()}>
+        <span onClick={() => isAllowedToEdit ?  handleClicked() : {}}>
         <AttendanceIconSVG checked={checked} />
         </span>
         </AttendanceItemWrapper>

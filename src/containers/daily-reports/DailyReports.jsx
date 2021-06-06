@@ -5,13 +5,14 @@ import { PRIMARY, SECONDARY, WHITE } from '../../common/styles/colors';
 import HeaderPage from '../../components/header-page/HeaderPage';
 import { DailyReportContainer, ChildrenReportWrapper } from './DailyReport.styled';
 import { Select } from 'antd';
-import { getGroupContacts } from '../../data/modules/contact/contact.actions';
+import { getCampContacts, getGroupContacts,getCampChildren } from '../../data/modules/contact/contact.actions';
 import ReportItem from '../../components/report-item/ReportItem';
 import { CounterWrapper, Wrapper } from '../daily-attendance/DailyAttendance.styled';
 import { ButtonWrapper } from '../daily-attendance/Attendance.styled';
 import ECButton from '../../components/button/ECButton';
 import { getAllCamps, getCampById } from '../../data/modules/camp/camp.action';
 import { setWaterChildReport } from '../../data/modules/report/report.action';
+import { PERMISSIONS } from '../../common/constants';
 
 const { Option } = Select;
 
@@ -20,17 +21,24 @@ export default function DailyReports({}){
     const dispatch = useDispatch();
     const {activeUser} = useSelector(({auth}) => auth);
     const { contacts } = useSelector(({contact}) => contact);
-    const { selectedCamp } = useSelector(({camp}) => camp );
+    const { selectedCamp,camps } = useSelector(({camp}) => camp );
     const [selectedTime,setSelectedTime] = useState('9:00');
     const [counter,setCounter] = useState(0)
     const [childrenList,setChildrenList] = useState([]);
     const [loading,setLoading] = useState(false);
     const [groupNum,setGroupNum] = useState();
+    const [campSelected,setCampSelected] = useState(null);
     const prevTime = useRef();
 
     useEffect(()=> {
-        dispatch(getGroupContacts(activeUser.campId,activeUser.id));
-        dispatch(getCampById(activeUser?.campId));
+        if(activeUser?.role === PERMISSIONS.TRANSPORT_MANAGER || activeUser?.role === PERMISSIONS.INSTRUCTION){
+            dispatch(getGroupContacts(activeUser.campId,activeUser.id));
+            dispatch(getCampById(activeUser?.campId));
+        } else if(activeUser?.role === PERMISSIONS.CAMP_MANAGER){
+            dispatch(getCampContacts(activeUser?.campId));
+        }else{
+            dispatch(getAllCamps());
+        }
 
         prevTime.current = selectedTime;
     },[])
@@ -46,6 +54,13 @@ export default function DailyReports({}){
             setGroupNum(groupNumber);
         }
     },[selectedCamp])
+
+    useEffect(() => {
+        if(campSelected){
+            dispatch(getCampChildren(campSelected));
+        }
+    }
+    ,[campSelected])
 
     useEffect(()=>{
         setChildrenList(contacts.filter(child => !!child.id));
@@ -109,9 +124,22 @@ export default function DailyReports({}){
         }
     }
 
+    const isAllowedToEdit = activeUser?.role === PERMISSIONS.INSTRUCTION || activeUser?.role === PERMISSIONS.TRANSPORT_MANAGER;
     return(
         <DailyReportContainer>
           <HeaderPage title={'- בקרת שתייה ומריחת קרם הגנה -'} size={1.6} color={SECONDARY}/>
+          {activeUser?.role === PERMISSIONS.GENERAL_MANAGER || activeUser?.role === PERMISSIONS.ADMIN && (
+            <Select
+            style={{ width: '60%',margin:'auto', marginTop: '0.7rem',marginBottom:'0.7rem'}}
+            placeholder={'בחר מחנה'}
+            onChange={(campId) => setCampSelected(campId)}
+            value={campSelected}
+          >
+            {camps.map((camp) => (
+              <Option value={camp.camp_id} key={camp.camp_id}>{camp.camp_name}</Option>
+            ))}
+            </Select>
+          )}
           <Select
           style={{ width: '60%',margin:'auto', marginTop: '0.7rem',marginBottom:'0.7rem'}}
           placeholder={'שעת דיווח'}
@@ -129,7 +157,7 @@ export default function DailyReports({}){
             </Wrapper>
         </ButtonWrapper>
         <ChildrenReportWrapper>
-        {childrenList?.filter(children => !!children.id).map((children,index) => <ReportItem groupNumber={groupNum} childIndex={index} key={children.id} date={moment(Date.now()).format('DD-MM-YYYY')} selectedTime={selectedTime} handleChecked={handleCheckedClicked} handleReport={handleReport} children={children}/>)}
+        {childrenList?.filter(children => !!children.id).map((children,index) => <ReportItem isAllowedToEdit={isAllowedToEdit} groupNumber={groupNum} childIndex={index} key={children.id} date={moment(Date.now()).format('DD-MM-YYYY')} selectedTime={selectedTime} handleChecked={handleCheckedClicked} handleReport={handleReport} children={children}/>)}
 
         </ChildrenReportWrapper>
         </DailyReportContainer>

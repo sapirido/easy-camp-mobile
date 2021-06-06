@@ -178,7 +178,7 @@ function ECSidebar({ history, collapsed, activeUser, setCollapsed }) {
               />
             </Menu.Item>}
             {
-              (activeUser?.role === PERMISSIONS.INSTRUCTION || activeUser?.role === PERMISSIONS.TRANSPORT_MANAGER) && (
+              activeUser?.role !== PERMISSIONS.PARENT &&
                 <Menu.Item
               style={selectedKey === '11' ? selectedStyled : unSelectedStyled}
               key="11"
@@ -193,9 +193,25 @@ function ECSidebar({ history, collapsed, activeUser, setCollapsed }) {
                 }
                 text={'דו״ח בקרת שתייה'}
               />
-            </Menu.Item>
-              ) 
+            </Menu.Item>  
             }
+            {(activeUser?.role === PERMISSIONS.ADMIN || activeUser?.role === PERMISSIONS.GENERAL_MANAGER) && (
+              <React.Fragment>
+                <Menu.Item
+                key="9"
+                onSelect={handleSelect}
+                onClick={() => handleClicked('/self-transport')}
+                style={selectedKey === '9' ? selectedStyled : unSelectedStyled}
+                >
+                <ContentItem
+                 iconComponent={
+                   <SelfTranportSVG color={selectedKey === '9' ? SECONDARY : WHITE}/>
+                 }
+                 text={'הגעה ואיסוף עצמי'}
+                 />
+                </Menu.Item>
+              </React.Fragment>
+            )}
             <DividerWrapper>
               <Divider style={{ 'background-color': 'white' }} />
             </DividerWrapper>
@@ -224,23 +240,7 @@ function ECSidebar({ history, collapsed, activeUser, setCollapsed }) {
                 text={'צור קשר'}
               />
             </Menu.Item>
-            {(activeUser?.role === PERMISSIONS.ADMIN || activeUser?.role === PERMISSIONS.GENERAL_MANAGER) && (
-              <React.Fragment>
-                <Menu.Item
-                key="9"
-                onSelect={handleSelect}
-                onClick={() => handleClicked('/self-transport')}
-                style={selectedKey === '9' ? selectedStyled : unSelectedStyled}
-                >
-                <ContentItem
-                 iconComponent={
-                   <SelfTranportSVG color={selectedKey === '9' ? SECONDARY : WHITE}/>
-                 }
-                 text={'הגעה ואיסוף עצמי'}
-                 />
-                </Menu.Item>
-              </React.Fragment>
-            )}
+         
           </React.Fragment>
         {activeUser?.role === PERMISSIONS.INSTRUCTION && (
           <Menu.Item

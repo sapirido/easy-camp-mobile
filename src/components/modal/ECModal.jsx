@@ -20,6 +20,12 @@ export default function ECModal({type,title,isVisible,onCancel,content,onOk = ()
             {content}
           </Modal>
         )
+      case MODAL_TYPES.EDIT:
+        return (
+          <Modal footer={null} visible={isVisible} onCancel={onCancel}>
+          {content}
+          </Modal>
+        )
       default:
         return null;
     }

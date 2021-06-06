@@ -51,3 +51,13 @@ export async function getAllContactList(transportList = null){
     }
     return [];
 }
+
+export async function getCampChilds(campId){
+    const campGroups = await getCampList(campId);
+    const childs = campGroups.reduce(([],group) => group.childrens,[])
+    if(typeof childs === 'object'){
+        const childrens = Object.values(childs).filter(child => !!child.id);
+        return childrens;
+    }
+    return childs.filter(child => !!child.id);
+}

@@ -13,7 +13,7 @@ export default function Task({background,task,allowedActions,deleteTask,editTask
                             <IconWrapper onClick={deleteTask}>
                             <DeleteSVG/>
                             </IconWrapper>
-                            <IconWrapper onClick={editTask}>
+                            <IconWrapper onClick={() => editTask(task)}>
                             <EditSVG/>
                             </IconWrapper>
                             </>

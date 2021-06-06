@@ -17,11 +17,11 @@ width:${({width}) => width || '100%'};
 }
 `
 
-export default function ECButton({handleClicked,disabled = false,buttonText,backgroundColor,textColor,borderColor = '',loading = false,style = {}}){
+export default function ECButton({htmlType,handleClicked,disabled = false,buttonText,backgroundColor,textColor,borderColor = '',loading = false,style = {}}){
     
     return(
     <ButtonStyled backgroundColor={backgroundColor} textColor={textColor} borderColor={borderColor} style={{...style}}>
-    <Button loading={loading} disabled={disabled} shape={'round'} block onClick={handleClicked}>{buttonText}</Button>
+    <Button htmlTye={htmlType} loading={loading} disabled={disabled} shape={'round'} block onClick={handleClicked}>{buttonText}</Button>
     </ButtonStyled>
     )
 }

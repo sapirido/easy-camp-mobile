@@ -28,6 +28,7 @@ import {
   closeModal,
 } from '../../data/modules/modal/modal.actions';
 import DeleteTaskModal from '../../components/modal/modals-content/DeleteTaskModal';
+import EditTaskModal from '../../components/modal/modals-content/EditTaskModal'
 
 const { Option } = Select;
 
@@ -143,14 +144,15 @@ export default function Home({ history }) {
     );
   }
 
-  function editTaskHandler(date, taskId) {
+  function editTaskHandler(task) {
+    console.log({task});
     dispatch(
       setModalState({
         type: MODAL_TYPES.EDIT,
         isVisible: true,
-        content: renderEditContent,
+        content: <EditTaskModal task={task}/>,
         onCancel: () => dispatch(closeModal()),
-        onOk: () => editTask(date, taskId),
+        onOk: () => editTask(currentDay, task.id),
       })
     );
   }
@@ -162,7 +164,7 @@ export default function Home({ history }) {
         {selectedDailyCalander?.tasks?.length ? (
           selectedDailyCalander.tasks.map((task, index) => (
             <Task
-              editTask={editTaskHandler}
+              editTask={(task) => editTaskHandler(task)}
               deleteTask={() => deleteTaskHandler(task.id)}
               allowedActions={allowedToEdit.includes(activeUser.role)}
               background={colors[index % colors.length]}
