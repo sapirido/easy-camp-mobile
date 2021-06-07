@@ -6,6 +6,7 @@ const HeaderStyled = styled.span`
 font-size:${({size}) => size || 1}rem;
 color: ${({color}) => color || PRIMARY};
 font-family:rivkabau-regular;
+text-align:center;
 `
 
 export default function HeaderPage({title,color,size,style}){

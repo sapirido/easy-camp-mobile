@@ -55,7 +55,7 @@ return(
         <Input required  style={{marginBottom:10}} value={childId} onChange={e => setChildId(e.target.value)} placeholder="מספר ת.ז ילד" />
         <Input required  style={{marginBottom:10}} value={email} onChange={e => setEmail(e.target.value)} prefix={<IconSVG src={emailSVG}/>} placeholder="אימייל"  />
         <Input required type="password" style={{marginBottom:10}} value={password} onChange={e => setPassword(e.target.value)} prefix={<IconSVG src={passwordSVG}/>} placeholder="סיסמא"  />
-        <Input required  type="password" style={{marginBottom:10}} value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} placeholder="שם מלא"  />
+        <Input required  type="password" style={{marginBottom:10}} value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} placeholder="אימות סיסמא"  />
         </ContentStyled>
         <ButtonsStyled>
         <ECButton handleClicked={onRegister} backgroundColor={PRIMARY} textColor={WHITE} buttonText={'צור משתמש'}/>

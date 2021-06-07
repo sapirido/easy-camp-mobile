@@ -28,7 +28,7 @@ const ContentStyled = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  padding: 1.2rem;
+  padding: 1.2rem 1.2rem 2.2rem 1.2rem;
   align-items:flex-start;
 `;
 

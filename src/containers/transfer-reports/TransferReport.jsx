@@ -2,6 +2,7 @@ import { Select } from 'antd';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { PERMISSIONS } from '../../common/constants';
 import { PRIMARY, SECONDARY } from '../../common/styles/colors';
 import { BlockContainer } from '../../common/styles/common.styled';
 import HeaderPage from '../../components/header-page/HeaderPage';
@@ -22,13 +23,13 @@ export default function TransferReport({}){
     const { transportList = [] } = useSelector(({masterCamp}) => masterCamp);
     const [selectedTransport,setSelectedTransport] = useState('');
     useEffect(() => {
-            if( activeUser?.role === 1 ) {
+            if( activeUser?.role === PERMISSIONS.PARENT ) {
                 dispatch(getReportPoints(activeUser.transport))
             }
-            if(activeUser?.role > 4){
+            if(activeUser?.role >= PERMISSIONS.CAMP_MANAGER){
                 dispatch(getTransportNumbers());
             }
-            if(activeUser?.role === 3){
+            if(activeUser?.role === PERMISSIONS.TRANSPORT_MANAGER){
                 dispatch(getReportPoints(activeUser.transportNumber));
              }
     },[activeUser])
@@ -66,7 +67,7 @@ export default function TransferReport({}){
         color={PRIMARY}
       />
      {
-         activeUser?.role > 4 && (
+         activeUser?.role >= PERMISSIONS.CAMP_MANAGER && (
             <SelectionContainer style={{padding:'1.5rem 0px'}}>
             <Select
             allowClear

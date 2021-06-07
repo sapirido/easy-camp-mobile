@@ -20,7 +20,7 @@ export function updateChildrensAttendance(campId,instructionId,date,childrens,is
             }
         }else{
             childrens.forEach(async children => {
-                const attended = !!children.attended || children?.attendance[date].transport;
+                const attended = !!children.attended || children?.attendance?.[date]?.transport;
                 await updateChildrenAttendance(campId,instructionId,date,children.id,!!attended,isGroup,false,isMorning);
             })
         }

@@ -47,6 +47,6 @@ padding-top:12px;
 export const SwitcherWrapper = styled.div`
 display:grid;
 grid-gap:15px;
-grid-template-columns:1fr 1fr;
+grid-template-columns:${({isGroup}) => isGroup ? '1fr' : '1fr 1fr'};
 
 `

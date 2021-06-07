@@ -3,7 +3,7 @@ import { WHITE,PRIMARY, SECONDARY } from './common/styles/colors';
 
 export const AppWrapper = styled.div`
 width: 100%;
-height: 120vh;
+height: 100%;
 display: flex;
 `;
 
@@ -11,7 +11,7 @@ export const GlobalStyle = createGlobalStyle`
 
   #root{
     font-family:almoni-regular;
-  height: 120vh;
+  height: 100%;
 
   }
   .title{

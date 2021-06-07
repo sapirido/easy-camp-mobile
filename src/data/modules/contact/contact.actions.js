@@ -16,7 +16,6 @@ export function getEmployeesContacts(){
 }
 
 export function getGroupContacts(campId,instructionId){
-    console.log({campId,instructionId});
     return async function _(dispatch){
         const contacts = await getGroupContactList(campId,instructionId);
         dispatch(setContacts(contacts));
@@ -32,7 +31,7 @@ export function getTransportContacts(transportList){
 
 export function getCampContacts(campId){
     return async function _(dispatch){
-        const contacts = await getCampContactList(campId);
+        const contacts = await getCampChilds(campId);
         dispatch(setContacts(contacts));
     }
 }

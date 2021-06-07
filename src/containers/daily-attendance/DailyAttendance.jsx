@@ -192,7 +192,7 @@ export default function DailyAttendance({}){
                     color={PRIMARY}
                     style={{ paddingTop: '1rem', paddingBottom: '0.7rem' }}
                   />
-                  <SwitcherWrapper>
+                  <SwitcherWrapper isGroup={isGroup}>
                     <Switch 
                     width={150}
                     height={32}
@@ -204,7 +204,7 @@ export default function DailyAttendance({}){
                     uncheckedIcon={<Icon justifyContent={'left'} width={'3rem'} label={'הסעה'}/>} 
                     checkedIcon={<Icon label={'קבוצה'}/>}
                     />
-                    <Switch 
+                    {!isGroup && <Switch 
                     width={150}
                     height={32}
                     onChange={() => setIsMorning(!isMorning)}
@@ -214,7 +214,7 @@ export default function DailyAttendance({}){
                     borderRadius={16} 
                     uncheckedIcon={<Icon justifyContent={'left'} width={'3rem'} label={'צהריים'}/>} 
                     checkedIcon={<Icon label={'בוקר'}/>}
-                    />
+                    />}
                     </SwitcherWrapper>
                   {!isGroup && 
                     <>

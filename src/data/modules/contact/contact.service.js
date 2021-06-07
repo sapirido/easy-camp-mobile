@@ -33,7 +33,8 @@ export async function getCampContactList(campId){
     const campList = await getCampList(campId);
     console.log({campList})
     let groups = [];
-    campList.forEach(group => groups = [...groups,...group.childrens,group.instruction])
+    console.log(typeof campList[0])
+    (campList || []).forEach(group => groups = [...groups,...group.childrens,group.instruction])
     if(groups.length){
         return Object.values(groups);
     }
