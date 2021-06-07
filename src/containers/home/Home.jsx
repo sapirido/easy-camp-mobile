@@ -15,6 +15,7 @@ import Task from '../../components/task/Task';
 import {
   getDailyByDate,
   deletedTask,
+  editTaskAction
 } from '../../data/modules/schedule/schedule.action';
 import {
   ContentStyled,
@@ -150,12 +151,26 @@ export default function Home({ history }) {
       setModalState({
         type: MODAL_TYPES.EDIT,
         isVisible: true,
-        content: <EditTaskModal task={task}/>,
+        content: <EditTaskModal task={task} handleSubmit={(values) => handleEditSubmit(values,task)}/>,
         onCancel: () => dispatch(closeModal()),
         onOk: () => editTask(currentDay, task.id),
       })
     );
   }
+
+  function handleEditSubmit(values,task){
+    const newValues = {
+      ...values,
+      timeRange: values.timeRange.map(time => moment(time).format('HH:mm').toString())
+    }
+    const index = task.id - 1;
+    dispatch(editTaskAction(selectedCampId,currentDay,index,newValues));
+    dispatch(closeModal());
+    
+  }
+
+  console.log({selectedCampId});
+
   return (
     <HomeStyled>
       <HeaderPage title={'- הלוז היומי -'} size={1.6} color={SECONDARY} />

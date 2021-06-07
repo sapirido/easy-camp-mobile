@@ -474,3 +474,17 @@ export async function saveChildReport(campId,groupNumber,childId,date,selectedTi
     console.error(err);
   }
 }
+
+
+export async function editTask(campId,date,index,newValues){
+  try{
+    let updates = {};
+    updates[`kleah/daily_schedules/${campId}/${date}/tasks/${index}`] = null;
+    updates[`kleah/daily_schedules/${campId}/${date}/tasks/${index}`] = newValues;
+
+    await db.ref().update(updates);
+    return await getDailyByDate(campId,date);
+  }catch(err){
+    console.error(err);
+  }
+}

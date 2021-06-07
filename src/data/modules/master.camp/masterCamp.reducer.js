@@ -13,7 +13,7 @@ export default function masterCampReducer(state = INITAL_STATE,action){
         case SET_MASTER_CAMP:
             return{
                 ...state,
-                selectedMasterCamp:action.paylaod
+                selectedMasterCamp:action.payload
             }
         case SET_ALL_MASTER_CAMPS:
             return{

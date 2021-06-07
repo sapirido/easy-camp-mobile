@@ -1,5 +1,5 @@
 import {SET_ALL_DAYS,SET_DAILY} from './schedule.types';
-import {createDailySchedule,getAllDailys,setTask,deleteTaskById,deleteDailySchedule,getDailyScheduleByDate} from './schedule.service';
+import {createDailySchedule,getAllDailys,setTask,deleteTaskById,deleteDailySchedule,getDailyScheduleByDate,updateTask} from './schedule.service';
 
 
 function setAllSchedules(allDays){
@@ -83,5 +83,13 @@ export function getDailyByDate(campId,date){
             dispatch(setDaily(null));
         }
 
+    }
+}
+
+export function editTaskAction(campId,date,index,newValues){
+    return async function _(dispatch){
+        const newSchedule = await updateTask(campId,date,index,newValues);
+        dispatch(setDaily(newSchedule));
+        
     }
 }

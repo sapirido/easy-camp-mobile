@@ -1,4 +1,4 @@
-import {storeDailySchedule,getAllSchedule,setTaskByDate,deleteScheduleByDate, getDailyByDate} from '../../../fb';
+import {storeDailySchedule,getAllSchedule,setTaskByDate,deleteScheduleByDate, getDailyByDate,editTask} from '../../../fb';
 
 export  async function createDailySchedule(dailySchedule){
     return await storeDailySchedule(dailySchedule);
@@ -33,4 +33,8 @@ export async function deleteDailySchedule(schduleDate){
 
 export async function getDailyScheduleByDate(campId,date){
     return await getDailyByDate(campId,date);
+}
+
+export async function updateTask(campId,date,index,newValues){
+    return await editTask(campId,date,index,newValues);
 }

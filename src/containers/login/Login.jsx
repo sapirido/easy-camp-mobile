@@ -12,7 +12,7 @@ import GreetingPopup from './GreetingPopup';
 
 export default function Login({history}){
     const [userType,setUserType] = useState(false);
-    const { masterCamps } = useSelector(({masterCamp}) => masterCamp);
+    const { masterCamps, selectedMasterCamp } = useSelector(({masterCamp}) => masterCamp);
     const {activeUser} = useSelector(({ auth }) => auth);
     const [childId,setChildId] = useState('');
     const [email,setEmail] = useState('');
@@ -67,8 +67,9 @@ function createParentUser(){
 history.push('/register');
 }
 
-
+const disabled = !(selectedMasterCamp && ((childId || email) && password))
 const options = masterCamps?.map(camp => camp.campName)
+
     return(
         <React.Fragment>
             <LoginStyled>
@@ -87,7 +88,7 @@ const options = masterCamps?.map(camp => camp.campName)
                 />
                 }
                 <ButtonsStyled>
-                    <ECButton handleClicked={onLogin} backgroundColor={PRIMARY} textColor={WHITE} buttonText={'כניסה'}/>
+                    <ECButton disabled={disabled} handleClicked={onLogin} backgroundColor={PRIMARY} textColor={WHITE} buttonText={'כניסה'}/>
                     {!userType && <ECButton style={{marginTop:'1.2rem'}} handleClicked={createParentUser} backgroundColor={WHITE} textColor={PRIMARY} borderColor={PRIMARY} buttonText={'צור משתמש'}/>}
                 </ButtonsStyled>
             </LoginStyled>
