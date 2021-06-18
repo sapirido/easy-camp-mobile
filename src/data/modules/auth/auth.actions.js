@@ -1,11 +1,12 @@
 import {
-  login, getUserAndUpdateFromDB, getUserById,employeeLogin,parentLogin,createParentUser,getParent
+  login, getUserAndUpdateFromDB, getUserById,employeeLogin,parentLogin,createParentUser,getParent,changePassword
 } from "./auth.service";
 import {
   LOGIN_START,
   LOGIN_SUCCESS,
   LOGIN_FAILED,
-  UPDATE_ACTIVE_USER
+  UPDATE_ACTIVE_USER,
+  SET_OLD_PASS
 } from "./auth.types";
 
 //! PLOP_APPEND_ACTION
@@ -59,10 +60,22 @@ return{
  }
 }
 
+export function setOldPassword(password){
+  return{
+    type:SET_OLD_PASS,
+    payload:password
+  }
+}
+
 export function onEmployeeLogin(email,password){
   return async function _(dispatch){
-    const employee = await employeeLogin(email,password);
-    dispatch(setActiveUser(employee));
+    try{
+      const employee = await employeeLogin(email,password);
+      dispatch(setActiveUser(employee));
+      dispatch(setOldPassword(password));
+    }catch(err){
+      throw err;
+    }
   }
 }
 
@@ -72,6 +85,20 @@ export function onParentLogin(childId,password){
     if(!!parent){
       dispatch(setActiveUser(parent));
       return true;
+    }
+  }
+}
+
+export function updatePassword(oldPassword,newPassword,user){
+  return async function _(dispatch){
+    try{
+
+      const updatedUser = await changePassword(oldPassword,newPassword,user);
+      dispatch(setActiveUser(updatedUser));
+      localStorage.setItem('activeUser',JSON.stringify(updatedUser));
+      return updatedUser;
+    }catch(err){
+      throw err;
     }
   }
 }

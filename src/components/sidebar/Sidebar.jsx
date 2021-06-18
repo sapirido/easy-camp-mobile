@@ -215,18 +215,7 @@ function ECSidebar({ history, collapsed, activeUser, setCollapsed }) {
             <DividerWrapper>
               <Divider style={{ 'background-color': 'white' }} />
             </DividerWrapper>
-            <Menu.Item
-              style={selectedKey === '6' ? selectedStyled : unSelectedStyled}
-              key="6"
-              onSelect={handleSelect}
-            >
-              <ContentItem
-                iconComponent={
-                  <AboutSVG color={selectedKey === '5' ? SECONDARY : WHITE} />
-                }
-                text={'אודות'}
-              />
-            </Menu.Item>
+
             <Menu.Item
               style={selectedKey === '10' ? selectedStyled : unSelectedStyled}
               onSelect={handleSelect}

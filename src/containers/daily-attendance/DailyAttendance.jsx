@@ -15,6 +15,8 @@ import { AttendancesWrapper,ButtonWrapper,SwitcherWrapper } from './Attendance.s
 import AttendanceItem from './AttendanceItem';
 import ECButton from '../../components/button/ECButton';
 import {updateChildrensAttendance} from '../../data/modules/attandance/attendance.action'
+import { getAllChildrens } from '../../data/modules/report/report.action';
+
 import {Select} from 'antd';
 
 const  { Option } = Select; 
@@ -27,12 +29,13 @@ export default function DailyAttendance({}){
     const {activeUser} = useSelector(({auth}) => auth);
     const { contacts } = useSelector(({contact}) => contact);
     const { camps,instructions } = useSelector(({camp}) => camp);
+    const {childrens} = useSelector(({report}) => report);
     const [contactList,setContact] = useState([]);
     const [rootContacts,setRootContacts] = useState([]);
     const [date,setDate] = useState(moment(Date.now()).format('DD-MM-YYYY'))
     const [isGroup,setIsGroup] = useState(true);
     const [selectedInstruction,setSelectedInstruction] = useState(null);
-    const [selectedCamp,setSelectedCamp] = useState(null);
+    const [selectedCamp,setSelectedCamp] = useState(-1);
     const [selectedStation,setSelectedStation] = useState('ALL');
     const [isMorning,setIsMorning] = useState(true);
     const [counter,setCounter] = useState(0);
@@ -42,7 +45,11 @@ export default function DailyAttendance({}){
     useEffect(() => {
         prevDate.current = date;
         if(activeUser?.role === PERMISSIONS.ADMIN || activeUser.role === PERMISSIONS.GENERAL_MANAGER){
-            dispatch(getAllCamps());
+            batch(() => {
+                dispatch(getAllChildrens());
+                dispatch(getAllCamps());
+            })
+
         }
         if(activeUser?.role === PERMISSIONS.CAMP_MANAGER){
             dispatch(getInstructionCamp(activeUser.campId));
@@ -63,7 +70,12 @@ export default function DailyAttendance({}){
     },[selectedStation])
 
     useEffect(() => {
-        if(selectedCamp){
+        if(selectedCamp === -1 && (activeUser?.role === PERMISSIONS.GENERAL_MANAGER || activeUser?.role === PERMISSIONS.ADMIN)){
+            setSelectedInstruction(null);
+                setContact([]);
+                dispatch(getAllChildrens());
+        }
+        if(selectedCamp && selectedCamp != -1){
             batch(() => {
                 setSelectedInstruction(null);
                 setContact([]);
@@ -77,7 +89,11 @@ export default function DailyAttendance({}){
             setRootContacts(contacts.filter(children => !!children.id));
             setContact(contacts.filter(children => !!children.id));
         }
-    },[contacts])
+        if(childrens.length){
+            setRootContacts(childrens.filter(children => !!children.id));
+            setContact(childrens.filter(children => !!children.id));
+        }
+    },[contacts,childrens])
 
     useEffect(()=>{
         let counter = 0;
@@ -266,25 +282,27 @@ export default function DailyAttendance({}){
                     return(
                         <>
                         <DatePicker
-                        defaultValue={moment(date, 'YYYY-MM-DD')}
-                        style={{
+                         defaultValue={moment(date, 'YYYY-MM-DD')}
+                         style={{
                           display: 'flex',
                           alignSelf: 'center',
                           marginTop: '2rem',
                           marginBottom: '1rem',
-                        }}
+                         }}
                         onChange={currentDateChanged}
                       />
                       <Select
                       style={{ width: '100%', marginTop: '0.7rem',marginBottom:'0.7rem'}}
                       placeholder={'בחר מחנה'}
+                      defaultValue={-1}
                       onChange={(campId) => setSelectedCamp(campId)}
                     >
+                        <Option value={-1} key={-1}>כל המחנות</Option>
                       {camps?.map((camp) => (
                         <Option value={camp.camp_id} key={camp.camp_id}>{camp.camp_name}</Option>
                       ))}
                     </Select>
-                    {selectedCamp &&
+                    {selectedCamp && selectedCamp != -1 &&
                         <>
                         <Select
                         style={{ width: '100%', marginTop: '0.7rem',marginBottom:'0.7rem'}}
@@ -296,9 +314,9 @@ export default function DailyAttendance({}){
                           <Option value={instruction.id} key={instruction.id}>{instruction.name}</Option>
                         ))}
                       </Select> 
-                      <Counter/>
                       </>
                      }
+                     <Counter/>
 
                         </>
                     )
@@ -332,7 +350,7 @@ export default function DailyAttendance({}){
    }
 
    function isAllowedToChange(role){
-    return role === PERMISSIONS.INSTRUCTION || role === PERMISSIONS.TRANSPORT_MANAGER || role === PERMISSIONS.GENERAL_MANAGER || role === PERMISSIONS.ADMIN 
+    return role === PERMISSIONS.INSTRUCTION || role === PERMISSIONS.TRANSPORT_MANAGER;
    }
 
    function handleUpdateAttendance(id,checked){

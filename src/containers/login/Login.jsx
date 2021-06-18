@@ -26,8 +26,13 @@ export default function Login({history}){
     },[])
 
     useEffect(()=>{
-        if(activeUser){
+        if(activeUser && activeUser?.updatedPassword){
             history.push('/');
+            return;
+        } 
+        if (activeUser && !activeUser?.updatedPassword){
+            history.push('/update-password');
+            return;
         }
     },[activeUser])
 
@@ -39,7 +44,12 @@ export default function Login({history}){
 async function onLogin(){
     if(userType){
         if(email && password){
-            await dispatch(onEmployeeLogin(email,password))
+            try{
+                await dispatch(onEmployeeLogin(email,password))
+            }catch(err){
+                console.error('err',err);
+                alert(err);
+            }
         } else {
             alert('אנא הזן שם אימייל וסיסמה');
             return null

@@ -20,6 +20,7 @@ import Feedback  from './containers/feedbacks/Feedback';
 import DailyAttendance from './containers/daily-attendance/DailyAttendance';
 import DailyReports from './containers/daily-reports/DailyReports';
 import SelfTransport from './containers/self-transport/SelfTransport';
+import UpdatePassword from './containers/update-password/UpdatePassword'
 
 const { Content } = Layout;
 
@@ -118,6 +119,11 @@ const authRoutes = [
     component:SelfTransport,
     isExact:true,
     path:'/self-transport'
+  },
+  {
+    component:UpdatePassword,
+    isExact:true,
+    path:'/update-password'
   }
 ];
 

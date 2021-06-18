@@ -1,7 +1,8 @@
-import { LOGIN_SUCCESS,UPDATE_ACTIVE_USER } from "./auth.types";
+import { LOGIN_SUCCESS,SET_OLD_PASS,UPDATE_ACTIVE_USER } from "./auth.types";
 
 const defaultState = {
-  activeUser: null
+  activeUser: null,
+  oldPassword:''
 };
 
 function authReducer(state = defaultState, action) {
@@ -11,6 +12,8 @@ function authReducer(state = defaultState, action) {
     }
     case UPDATE_ACTIVE_USER:
       return {...state,activeUser: action.payload};
+    case SET_OLD_PASS:
+      return {...state,oldPassword:action.payload}
     default:
       return state;
   }

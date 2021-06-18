@@ -3,7 +3,7 @@ import {Button} from 'antd';
 import styled from 'styled-components';
 import { PRIMARY,WHITE } from '../../common/styles/colors';
 
-const ButtonStyled = styled.div`
+export const ButtonStyled = styled.div`
 width:${({width}) => width || '100%'};  
 
 .ant-btn{

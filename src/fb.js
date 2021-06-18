@@ -14,6 +14,7 @@ firebase.initializeApp(firebaseConfig);
 export const db = firebase.database();
 export const { auth } = firebase;
 export const storage = firebase.storage();
+const currentUser = auth().currentUser;
 
 //***START_AUTH***//
 const provider = new auth.GoogleAuthProvider();
@@ -53,20 +54,54 @@ function loginParentWithEmailAndPassword(email,password){
 
 export async function loginEmployee(email,password){
   try{
-    const masterCamp = localStorage.getItem('campCode');
-    const campEmployees =  await (await db.ref(`/${masterCamp}/users/employees`).once('value')).val();
-
-    console.log(masterCamp)
-    console.log(campEmployees)
-    const employees = Object.values(campEmployees);
-    console.log(employees)
-    if(employees.length){
-      const selectedEmployee = employees.find(employee => employee.email === email);
-      return selectedEmployee;
+    const user = await auth().signInWithEmailAndPassword(email,password);
+    if(user){
+      const masterCamp = localStorage.getItem('campCode');
+      const campEmployees =  await (await db.ref(`/${masterCamp}/users/employees`).once('value')).val();
+      
+      const employees = Object.values(campEmployees);
+  
+      if(employees.length){
+        const selectedEmployee = employees.find(employee => employee.email === email);
+        return selectedEmployee;
+      }
+    }else{
+      throw new Error('המשתמש אינו רשום במערכת');
     }
+    
     return false;
   }catch(err){
+   console.error('err');
+   throw new Error('המשתמש אינו רשום במערכת');
+
+  }
+}
+
+export async function updateUser(user){
+  try{
+    let updates = {};
+    updates[`/kleah/users/employees/${user.id}`] = null;
+    updates[`/kleah/users/employees/${user.id}`] = user;
+    return await db.ref().update(updates);
+  }catch(err){
     console.error(err);
+  }
+}
+
+export async function updateUserPassword(oldPassword,newPassword,user){
+  try{
+    await auth().signInWithEmailAndPassword(user.email,oldPassword);
+    await auth().currentUser.updatePassword(newPassword);
+    const newUser = {
+      ...user,
+      updatedPassword:true
+    }
+    await updateUser(newUser);
+    return newUser;
+
+  }catch(err){
+    console.error(err);
+    throw err;
   }
 }
 
@@ -444,18 +479,21 @@ export async function getChildrensContanct(){
 
 //attendance
 
-export async function updateAttendance(campId,instructionId,date,childId,attended,isGroup,selectedGroupNumber,isMorning){
+export async function updateAttendance(campId,instructionId,date,childId,childIndex,attended,isGroup,selectedGroupNumber,isMorning){
 console.log({isGroup,isMorning});
   try{
   let update ={};
 if(isGroup){
-  console.log(`/kleah/camps/${campId}/groups/${selectedGroupNumber}/childrens/${childId}/attendance/group`)
-  update[`/kleah/camps/${campId}/groups/${selectedGroupNumber}/childrens/${childId}/attendance/${date}/group`] = attended;
+  update[`/kleah/camps/${campId}/groups/${selectedGroupNumber}/childrens/${childIndex}/attendance/${date}/group`] = attended;
+  update[`/kleah/users/childrens/${childId}/attendance/${date}/group`] = attended;
 }else{
   if(isMorning){
     update[`/kleah/users/childrens/${childId}/attendance/${date}/transport/morning`] = attended;
+  update[`/kleah/camps/${campId}/groups/${selectedGroupNumber}/childrens/${childIndex}/attendance/${date}/transport/morning`] = attended;
+
   }else{
     update[`/kleah/users/childrens/${childId}/attendance/${date}/transport/noon`] = attended;
+    update[`/kleah/camps/${campId}/groups/${selectedGroupNumber}/childrens/${childIndex}/attendance/${date}/transport/noon`] = attended;
 
   }
 }

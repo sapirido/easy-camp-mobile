@@ -1,4 +1,4 @@
-import { getUser, login as firebaseLogin, saveUser,loginEmployee,loginParent,getChildById,registerParent,getParentByChildId} from '../../../fb';
+import { getUser, login as firebaseLogin, saveUser,loginEmployee,loginParent,getChildById,registerParent,getParentByChildId,updateUserPassword} from '../../../fb';
 import _ from 'lodash';
 export async function login() {
   return firebaseLogin();
@@ -26,13 +26,16 @@ export async function getUserById(id){
 
 export async function employeeLogin(email,password){
 
-  const employee = await loginEmployee(email,password);
-  if(employee){
-    localStorage.setItem('activeUser',JSON.stringify(employee));
-    localStorage.setItem('expired',+new Date());
-    return employee;
+  try{
+    const employee = await loginEmployee(email,password);
+    if(employee){
+      localStorage.setItem('activeUser',JSON.stringify(employee));
+      localStorage.setItem('expired',+new Date());
+      return employee;
+    }
+  }catch(err){
+    throw err;
   }
-   alert('המשתמש לא קיים במערכת');
 } 
 
 export async function parentLogin(childId,password){
@@ -61,3 +64,13 @@ try {
     console.error(err);
   }
 }
+
+export async function changePassword(oldPassword,newPassword,user){
+  try{
+
+    return await updateUserPassword(oldPassword,newPassword,user);
+  }catch(err){
+    throw err
+  }
+}
+

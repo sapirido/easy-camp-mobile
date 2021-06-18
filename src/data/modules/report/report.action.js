@@ -96,7 +96,7 @@ function setAllChildrens(childrens){
     }
 }
 
-export function getAllChildrens(){
+export function  getAllChildrens(){
     return async function _(dispatch){
         const allChildrens = await getChildrens();
         dispatch(setAllChildrens(allChildrens));

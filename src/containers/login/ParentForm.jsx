@@ -10,7 +10,7 @@ export default function ParentLoginForm({id,setId,password,setPassword}){
 
     return(
         <FormStyled>
-            <Input required  style={{marginBottom:7}} value={id} onChange={setId} prefix={<IconSVG src={fullnameSVG}/>} placeholder="ת.ז ילד" bordered={false} />
+            <Input required  style={{marginBottom:7}} value={id} type="number" onChange={setId} prefix={<IconSVG src={fullnameSVG}/>} placeholder="ת.ז ילד" bordered={false} />
             <Input type="password" required onChange={setPassword} value={password} placeholder="סיסמא" bordered={false} prefix={<IconSVG src={passwordSVG}/>} />
         </FormStyled>
     )

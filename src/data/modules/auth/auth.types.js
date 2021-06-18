@@ -4,3 +4,4 @@ export const LOGIN_START = 'LOGIN_START';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILED = 'LOGIN_FAILED';
 export const UPDATE_ACTIVE_USER = 'UPDATE_ACTIVE_USER';
+export const SET_OLD_PASS = 'SET_OLD_PASS';
