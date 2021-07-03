@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import {createPointReport,getAllPointReports, deletePointReport,createParentReport,getAllParentReportById,updatePointStatus,storeWaterChildReport,checkDailyReport,getChildrens,updateChildTransport} from './report.service';
 import {SET_REPORT_POINTS,SET_SELCTED_PARENT_REPORTS,SET_SELECTED_REPORT, SET_WATER_REPORTS,SET_ALL_CHILDRENS} from './report.types';
+import {setContacts} from '../contact/contact.actions';
 
 export function setPointReports(reports){
     return{
@@ -99,6 +100,7 @@ function setAllChildrens(childrens){
 export function  getAllChildrens(){
     return async function _(dispatch){
         const allChildrens = await getChildrens();
+        dispatch(setContacts(allChildrens));
         dispatch(setAllChildrens(allChildrens));
     }
 }

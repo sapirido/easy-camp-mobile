@@ -39,7 +39,6 @@ export function registerParent(parentData){
   return async function _(dispatch){
     parentData = {
       ...parentData,
-      type:'PARENT'
     }
     const parent = await createParentUser(parentData);
     if(parent){

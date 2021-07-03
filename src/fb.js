@@ -120,11 +120,7 @@ export async function registerParent(parent){
   const masterCamp = localStorage.getItem('campCode');
   await auth().createUserWithEmailAndPassword(email,password);
   await  db.ref(`/${masterCamp}/users/parents/${parent.childId}`).set({
-    email:parent.email,
-    name:parent.name,
-    childId:parent.childId,
-    type:parent.type,
-    campId:parent.campId
+    ...parent
   }
   )
 return true;
@@ -311,7 +307,6 @@ export async function setTaskByDate(schedule,campId){
 
 export async function deleteScheduleByDate(scheduleDate){
   try{
-    console.log('im in fb');
     let updates = {};
     updates[`/kleah/daily_schedules/${scheduleDate}`] = null;
     return await db.ref().update(updates);
@@ -326,7 +321,6 @@ export async function addReportPoint(report){
   try{
     let update = {}
     update[`/kleah/reports/point_reports/${report.date}`] = report;
-    console.log({update})
     return await db.ref().update(update);
   }catch(err){
     console.error(err);
@@ -381,6 +375,7 @@ export async function getParentReportById(instructionId){
 }
 
 export async function updateChildrenTransport(child,date,type){
+  console.log({child});
   try{
     let update = {};
     if(type === 'collect'){
@@ -447,7 +442,6 @@ export async function getEmployeesContact(){
 
 export async function getGroupContact(campId){
   try{
-    console.log({path:`/kleah/camps/${campId}/groups`})
      return await (await db.ref(`/kleah/camps/${campId}/groups`).once('value')).val();
 
   } catch(err){
@@ -480,7 +474,6 @@ export async function getChildrensContanct(){
 //attendance
 
 export async function updateAttendance(campId,instructionId,date,childId,childIndex,attended,isGroup,selectedGroupNumber,isMorning){
-console.log({isGroup,isMorning});
   try{
   let update ={};
 if(isGroup){

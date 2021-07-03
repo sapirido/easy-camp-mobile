@@ -8,6 +8,7 @@ align-items:center;
 height:fit-content;
 overflow:scroll;
 width: 100%;
+margin:30px 0px;
 `
 
 export const Wrapper = styled.div`

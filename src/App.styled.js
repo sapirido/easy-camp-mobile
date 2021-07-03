@@ -23,6 +23,7 @@ export const GlobalStyle = createGlobalStyle`
 `
 export const AppStyled = styled.div`
 background-color:${WHITE};
+height:100%;
 
 ul[role="menu"]{
   background-color:${PRIMARY};

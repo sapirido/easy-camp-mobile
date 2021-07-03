@@ -13,6 +13,7 @@ export async function getGroupContactList(campId,instructionId){
     const groupList = await getGroupContact(campId);
     console.log({groupList});
     const selectedGroup = !isEmpty(groupList) && !isEmpty(Object.values(groupList).filter(Boolean)) && Object.values(groupList).filter(Boolean).find(group => group.instruction?.id === instructionId);
+    console.log({selectedGroup});
     if(selectedGroup?.childrens){
         return Object.values(selectedGroup.childrens);
     } 

@@ -8,7 +8,6 @@ export default function ECSelect({width = 167,options = [],placeholder = '',hand
 
 
     function onSearch(val){
-         console.log({val});
     }
     
 

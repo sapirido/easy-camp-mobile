@@ -9,6 +9,7 @@ import EmployeeLoginForm from './EmployeeForm';
 import { ButtonsStyled, LoginStyled } from './Login.styled';
 import ParentLoginForm from './ParentForm';
 import GreetingPopup from './GreetingPopup';
+import { PERMISSIONS } from '../../common/constants';
 
 export default function Login({history}){
     const [userType,setUserType] = useState(false);
@@ -26,7 +27,7 @@ export default function Login({history}){
     },[])
 
     useEffect(()=>{
-        if(activeUser && activeUser?.updatedPassword){
+        if((activeUser && activeUser?.updatedPassword) || activeUser?.role === PERMISSIONS.PARENT){
             history.push('/');
             return;
         } 

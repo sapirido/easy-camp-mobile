@@ -1,7 +1,7 @@
 import { getAllContactList, getCampContactList, getEmployeesContactList, getGroupContactList, getCampChilds } from './contact.service';
 import { SET_CONTACTS } from './contact.types';
 
-function setContacts(contacts){
+export function setContacts(contacts){
 return {
     type: SET_CONTACTS,
     payload: contacts
@@ -18,6 +18,7 @@ export function getEmployeesContacts(){
 export function getGroupContacts(campId,instructionId){
     return async function _(dispatch){
         const contacts = await getGroupContactList(campId,instructionId);
+        console.log({contacts});
         dispatch(setContacts(contacts));
     }
 }

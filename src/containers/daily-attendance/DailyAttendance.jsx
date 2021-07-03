@@ -16,13 +16,14 @@ import AttendanceItem from './AttendanceItem';
 import ECButton from '../../components/button/ECButton';
 import {updateChildrensAttendance} from '../../data/modules/attandance/attendance.action'
 import { getAllChildrens } from '../../data/modules/report/report.action';
+import Lottie from 'react-lottie';
+import success from '../../assets/lottie/success_primary.json';
+import { ContentBox } from '../feedbacks/Feedbacks.styled';
 
 import {Select} from 'antd';
 
 const  { Option } = Select; 
 
-
-const {Search} = Input;
 
 export default function DailyAttendance({}){
     const dispatch = useDispatch();
@@ -39,6 +40,7 @@ export default function DailyAttendance({}){
     const [selectedStation,setSelectedStation] = useState('ALL');
     const [isMorning,setIsMorning] = useState(true);
     const [counter,setCounter] = useState(0);
+    const [isUpdated,setIsUpdated] = useState(false);
 
     const prevDate = useRef();
 
@@ -85,13 +87,17 @@ export default function DailyAttendance({}){
     },[selectedCamp])
 
     useEffect(() => {   
+        console.log('here2!');
         if(contacts.length){
             setRootContacts(contacts.filter(children => !!children.id));
             setContact(contacts.filter(children => !!children.id));
         }
-        if(childrens.length){
-            setRootContacts(childrens.filter(children => !!children.id));
-            setContact(childrens.filter(children => !!children.id));
+        else{
+            if(childrens.length){
+                setRootContacts(childrens.filter(children => !!children.id));
+                setContact(childrens.filter(children => !!children.id));
+            }
+            
         }
     },[contacts,childrens])
 
@@ -107,7 +113,6 @@ export default function DailyAttendance({}){
 
     useEffect(() => {
         if(selectedInstruction){
-            console.log({instructions});
             const instruction = instructions.find(ins => ins.id === selectedInstruction);
             dispatch(getGroupContacts(instruction.campId,selectedInstruction))
         }
@@ -117,7 +122,7 @@ export default function DailyAttendance({}){
         if(contactList.length){
             setCounterFromDbData();
         }
-    },[contactList.length,isMorning])
+    },[contactList.length,isMorning,selectedInstruction])
 
     function setCounterFromDbData(){
         let count = 0;
@@ -142,6 +147,7 @@ export default function DailyAttendance({}){
     }
 
     function getContactsByRole(){
+        console.log('inHERE!!!')
         switch(activeUser.role){
             case PERMISSIONS.INSTRUCTION:
                 dispatch(getGroupContacts(activeUser.campId,activeUser.id));
@@ -150,7 +156,6 @@ export default function DailyAttendance({}){
                 isGroup ?  dispatch(getGroupContacts(activeUser.campId,activeUser.id)) : dispatch(getTransportContacts(activeUser.transports));
                 break;
             case PERMISSIONS.CAMP_MANAGER:
-                console.log({activeUser});
                 dispatch(getGroupContacts(activeUser.campId,selectedInstruction));
                 break;
             case PERMISSIONS.GENERAL_MANAGER:
@@ -333,6 +338,7 @@ export default function DailyAttendance({}){
    }
 
    function updateAttendance(){
+       setIsUpdated(true);
     switch(activeUser.role){
       
         case PERMISSIONS.TRANSPORT_MANAGER:
@@ -347,6 +353,9 @@ export default function DailyAttendance({}){
             dispatch(updateChildrensAttendance(selectedCamp,selectedInstruction,date,rootContacts,isGroup,isMorning))
             break;
     }
+    setTimeout(() => {
+        setIsUpdated(false);
+    },2000);
    }
 
    function isAllowedToChange(role){
@@ -364,12 +373,25 @@ export default function DailyAttendance({}){
    }
 
 
-   console.log({contactList});
+   const defaultOptions = {
+    loop:true,
+    autoplay:true,
+    animationData: success,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice"
+    }
+  }
+
+   if(isUpdated) { 
+       return (
+        <ContentBox> <Lottie options={defaultOptions} height={250} width={250}/> </ContentBox>
+       )
+   }
     return (
      <DailyAttendanceWrapper>
      <HeaderPage  title={'- נוכחות יומית -'} size={1.6} color={SECONDARY}/>
-     {renderContentByRole()}
-     {isAllowedToChange(activeUser?.role) && contactList.length > 0 && 
+        {renderContentByRole()}
+         {isAllowedToChange(activeUser?.role) && contactList.length > 0 && 
     <ButtonWrapper>
      <Wrapper>
     <ECButton handleClicked={updateAttendance} buttonText={'עדכן נוכחות'} backgroundColor={WHITE} textColor={PRIMARY}/>
