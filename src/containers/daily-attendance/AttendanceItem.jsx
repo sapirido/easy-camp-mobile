@@ -2,6 +2,7 @@ import React,{useEffect, useState} from 'react';
 import { AttendanceItemWrapper,Name,TrasnportNumber } from './Attendance.styled';
 import { AttendanceIconSVG} from '../../common/icons/icons';
 import _, { isElement } from 'lodash';
+import { PRIMARY, SECONDARY, WHITE } from '../../common/styles/colors';
 
 
 export default function AttendanceItem({children,date,handleUpdateAttendance,isGroup,isMorning,isEnabledChange}){

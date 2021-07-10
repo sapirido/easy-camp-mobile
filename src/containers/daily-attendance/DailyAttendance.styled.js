@@ -2,13 +2,7 @@ import styled from 'styled-components';
 import { SECONDARY, WHITE, YELLOW_CARD } from '../../common/styles/colors';
 
 export const DailyAttendanceWrapper = styled.div`
-display:flex;
-flex-direction:column;
-align-items:center;
-height:fit-content;
-overflow:scroll;
-width: 100%;
-margin:30px 0px;
+width:100%;
 `
 
 export const Wrapper = styled.div`

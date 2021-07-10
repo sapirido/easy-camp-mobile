@@ -3,15 +3,15 @@ import {PRIMARY, WHITE, ERROR} from '../../common/styles/colors';
 
 export const AttendanceItemWrapper = styled.div`
 background-color:${PRIMARY};
-border-radius: 12px;
+border-radius: 18px;
 display: grid;
 grid-template-columns: 2fr 2fr 1fr;
 grid-row-gap: 15px;
 grid-column-gap: 20px;
 width:100%;
-height: 35px;
+height: fit-content;
 align-items: center;
-padding: 0 0 0 15px;
+padding: 15px;
 opacity:${({disabled}) => disabled ? 0.4 : 1};
 ${({isNotNeedToCome}) => isNotNeedToCome && css`
 border: 3px solid ${ERROR};
@@ -28,6 +28,7 @@ padding:25px 0;
 overflow:scroll;
 height:fit-content;
 max-height:33rem;
+padding-bottom: 50px;
 `
 export const Name = styled.div`
 color:${WHITE};
@@ -45,8 +46,16 @@ padding-top:12px;
 `
 
 export const SwitcherWrapper = styled.div`
-display:grid;
+display:flex;
+justify-content: center;
 grid-gap:15px;
 grid-template-columns:${({isGroup}) => isGroup ? '1fr' : '1fr 1fr'};
 
+`
+
+export const PaginationWrapper = styled.div`
+`
+export const HeaderWrapper = styled.div`
+display: flex;
+justify-content: center;
 `

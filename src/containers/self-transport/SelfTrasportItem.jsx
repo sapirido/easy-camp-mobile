@@ -1,5 +1,6 @@
 import React, { useEffect,useState } from 'react';
 import { AttendanceIconSVG } from '../../common/icons/icons';
+import { PRIMARY, WHITE } from '../../common/styles/colors';
 import { AttendanceItemWrapper,Name,TrasnportNumber } from '../daily-attendance/Attendance.styled';
 
 export default function({children,date,handleUpdateReport,isArrived}){
@@ -26,7 +27,7 @@ export default function({children,date,handleUpdateReport,isArrived}){
            {`${children.childrenName} ${children.familyName}`}
          </Name>
          <span onClick={handleClicked}>
-          <AttendanceIconSVG checked={checked} />
+          <AttendanceIconSVG checked={checked ? PRIMARY : WHITE } />
         </span>
         </AttendanceItemWrapper>
     )

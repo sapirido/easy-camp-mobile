@@ -26,17 +26,14 @@ const { Content } = Layout;
 
 const ContentStyled = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
   width: 100%;
-  padding: 1.2rem 1.2rem 2.2rem 1.2rem;
-  align-items:flex-start;
+  padding: 20px;
+justify-content: center;
 `;
 
 const MenuStyled = styled.div`
   display: grid;
   grid-template-columns:17% 70%;
-  justify-content: flex-start;
   width: 100%;
   align-items: center;
   direction: rtl;
@@ -51,13 +48,11 @@ const NameStlyed = styled.div`
 
 const LayoutStyled = styled(Layout)`
 background-color:white;
-display:flex;
 grid-gap:0px;
 `
 const ContentWrapper = styled(Content)`
 display:grid;
-grid-template-rows:10% 90%;
-/* margin-top:20px; */
+grid-template-rows:10% auto;
 `
 
 
@@ -134,7 +129,6 @@ function AppRouter({ history }) {
   const { modalState } = useSelector(({ modal }) => modal);
   useEffect(() => {
     const user = checkActiveUser(activeUser);
-    console.log({user});
     if (user) {
       dispatch(setActiveUser(user));
       history.push('/');
@@ -181,7 +175,7 @@ function AppRouter({ history }) {
      
 
         <Switch>
-          <ContentStyled>
+          <ContentStyled as={'div'}>
             {[...notAuthRoute, ...routes].map((route) => (
               <Route
                 exact={route.isExact}

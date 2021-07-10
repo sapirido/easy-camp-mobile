@@ -1,5 +1,7 @@
 import { DatePicker } from 'antd';
 import moment from 'moment';
+import Lottie from 'react-lottie';
+
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Switch from "react-switch";
@@ -11,6 +13,8 @@ import { IconStyled, Wrapper } from '../daily-attendance/DailyAttendance.styled'
 import SelfTransportItem from './SelfTrasportItem';
 import { ButtonWrapper } from '../daily-attendance/Attendance.styled';
 import ECButton from '../../components/button/ECButton';
+import { ContentBox } from '../feedbacks/Feedbacks.styled';
+import success from '../../assets/lottie/success_primary.json';
 
 
 export default function SelfTransport({}){
@@ -18,6 +22,7 @@ export default function SelfTransport({}){
     const [date,setDate] = useState(moment(Date.now()).format('DD-MM-YYYY'));
     const [isArrived,setIsArrived] = useState(true);
     const [childrenList,setChildrenList] = useState([]);
+    const [isUpdated,setIsUpdated] = useState(false);
     const dispatch = useDispatch();
     const { childrens } = useSelector(({report}) => report);
 
@@ -59,20 +64,35 @@ export default function SelfTransport({}){
    }
 
   function handleAllReport(){
+      setIsUpdated(true);
     for(let child of childrenList){
         if(child.arrived){
-            console.log({child});
              dispatch(updateChildTransportArrived(child,date));
         }
         if(child.collect){
-            console.log({child});
              dispatch(updatedChildTransportCollect(child,date));
         }
     }
+    setTimeout(() => {
+        setIsUpdated(false);
+    },2000)
    }
 
+   const defaultOptions = {
+    loop:true,
+    autoplay:true,
+    animationData: success,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice"
+    }
+  }
 
-console.log({childrenList})
+   if(isUpdated) { 
+       return (
+        <ContentBox> <Lottie options={defaultOptions} height={250} width={250}/> </ContentBox>
+       )
+   }
+
     return(
         <SelfTransportWrapper>
           <HeaderPage  title={'- איסוף והגעה עצמית -'} size={1.6} color={SECONDARY}/>
@@ -99,12 +119,12 @@ console.log({childrenList})
         }}
         onChange={currentDateChanged}
       />
-      <ListWrapper>
-        {childrenList?.filter(child => !!child.id).map(children => <SelfTransportItem key={children.id} children={children} date={date} handleUpdateReport={handleReport} isArrived={isArrived}/>) }
-        <ButtonWrapper>
         <Wrapper>
           <ECButton  handleClicked={handleAllReport} buttonText={'עדכן דוח'} backgroundColor={WHITE} textColor={PRIMARY}/>
         </Wrapper>
+      <ListWrapper>
+        {childrenList?.filter(child => !!child.id).map(children => <SelfTransportItem key={children.id} children={children} date={date} handleUpdateReport={handleReport} isArrived={isArrived}/>) }
+        <ButtonWrapper>
     </ButtonWrapper>
       </ListWrapper>
     </SelfTransportWrapper>

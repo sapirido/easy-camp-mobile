@@ -1,26 +1,23 @@
-import React, { useEffect, useState,useRef } from 'react';
-import styled from 'styled-components';
-import {DailyAttendanceWrapper,Wrapper,CounterWrapper,IconStyled} from './DailyAttendance.styled'
-import { PRIMARY, SECONDARY,WHITE } from '../../common/styles/colors';
-import HeaderPage from '../../components/header-page/HeaderPage';
-import Switch from "react-switch";
+import { DatePicker, Select } from 'antd';
 import moment from 'moment';
-import { SearchContainer } from '../../common/styles/common.styled';
-import { batch, useDispatch, useSelector } from 'react-redux';
-import { PERMISSIONS } from '../../common/constants';
-import { Input,DatePicker } from 'antd';
-import { getCampContacts, getGroupContacts, getTransportContacts } from '../../data/modules/contact/contact.actions';
-import { getAllCamps, getInstructionCamp } from '../../data/modules/camp/camp.action';
-import { AttendancesWrapper,ButtonWrapper,SwitcherWrapper } from './Attendance.styled';
-import AttendanceItem from './AttendanceItem';
-import ECButton from '../../components/button/ECButton';
-import {updateChildrensAttendance} from '../../data/modules/attandance/attendance.action'
-import { getAllChildrens } from '../../data/modules/report/report.action';
+import React, { useEffect, useRef, useState } from 'react';
 import Lottie from 'react-lottie';
-import success from '../../assets/lottie/success_primary.json';
+import { batch, useDispatch, useSelector } from 'react-redux';
+import Switch from "react-switch";
+import { PERMISSIONS } from '../../common/constants';
+import { PRIMARY, SECONDARY, WHITE } from '../../common/styles/colors';
+import ECButton from '../../components/button/ECButton';
+import HeaderPage from '../../components/header-page/HeaderPage';
+import { updateChildrensAttendance } from '../../data/modules/attandance/attendance.action';
+import { getAllCamps, getInstructionCamp } from '../../data/modules/camp/camp.action';
+import { getCampContacts, getGroupContacts, getTransportContacts } from '../../data/modules/contact/contact.actions';
+import { AttendancesWrapper, ButtonWrapper, HeaderWrapper, SwitcherWrapper } from './Attendance.styled';
+import { getAllChildrens } from '../../data/modules/report/report.action';
+import AttendanceItem from './AttendanceItem';
+import { CounterWrapper, DailyAttendanceWrapper, IconStyled, Wrapper } from './DailyAttendance.styled';
 import { ContentBox } from '../feedbacks/Feedbacks.styled';
+import success from '../../assets/lottie/success_primary.json';
 
-import {Select} from 'antd';
 
 const  { Option } = Select; 
 
@@ -121,8 +118,10 @@ export default function DailyAttendance({}){
     useEffect(()=> {
         if(contactList.length){
             setCounterFromDbData();
+        }else{
+            setCounter(0);
         }
-    },[contactList.length,isMorning,selectedInstruction])
+    },[contactList.length,isMorning,selectedInstruction,isGroup,selectedStation])
 
     function setCounterFromDbData(){
         let count = 0;
@@ -207,12 +206,14 @@ export default function DailyAttendance({}){
                 return (
                     
                     <React.Fragment>
+                        <HeaderWrapper>
                     <HeaderPage
                     title={moment(Date.now()).format('DD.MM.YYYY')}
                     size={1.2}
                     color={PRIMARY}
                     style={{ paddingTop: '1rem', paddingBottom: '0.7rem' }}
                   />
+                  </HeaderWrapper>
                   <SwitcherWrapper isGroup={isGroup}>
                     <Switch 
                     width={150}
@@ -240,7 +241,7 @@ export default function DailyAttendance({}){
                   {!isGroup && 
                     <>
                     <Select
-                  style={{ width: '100%', marginTop: '0.7rem',marginBottom:'0.7rem'}}
+                  style={{ width: '100%', marginTop: 6,marginBottom:6}}
                   placeholder={'בחר תחנה'}
                   onChange={(stationId) => setSelectedStation(stationId)}
                 >
@@ -265,13 +266,13 @@ export default function DailyAttendance({}){
                             style={{
                               display: 'flex',
                               alignSelf: 'center',
-                              marginTop: '2rem',
-                              marginBottom: '1rem',
+                              marginTop: '0.5rem',
+                              borderRadius:12
                             }}
                             onChange={currentDateChanged}
                           />
                           <Select
-                          style={{ width: '100%', marginTop: '0.7rem',marginBottom:'0.7rem'}}
+                          style={{ width: '100%', marginTop: 6,marginBottom:6}}
                           placeholder={'בחר מדריך'}
                           onChange={(instruction) => setSelectedInstruction(instruction)}
                         >
@@ -289,15 +290,16 @@ export default function DailyAttendance({}){
                         <DatePicker
                          defaultValue={moment(date, 'YYYY-MM-DD')}
                          style={{
-                          display: 'flex',
-                          alignSelf: 'center',
-                          marginTop: '2rem',
-                          marginBottom: '1rem',
+                            display: 'flex',
+                            alignSelf: 'center',
+                            marginTop: '0.5rem',
+                            borderRadius:12
+
                          }}
                         onChange={currentDateChanged}
                       />
                       <Select
-                      style={{ width: '100%', marginTop: '0.7rem',marginBottom:'0.7rem'}}
+                      style={{ width: '100%', marginTop: 6,marginBottom:6}}
                       placeholder={'בחר מחנה'}
                       defaultValue={-1}
                       onChange={(campId) => setSelectedCamp(campId)}
@@ -310,7 +312,7 @@ export default function DailyAttendance({}){
                     {selectedCamp && selectedCamp != -1 &&
                         <>
                         <Select
-                        style={{ width: '100%', marginTop: '0.7rem',marginBottom:'0.7rem'}}
+                        style={{ width: '100%', marginTop: 6,marginBottom:6}}
                         placeholder={'בחר מדריך'}
                         value={selectedInstruction}
                         onChange={(instruction) => setSelectedInstruction(instruction)}
@@ -389,7 +391,9 @@ export default function DailyAttendance({}){
    }
     return (
      <DailyAttendanceWrapper>
+         <HeaderWrapper>
      <HeaderPage  title={'- נוכחות יומית -'} size={1.6} color={SECONDARY}/>
+     </HeaderWrapper>
         {renderContentByRole()}
          {isAllowedToChange(activeUser?.role) && contactList.length > 0 && 
     <ButtonWrapper>

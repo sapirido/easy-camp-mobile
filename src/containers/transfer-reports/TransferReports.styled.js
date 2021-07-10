@@ -6,6 +6,7 @@ flex-direction:column;
 align-items:center;
 height:fit-content;
 overflow:scroll;
+justify-content: center;
 `
 export const ReportContainer = styled.div`
 `
