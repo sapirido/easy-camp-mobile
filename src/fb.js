@@ -15,11 +15,11 @@ export const db = firebase.database();
 export const { auth } = firebase;
 export const storage = firebase.storage();
 const currentUser = auth().currentUser;
-
+const masterCamp = localStorage.getItem('campCode') || 'kleahA';
 //***START_AUTH***//
 const provider = new auth.GoogleAuthProvider();
 export async function getUser(id){
-const userData = await db.ref(`kleah/users/employees/${id}`).once('value').then(snapshot =>{
+const userData = await db.ref(`${masterCamp}/users/employees/${id}`).once('value').then(snapshot =>{
    return snapshot.val();
   });
   return userData;
@@ -27,7 +27,7 @@ const userData = await db.ref(`kleah/users/employees/${id}`).once('value').then(
 
 export async function saveUser(userData){
 
-   await db.ref(`/kleah/users/employees/${userData.id}`).set({
+   await db.ref(`/${masterCamp}/users/employees/${userData.id}`).set({
     ...userData
   })
 }
@@ -56,7 +56,6 @@ export async function loginEmployee(email,password){
   try{
     const user = await auth().signInWithEmailAndPassword(email,password);
     if(user){
-      const masterCamp = localStorage.getItem('campCode');
       const campEmployees =  await (await db.ref(`/${masterCamp}/users/employees`).once('value')).val();
       
       const employees = Object.values(campEmployees);
@@ -80,8 +79,8 @@ export async function loginEmployee(email,password){
 export async function updateUser(user){
   try{
     let updates = {};
-    updates[`/kleah/users/employees/${user.id}`] = null;
-    updates[`/kleah/users/employees/${user.id}`] = user;
+    updates[`/${masterCamp}/users/employees/${user.id}`] = null;
+    updates[`/${masterCamp}/users/employees/${user.id}`] = user;
     return await db.ref().update(updates);
   }catch(err){
     console.error(err);
@@ -107,7 +106,6 @@ export async function updateUserPassword(oldPassword,newPassword,user){
 
 export async function getChildById(childId){
   try{
-    const masterCamp = localStorage.getItem('campCode');
     const child = await (await db.ref(`/${masterCamp}/users/childrens/${childId}`).once('value')).val();
     return !!child && child;
   }catch(err){
@@ -117,7 +115,6 @@ export async function getChildById(childId){
 
 export async function registerParent(parent){
   const {email,password} = parent;
-  const masterCamp = localStorage.getItem('campCode');
   await auth().createUserWithEmailAndPassword(email,password);
   await  db.ref(`/${masterCamp}/users/parents/${parent.childId}`).set({
     ...parent
@@ -127,7 +124,6 @@ return true;
 }
 
 export async function loginParent(childId,password){
-  const masterCamp = localStorage.getItem('campCode');
   const parent = await (await db.ref(`/${masterCamp}/users/parents/${childId}`).once('value')).val();
   if(!!parent){
     loginParentWithEmailAndPassword(parent.email,password);
@@ -141,7 +137,7 @@ export async function loginParent(childId,password){
 //***START_CAMP */
 export async function saveEmpolyee(employee){
 try{
-  await db.ref(`/kleah/users/employees/${employee.id}`).set({
+  await db.ref(`/${masterCamp}/users/employees/${employee.id}`).set({
     ...employee
   })
 }catch(err){
@@ -151,7 +147,7 @@ try{
 
 export async function saveChildren(children){
   try{
-    await db.ref(`/kleah/users/childrens/${children.id}`).set({
+    await db.ref(`/${masterCamp}/users/childrens/${children.id}`).set({
       ...children
     })
   }catch(err){
@@ -161,7 +157,7 @@ export async function saveChildren(children){
 
 export async function saveCamp(camp){
   try{
-    await db.ref(`/kleah/camps/${camp.camp_id}`).set({
+    await db.ref(`/${masterCamp}/camps/${camp.camp_id}`).set({
       ...camp
     })
   }catch(err){
@@ -171,7 +167,7 @@ export async function saveCamp(camp){
 
 export async function getAllCamps(){
   try{
-    const allCamps = await (await db.ref('/kleah/camps').once('value')).val();
+    const allCamps = await (await db.ref(`/${masterCamp}/camps`).once('value')).val();
     return allCamps.filter(Boolean);
   }catch(err){
     console.error(err);
@@ -180,7 +176,7 @@ export async function getAllCamps(){
 
 export async function getCampInstructions(campId){
   try{
-    const instructions = await (await db.ref(`/kleah/camps/${campId}/instructions`).once('value')).val();
+    const instructions = await (await db.ref(`/${masterCamp}/camps/${campId}/instructions`).once('value')).val();
     return instructions.filter(Boolean);
   } catch(err){
     console.error('can not fetch instruction data',err);
@@ -189,7 +185,6 @@ export async function getCampInstructions(campId){
 
 export async function getParentByChildId(childId){
   try{
-    const masterCamp = localStorage.getItem('campCode');
     return await (await db.ref(`/${masterCamp}/users/parents/${childId}`).once('value')).val();
   } catch(err) {
     console.error(err);
@@ -199,7 +194,7 @@ export async function getParentByChildId(childId){
 export async function getCampById(campId){
 
   try{
-    return await (await db.ref(`/kleah/camps/${campId}`).once('value')).val();
+    return await (await db.ref(`/${masterCamp}/camps/${campId}`).once('value')).val();
   }catch(err){
     console.error(err);
   }
@@ -208,9 +203,9 @@ export async function getCampById(campId){
 export async function updateCampManager(managerId,campId,updatedData){
   try{
     let updates = {};
-    updates[`/kleah/camps/${campId}/camp_manager`] = updatedData;
-    updates[`/kleah/users/employees/${managerId}`] = null;
-    updates[`/kleah/users/employees/${updatedData.id}`] = updatedData;
+    updates[`/${masterCamp}/camps/${campId}/camp_manager`] = updatedData;
+    updates[`/${masterCamp}/users/employees/${managerId}`] = null;
+    updates[`/${masterCamp}/users/employees/${updatedData.id}`] = updatedData;
     return await db.ref().update(updates);
   }catch(err){
     console.error(err);
@@ -220,10 +215,10 @@ export async function updateCampManager(managerId,campId,updatedData){
 export async function updateInstruction(camp,instructionId,updatedData){
   try{
     let updates = {};
-    updates[`/kleah/users/employees/${instructionId}`] = null;
-    updates[`/kleah/users/employees/${updatedData?.id}`] = updatedData;
-    updates[`/kleah/camps/${camp.camp_id}`] = null;
-    updates[`/kleah/camps/${camp.camp_id}`] = camp;
+    updates[`/${masterCamp}/users/employees/${instructionId}`] = null;
+    updates[`/${masterCamp}/users/employees/${updatedData?.id}`] = updatedData;
+    updates[`/${masterCamp}/camps/${camp.camp_id}`] = null;
+    updates[`/${masterCamp}/camps/${camp.camp_id}`] = camp;
     return await db.ref().update(updates);
 
   }catch(err){
@@ -234,10 +229,10 @@ export async function updateInstruction(camp,instructionId,updatedData){
 export async function updateChildren(camp,childrenId,updatedData){
   try{
     let updates = {};
-    updates[`/kleah/users/childrens/${childrenId}`] = null;
-    updates[`kleah/users/childrens/${updatedData.id}`] = updatedData;
-    updates[`kleah/camps/${camp.camp_id}`] = null;
-    updates[`kleah/camps/${camp.camp_id}`] = camp;
+    updates[`/${masterCamp}/users/childrens/${childrenId}`] = null;
+    updates[`${masterCamp}/users/childrens/${updatedData.id}`] = updatedData;
+    updates[`${masterCamp}/camps/${camp.camp_id}`] = null;
+    updates[`${masterCamp}/camps/${camp.camp_id}`] = camp;
     return await db.ref().update(updates);
   }catch(err){
     console.error(err);
@@ -249,7 +244,7 @@ export async function updateChildren(camp,childrenId,updatedData){
 
 export async function getAllEmployees(){
   try{
-    return await (await db.ref('/kleah/users/employees').once('value')).val();
+    return await (await db.ref(`/${masterCamp}/users/employees`).once('value')).val();
   }catch(err){
     console.error(err);
   }
@@ -257,7 +252,7 @@ export async function getAllEmployees(){
 
 export async function getEmployee(employeeId){
 try{
-  return await (await db.ref(`/kleah/users/employees/${employeeId}`).once('value')).val();
+  return await (await db.ref(`/${masterCamp}/users/employees/${employeeId}`).once('value')).val();
 
 }catch(err){
   console.error(err);
@@ -269,7 +264,7 @@ try{
 //**SCHEDULE_START */
 export async function storeDailySchedule(dailySchedule){
   try{
-    await db.ref(`/kleah/daily_schedules/${dailySchedule.date}`).set({
+    await db.ref(`/${masterCamp}/daily_schedules/${dailySchedule.date}`).set({
       ...dailySchedule
     })
   }catch(err){
@@ -279,7 +274,7 @@ export async function storeDailySchedule(dailySchedule){
 
 export async function getAllSchedule(campId){
   try{
-    return await (await db.ref(`/kleah/daily_schedules/${campId}`).once('value')).val();
+    return await (await db.ref(`/${masterCamp}/daily_schedules/${campId}`).once('value')).val();
   }catch(err){
     console.error(err);
   }
@@ -287,7 +282,6 @@ export async function getAllSchedule(campId){
 
 export async function getDailyByDate(campId,date){
   try{
-    const masterCamp = localStorage.getItem('masterCamp') || 'kleah';
     return await (await db.ref(`/${masterCamp}/daily_schedules/${campId}/${date}`).once('value')).val();
   }catch(err){
     console.error(err);
@@ -297,8 +291,8 @@ export async function getDailyByDate(campId,date){
 export async function setTaskByDate(schedule,campId){
   try{
     let updates = {};
-    updates[`/kleah/daily_schedules/${campId}/${schedule.date}`] = null;
-    updates[`/kleah/daily_schedules/${campId}/${schedule.date}`] = schedule;
+    updates[`/${masterCamp}/daily_schedules/${campId}/${schedule.date}`] = null;
+    updates[`/${masterCamp}/daily_schedules/${campId}/${schedule.date}`] = schedule;
     return await db.ref().update(updates);
   }catch(err){
     console.error(err);
@@ -308,7 +302,7 @@ export async function setTaskByDate(schedule,campId){
 export async function deleteScheduleByDate(scheduleDate){
   try{
     let updates = {};
-    updates[`/kleah/daily_schedules/${scheduleDate}`] = null;
+    updates[`/${masterCamp}/daily_schedules/${scheduleDate}`] = null;
     return await db.ref().update(updates);
     }catch(err){
       console.error(err);
@@ -320,7 +314,7 @@ export async function deleteScheduleByDate(scheduleDate){
 export async function addReportPoint(report){
   try{
     let update = {}
-    update[`/kleah/reports/point_reports/${report.date}`] = report;
+    update[`/${masterCamp}/reports/point_reports/${report.date}`] = report;
     return await db.ref().update(update);
   }catch(err){
     console.error(err);
@@ -329,7 +323,7 @@ export async function addReportPoint(report){
 
 export async function getReportPoints(transportId){
   try{
-   return await (await db.ref(`/kleah/reports/point_reports/${transportId}`).once('value')).val();
+   return await (await db.ref(`/${masterCamp}/reports/point_reports/${transportId}`).once('value')).val();
   }catch(err){
     console.error(err);
   }
@@ -338,7 +332,7 @@ export async function getReportPoints(transportId){
 export async function updateTransportPoint(transportId,report){
   try{
     let update = {};
-    update[`/kleah/reports/point_reports/${transportId}/${report.date}`] = report;
+    update[`/${masterCamp}/reports/point_reports/${transportId}/${report.date}`] = report;
     await db.ref().update(update);
     return report;
   } catch(err) {
@@ -349,7 +343,7 @@ export async function updateTransportPoint(transportId,report){
 export async function removeReportPoint(date){
   try{
     let update = {}
-    update[`/kleah/reports/point_reports/${date}`] = null;
+    update[`/${masterCamp}/reports/point_reports/${date}`] = null;
     return await db.ref().update(update);
   }catch(err){
     console.error(err);
@@ -359,7 +353,7 @@ export async function removeReportPoint(date){
 export async function addParentReport(instructionId,report){
   try{
     let update = {};
-    update[`/kleah/reports/parent_reports/${instructionId}/${report.date}/${report.id}`] = report;
+    update[`/${masterCamp}/reports/parent_reports/${instructionId}/${report.date}/${report.id}`] = report;
     return await db.ref().update(update);
   }catch(err){
     console.error(err);
@@ -368,7 +362,7 @@ export async function addParentReport(instructionId,report){
 
 export async function getParentReportById(instructionId){
   try{
-    return await (await db.ref(`/kleah/reports/parent_reports/${instructionId}`).once('value')).val();
+    return await (await db.ref(`/${masterCamp}/reports/parent_reports/${instructionId}`).once('value')).val();
   }catch(err){
     console.error(err);
   }
@@ -379,9 +373,9 @@ export async function updateChildrenTransport(child,date,type){
   try{
     let update = {};
     if(type === 'collect'){
-      update[`/kleah/users/childrens/${child.id}/selfTransports/${date}/collect`] = child.collect;
+      update[`/${masterCamp}/users/childrens/${child.id}/selfTransports/${date}/collect`] = child.collect;
     }else{
-      update[`/kleah/users/childrens/${child.id}/selfTransports/${date}/arrived`] = child.arrived;
+      update[`/${masterCamp}/users/childrens/${child.id}/selfTransports/${date}/arrived`] = child.arrived;
     }
     return await db.ref().update(update);
   }catch(err){
@@ -402,7 +396,7 @@ export async function getMasterCamps(){
 
 export async function getAllTransport(){
   try{
-    return await (await db.ref('/kleah/transports').once('value')).val();
+    return await (await db.ref(`/${masterCamp}/transports`).once('value')).val();
   }catch(err){
     console.log(err);
   }
@@ -410,7 +404,7 @@ export async function getAllTransport(){
 
 export async function checkChildrenReport(campId,groupNumber,childIndex,date){
 try{
-return await (await db.ref(`/kleah/camps/${campId}/groups/${groupNumber}/childrens/${childIndex}/reports/${date}`).once('value')).val();
+return await (await db.ref(`/${masterCamp}/camps/${campId}/groups/${groupNumber}/childrens/${childIndex}/reports/${date}`).once('value')).val();
 }catch(err){
   console.error(err);
 }
@@ -420,12 +414,12 @@ return await (await db.ref(`/kleah/camps/${campId}/groups/${groupNumber}/childre
 
 export async function getFeedbacks(){
 
-  return await (await db.ref('kleah/feedbacks').once('value')).val();
+  return await (await db.ref(`${masterCamp}/feedbacks`).once('value')).val();
 }
 
 export async function storeFeedback(campId,week,childId,feedback){
 let update ={};
-update[`/kleah/camps/${campId}/feedbacks/${week}/${childId}`] = feedback;
+update[`/${masterCamp}/camps/${campId}/feedbacks/${week}/${childId}`] = feedback;
 return await db.ref().update(update);
 }
 
@@ -434,7 +428,7 @@ return await db.ref().update(update);
 
 export async function getEmployeesContact(){
   try{
-    return await (await db.ref('kleah/users/employees').once('value')).val();
+    return await (await db.ref(`${masterCamp}/users/employees`).once('value')).val();
   } catch(err){
     console.error('can not fetch employees contacts',err);
   }
@@ -442,7 +436,7 @@ export async function getEmployeesContact(){
 
 export async function getGroupContact(campId){
   try{
-     return await (await db.ref(`/kleah/camps/${campId}/groups`).once('value')).val();
+     return await (await db.ref(`/${masterCamp}/camps/${campId}/groups`).once('value')).val();
 
   } catch(err){
     console.error('can not fetch group contacts',err);
@@ -451,7 +445,7 @@ export async function getGroupContact(campId){
 
 export async function getCampList(campId){
   try{
-    return await (await db.ref(`/kleah/camps/${campId}/groups`).once('value')).val();
+    return await (await db.ref(`/${masterCamp}/camps/${campId}/groups`).once('value')).val();
   } catch(err){
     console.error('can not fetch camp contacts',err);
   }
@@ -465,7 +459,7 @@ export async function getAllContact(){
 
 export async function getChildrensContanct(){
   try{
-   return await (await db.ref('/kleah/users/childrens').once('value')).val(); 
+   return await (await db.ref(`/${masterCamp}/users/childrens`).once('value')).val(); 
   } catch(err){
     console.error('can not fetch transport contacts',err);
   }
@@ -477,16 +471,16 @@ export async function updateAttendance(campId,instructionId,date,childId,childIn
   try{
   let update ={};
 if(isGroup){
-  update[`/kleah/camps/${campId}/groups/${selectedGroupNumber}/childrens/${childIndex}/attendance/${date}/group`] = attended;
-  update[`/kleah/users/childrens/${childId}/attendance/${date}/group`] = attended;
+  update[`/${masterCamp}/camps/${campId}/groups/${selectedGroupNumber}/childrens/${childIndex}/attendance/${date}/group`] = attended;
+  update[`/${masterCamp}/users/childrens/${childId}/attendance/${date}/group`] = attended;
 }else{
   if(isMorning){
-    update[`/kleah/users/childrens/${childId}/attendance/${date}/transport/morning`] = attended;
-  update[`/kleah/camps/${campId}/groups/${selectedGroupNumber}/childrens/${childIndex}/attendance/${date}/transport/morning`] = attended;
+    update[`/${masterCamp}/users/childrens/${childId}/attendance/${date}/transport/morning`] = attended;
+  update[`/${masterCamp}/camps/${campId}/groups/${selectedGroupNumber}/childrens/${childIndex}/attendance/${date}/transport/morning`] = attended;
 
   }else{
-    update[`/kleah/users/childrens/${childId}/attendance/${date}/transport/noon`] = attended;
-    update[`/kleah/camps/${campId}/groups/${selectedGroupNumber}/childrens/${childIndex}/attendance/${date}/transport/noon`] = attended;
+    update[`/${masterCamp}/users/childrens/${childId}/attendance/${date}/transport/noon`] = attended;
+    update[`/${masterCamp}/camps/${campId}/groups/${selectedGroupNumber}/childrens/${childIndex}/attendance/${date}/transport/noon`] = attended;
 
   }
 }
@@ -499,7 +493,7 @@ return await db.ref().update(update);
 export async function saveChildReport(campId,groupNumber,childId,date,selectedTime,isDrink){
   try{
     let update = {};
-    update[`kleah/camps/${campId}/groups/${groupNumber}/childrens/${childId}/reports/${date}/${selectedTime}/isDrinkWater`] = isDrink;
+    update[`${masterCamp}/camps/${campId}/groups/${groupNumber}/childrens/${childId}/reports/${date}/${selectedTime}/isDrinkWater`] = isDrink;
     return await db.ref().update(update);
   }catch(err){
     console.error(err);
@@ -510,8 +504,8 @@ export async function saveChildReport(campId,groupNumber,childId,date,selectedTi
 export async function editTask(campId,date,index,newValues){
   try{
     let updates = {};
-    updates[`kleah/daily_schedules/${campId}/${date}/tasks/${index}`] = null;
-    updates[`kleah/daily_schedules/${campId}/${date}/tasks/${index}`] = newValues;
+    updates[`${masterCamp}/daily_schedules/${campId}/${date}/tasks/${index}`] = null;
+    updates[`${masterCamp}/daily_schedules/${campId}/${date}/tasks/${index}`] = newValues;
 
     await db.ref().update(updates);
     return await getDailyByDate(campId,date);

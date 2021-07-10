@@ -1,6 +1,8 @@
 import React,{useState,useEffect,useRef} from 'react';
 import { useDispatch,useSelector } from 'react-redux';
 import moment from 'moment';
+import Lottie from 'react-lottie';
+
 import { PRIMARY, SECONDARY, WHITE } from '../../common/styles/colors';
 import HeaderPage from '../../components/header-page/HeaderPage';
 import { DailyReportContainer, ChildrenReportWrapper } from './DailyReport.styled';
@@ -13,6 +15,8 @@ import ECButton from '../../components/button/ECButton';
 import { getAllCamps, getCampById } from '../../data/modules/camp/camp.action';
 import { setWaterChildReport } from '../../data/modules/report/report.action';
 import { PERMISSIONS } from '../../common/constants';
+import { ContentBox } from '../feedbacks/Feedbacks.styled';
+import success from '../../assets/lottie/success_primary.json';
 
 const { Option } = Select;
 
@@ -25,7 +29,7 @@ export default function DailyReports({}){
     const [selectedTime,setSelectedTime] = useState('9:00');
     const [counter,setCounter] = useState(0)
     const [childrenList,setChildrenList] = useState([]);
-    const [loading,setLoading] = useState(false);
+    const [isUpdated,setIsUpdated] = useState(false)
     const [groupNum,setGroupNum] = useState();
     const [campSelected,setCampSelected] = useState(null);
     const prevTime = useRef();
@@ -112,6 +116,7 @@ export default function DailyReports({}){
     async function handleAllReport(){
         const date = moment(Date.now()).format('DD-MM-YYYY');
         if(childrenList.length){
+            setIsUpdated(true);
             childrenList.forEach((child,index) => {
                 let isDrink;
                 if(child?.reports && child.reports[date] && child.reports[date][selectedTime]){
@@ -121,8 +126,26 @@ export default function DailyReports({}){
                 
                 dispatch(setWaterChildReport(activeUser?.campId, groupNum, index, date, selectedTime, isDrink));
             })
+            setTimeout(() => {
+                setIsUpdated(false)
+            },2000)
         }
     }
+
+    const defaultOptions = {
+        loop:true,
+        autoplay:true,
+        animationData: success,
+        rendererSettings: {
+          preserveAspectRatio: "xMidYMid slice"
+        }
+      }
+    
+       if(isUpdated) { 
+           return (
+            <ContentBox> <Lottie options={defaultOptions} height={250} width={250}/> </ContentBox>
+           )
+       }
 
     const isAllowedToEdit = activeUser?.role === PERMISSIONS.INSTRUCTION || activeUser?.role === PERMISSIONS.TRANSPORT_MANAGER;
     return(

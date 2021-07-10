@@ -84,7 +84,6 @@ export default function DailyAttendance({}){
     },[selectedCamp])
 
     useEffect(() => {   
-        console.log('here2!');
         if(contacts.length){
             setRootContacts(contacts.filter(children => !!children.id));
             setContact(contacts.filter(children => !!children.id));
@@ -146,7 +145,6 @@ export default function DailyAttendance({}){
     }
 
     function getContactsByRole(){
-        console.log('inHERE!!!')
         switch(activeUser.role){
             case PERMISSIONS.INSTRUCTION:
                 dispatch(getGroupContacts(activeUser.campId,activeUser.id));
