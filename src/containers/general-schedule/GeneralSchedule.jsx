@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { PRIMARY,SECONDARY } from '../../common/styles/colors';
-import general from '../../assets/images/general_schedule.jpg';
+import general from '../../assets/images/general_schedule.png';
 import HeaderPage from '../../components/header-page/HeaderPage';
 import {BlockContainer} from '../../common/styles/common.styled';
 

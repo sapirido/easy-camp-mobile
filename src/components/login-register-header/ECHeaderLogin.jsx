@@ -1,4 +1,5 @@
 import React,{Fragment} from 'react';
+import styled from 'styled-components';
 import {HeaderStyled,TitleStyled,SelctionStyled,IconStyled} from '../../containers/login/Login.styled';
 import ECSelect from '../select/ECSelect';
 import Switch from "react-switch";
@@ -19,10 +20,11 @@ export default function HeaderLogin({
     return (
         <Fragment>
         <HeaderStyled>
-        <TitleStyled>
+        {/* <TitleStyled>
             Easy Camp
-        </TitleStyled>
-        <img style={{height:'7rem'}} src={square}/>
+        </TitleStyled> */}
+        <Logo/>
+        {/* <img style={{height:'7rem'}} src={'/images/logo_big.svg'}/> */}
     </HeaderStyled>
     <SelctionStyled>
                 <ECSelect options={options} handleSelect={handleCampSelected} placeholder="בחר קייטנה"/>
@@ -43,3 +45,12 @@ export default function HeaderLogin({
     </Fragment>
     )
 }
+
+const Logo = styled.div`
+  background-image:url('/images/logo_big.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  width:140px;
+  height:140px;
+`

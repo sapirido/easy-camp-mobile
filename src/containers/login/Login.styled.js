@@ -22,6 +22,7 @@ padding-top:3rem;
 export const HeaderStyled = styled.div`
 display:flex;
 justify-content:center;
+align-items: center;
 flex-direction:column;
 text-align:center;
 `
@@ -38,7 +39,7 @@ justify-content:center;
 flex-direction:column;
 align-items:center;
 font-family:almoni-regular;
-padding-top:6rem;
+padding-top:4rem;
 .ant-select > .ant-select-selector {
     border-radius:1.5rem;
     border:2px solid ${PRIMARY};
