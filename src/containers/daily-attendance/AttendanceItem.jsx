@@ -33,7 +33,7 @@ return(
     <AttendanceItemWrapper disabled={isArrived || isCollect} isNotNeedToCome={isNotNeedToCome}>
     <TrasnportNumber>תחנה מס׳ {children?.transport || 'לא קיים'}</TrasnportNumber>
     <Name>
-    {`${children.childrenName} ${children.familyName}`}
+    {children.childrenName}
     </Name>
     <span onClick={() => isEnabledChange && !(isArrived || isCollect || isNotNeedToCome) ?  handleClicked() : {}}>
     <AttendanceIconSVG checked={checked} />

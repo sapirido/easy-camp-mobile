@@ -66,7 +66,7 @@ export default function DailyAttendance({}){
          const filteredChildren = rootContacts?.filter(child => child.transport == selectedStation);
          setContact(filteredChildren);
      }
-    },[selectedStation])
+    },[selectedStation,isUpdated])
 
     useEffect(() => {
         if(selectedCamp === -1 && (activeUser?.role === PERMISSIONS.GENERAL_MANAGER || activeUser?.role === PERMISSIONS.ADMIN)){
@@ -81,7 +81,7 @@ export default function DailyAttendance({}){
                 dispatch(getInstructionCamp(selectedCamp));
             })
         }
-    },[selectedCamp])
+    },[selectedCamp,isUpdated])
 
     useEffect(() => {   
         if(contacts.length){
