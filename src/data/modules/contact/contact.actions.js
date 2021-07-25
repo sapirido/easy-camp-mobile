@@ -25,6 +25,7 @@ export function getGroupContacts(campId,instructionId){
 
 export function getTransportContacts(transportList){
     return async function _(dispatch){
+        debugger;
         const contacts = await getAllContactList(transportList);
         dispatch(setContacts(contacts));
     }

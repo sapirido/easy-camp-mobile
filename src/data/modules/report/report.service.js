@@ -69,7 +69,7 @@ export async function checkDailyReport(campId,groupNumber,childIndex,date){
 
 export async function getChildrens(){
    const childrens = await getChildrensContanct();
-   return Object.values(childrens);
+   return Object.values(childrens || {});
 }
 
 export async function updateChildTransport(child,date,type){

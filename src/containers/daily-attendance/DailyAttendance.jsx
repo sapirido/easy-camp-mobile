@@ -66,7 +66,7 @@ export default function DailyAttendance({}){
          const filteredChildren = rootContacts?.filter(child => child.transport == selectedStation);
          setContact(filteredChildren);
      }
-    },[selectedStation,isUpdated])
+    },[selectedStation])
 
     useEffect(() => {
         if(selectedCamp === -1 && (activeUser?.role === PERMISSIONS.GENERAL_MANAGER || activeUser?.role === PERMISSIONS.ADMIN)){
@@ -81,7 +81,7 @@ export default function DailyAttendance({}){
                 dispatch(getInstructionCamp(selectedCamp));
             })
         }
-    },[selectedCamp,isUpdated])
+    },[selectedCamp])
 
     useEffect(() => {   
         if(contacts.length){
@@ -193,7 +193,7 @@ export default function DailyAttendance({}){
                     title={moment(Date.now()).format('DD.MM.YYYY')}
                     size={1.2}
                     color={PRIMARY}
-                    style={{ paddingTop: '2rem', paddingBottom: '2rem' }}
+                    style={{display:'flex',justifyContent:'center'}}
                   />
                   <Counter/>
                   </>

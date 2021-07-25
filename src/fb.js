@@ -19,7 +19,7 @@ const masterCamp = localStorage.getItem('campCode') || 'kleahA';
 //***START_AUTH***//
 const provider = new auth.GoogleAuthProvider();
 export async function getUser(id){
-const userData = await db.ref(`${masterCamp}/users/employees/${id}`).once('value').then(snapshot =>{
+const userData = await db.ref(`/${masterCamp}/users/employees/${id}`).once('value').then(snapshot =>{
    return snapshot.val();
   });
   return userData;
@@ -414,7 +414,7 @@ return await (await db.ref(`/${masterCamp}/camps/${campId}/groups/${groupNumber}
 
 export async function getFeedbacks(){
 
-  return await (await db.ref(`${masterCamp}/feedbacks`).once('value')).val();
+  return await (await db.ref(`/${masterCamp}/feedbacks`).once('value')).val();
 }
 
 export async function storeFeedback(campId,week,childId,feedback){
@@ -428,7 +428,7 @@ return await db.ref().update(update);
 
 export async function getEmployeesContact(){
   try{
-    return await (await db.ref(`${masterCamp}/users/employees`).once('value')).val();
+    return await (await db.ref(`/${masterCamp}/users/employees`).once('value')).val();
   } catch(err){
     console.error('can not fetch employees contacts',err);
   }
@@ -493,7 +493,7 @@ return await db.ref().update(update);
 export async function saveChildReport(campId,groupNumber,childId,date,selectedTime,isDrink){
   try{
     let update = {};
-    update[`${masterCamp}/camps/${campId}/groups/${groupNumber}/childrens/${childId}/reports/${date}/${selectedTime}/isDrinkWater`] = isDrink;
+    update[`/${masterCamp}/camps/${campId}/groups/${groupNumber}/childrens/${childId}/reports/${date}/${selectedTime}/isDrinkWater`] = isDrink;
     return await db.ref().update(update);
   }catch(err){
     console.error(err);
@@ -504,7 +504,7 @@ export async function saveChildReport(campId,groupNumber,childId,date,selectedTi
 export async function editTask(campId,date,index,newValues){
   try{
     let updates = {};
-    updates[`${masterCamp}/daily_schedules/${campId}/${date}/tasks/${index}`] = null;
+    updates[`/${masterCamp}/daily_schedules/${campId}/${date}/tasks/${index}`] = null;
     updates[`${masterCamp}/daily_schedules/${campId}/${date}/tasks/${index}`] = newValues;
 
     await db.ref().update(updates);

@@ -46,6 +46,7 @@ export default function Home({ history }) {
     const now = moment(+new Date()).format('YYYY-MM-DD');
     dispatch(getAllCamps());
     setCurrentDay(currentDay || now);
+    console.log({activeUser});
     if(activeUser?.role === 1){
       setSelectedCampId(activeUser?.campId);
     }
@@ -62,8 +63,9 @@ export default function Home({ history }) {
   }, [selectedCampId, currentDay, selectedDailyCalander?.tasks?.length]);
 
   function getCampIdByUserRole() {
-    if (activeUser.role === PERMISSIONS.PARENT) {
-    }
+    if (!allowedToEdit.includes(activeUser?.role)) {
+      setSelectedCampId(activeUser?.campId);
+    } 
   }
 
   function currentDateChanged(date, dateString) {
@@ -112,8 +114,6 @@ export default function Home({ history }) {
       <HeaderPage title={'לא קיימת פעילות ביום זה'} size={1.6} />
     </EmptyStyled>
   );
-
-  const renderEditContent = () => <div>ערוך!!</div>;
 
   async function deleteTask(taskId) {
     batch(async () => {
