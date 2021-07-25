@@ -17,18 +17,16 @@ if(isGroup){
     children?.attendance && children?.attendance[date]?.transport?.noon ? setChecked(true) : setChecked(false);
   }
 }
-},[isGroup,date])
+},[isGroup,date,isMorning])
 
 function handleClicked(){
   handleUpdateAttendance(children.id,!checked);
   setChecked(!checked);
 }
-// console.log({children,checked});
-console.log({children});
+
 const isArrived = !isGroup && isMorning && children?.selfTransports?.[date]?.arrived;
 const isCollect = !isGroup && !isMorning && children?.selfTransports?.[date]?.collect;
 const isNotNeedToCome = !isGroup && !isMorning && !children?.selfTransports?.[date]?.arrived && !children?.attendance?.[date]?.transport?.morning
-console.log('here!!');
 return(
     <AttendanceItemWrapper disabled={isArrived || isCollect} isNotNeedToCome={isNotNeedToCome}>
     <TrasnportNumber>תחנה מס׳ {children?.transport || 'לא קיים'}</TrasnportNumber>

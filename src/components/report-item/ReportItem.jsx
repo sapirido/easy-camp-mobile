@@ -28,7 +28,7 @@ export default function ReportItem({children,handleChecked,handleReport,selected
         <AttendanceItemWrapper>
         <TrasnportNumber>תחנה מס׳ {children?.transport || 'לא קיים'}</TrasnportNumber>
         <Name>
-        {`${children.childrenName} ${children.familyName}`}
+        {children.childrenName}
         </Name>
         <span onClick={() => isAllowedToEdit ?  handleClicked() : {}}>
         <AttendanceIconSVG checked={checked} />

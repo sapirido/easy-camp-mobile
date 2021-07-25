@@ -481,7 +481,6 @@ if(isGroup){
   }else{
     update[`/${masterCamp}/users/childrens/${childId}/attendance/${date}/transport/noon`] = attended;
     update[`/${masterCamp}/camps/${campId}/groups/${selectedGroupNumber}/childrens/${childIndex}/attendance/${date}/transport/noon`] = attended;
-
   }
 }
 return await db.ref().update(update);
@@ -492,6 +491,7 @@ return await db.ref().update(update);
 
 export async function saveChildReport(campId,groupNumber,childId,date,selectedTime,isDrink){
   try{
+    debugger;
     let update = {};
     update[`/${masterCamp}/camps/${campId}/groups/${groupNumber}/childrens/${childId}/reports/${date}/${selectedTime}/isDrinkWater`] = isDrink;
     return await db.ref().update(update);

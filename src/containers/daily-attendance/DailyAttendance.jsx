@@ -56,7 +56,7 @@ export default function DailyAttendance({}){
         if(activeUser?.role === PERMISSIONS.INSTRUCTION || activeUser?.role === PERMISSIONS.TRANSPORT_MANAGER){
             getContactsByRole();
         }
-    },[isGroup])
+    },[isGroup,isMorning])
 
     useEffect(() => {
      if ( selectedStation === 'ALL' ) {

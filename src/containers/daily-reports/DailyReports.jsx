@@ -17,6 +17,7 @@ import { setWaterChildReport } from '../../data/modules/report/report.action';
 import { PERMISSIONS } from '../../common/constants';
 import { ContentBox } from '../feedbacks/Feedbacks.styled';
 import success from '../../assets/lottie/success_primary.json';
+import { isObject } from 'lodash';
 
 const { Option } = Select;
 
@@ -36,9 +37,11 @@ export default function DailyReports({}){
 
     useEffect(()=> {
         if(activeUser?.role === PERMISSIONS.TRANSPORT_MANAGER || activeUser?.role === PERMISSIONS.INSTRUCTION){
+            dispatch(getCampById(activeUser?.campId));
             dispatch(getGroupContacts(activeUser.campId,activeUser.id));
             dispatch(getCampById(activeUser?.campId));
         } else if(activeUser?.role === PERMISSIONS.CAMP_MANAGER){
+            dispatch(getCampById(activeUser?.campId));
             dispatch(getCampContacts(activeUser?.campId));
         }else{
             dispatch(getAllCamps());
@@ -49,12 +52,16 @@ export default function DailyReports({}){
 
     useEffect(() => {
         let groupNumber;
-        if(selectedCamp && selectedCamp.groups?.length){
-            selectedCamp.groups.forEach((group,index) => {
-                if(group.instruction.id == activeUser?.id){
-                    groupNumber = index;
-                }
-            })
+        if(!!selectedCamp){
+            const groups = isObject(selectedCamp?.groups) ? Object.values(selectedCamp?.groups || {}).filter(group => !!group?.instruction?.id) : selectedCamp?.groups;
+            if(groups.length){
+                groups.forEach((group,index) => {
+                    if(group.instruction.id == activeUser?.id){
+                       debugger; 
+                        groupNumber = index;
+                    }
+                })
+            }
             setGroupNum(groupNumber);
         }
     },[selectedCamp])
@@ -101,17 +108,14 @@ export default function DailyReports({}){
     )
 
     function handleReport(childId,checked){
-        const mappedChildrends = childrenList.map(child => child.id == childId ? ({
+        const mappedChildrends = childrenList.map(child => child.id == childId ? {
             ...child,
             isDrinkWater:checked
-        }) : child)
+        } : child)
         setChildrenList(mappedChildrends);
     }
 
    
-    
-    
-    
     
     async function handleAllReport(){
         const date = moment(Date.now()).format('DD-MM-YYYY');
