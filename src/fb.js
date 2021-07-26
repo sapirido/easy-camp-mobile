@@ -491,7 +491,6 @@ return await db.ref().update(update);
 
 export async function saveChildReport(campId,groupNumber,childId,date,selectedTime,isDrink){
   try{
-    debugger;
     let update = {};
     update[`/${masterCamp}/camps/${campId}/groups/${groupNumber}/childrens/${childId}/reports/${date}/${selectedTime}/isDrinkWater`] = isDrink;
     return await db.ref().update(update);

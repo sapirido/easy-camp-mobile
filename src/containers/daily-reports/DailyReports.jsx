@@ -57,7 +57,6 @@ export default function DailyReports({}){
             if(groups.length){
                 groups.forEach((group,index) => {
                     if(group.instruction.id == activeUser?.id){
-                       debugger; 
                         groupNumber = index;
                     }
                 })
