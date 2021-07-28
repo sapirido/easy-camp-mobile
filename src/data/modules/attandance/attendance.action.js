@@ -5,14 +5,14 @@ import { updateChildrenAttendance } from './attendace.service';
 export function updateChildrensAttendance(campId,instructionId,date,childrens,isGroup,isMorning){
 
     return async function _(){
+        let groupNumber;
+        const groupList = await getGroupContact(campId);
+         Object.values(groupList).forEach((group,index) => {
+            if(group.instruction?.id === instructionId){
+                groupNumber = index;
+            }
+        });
         if(isGroup){
-            let groupNumber;
-            const groupList = await getGroupContact(campId);
-             Object.values(groupList).forEach((group,index) => {
-                if(group.instruction?.id === instructionId){
-                    groupNumber = index;
-                }
-            });
             let index = 0;
             for(let child of childrens){
                 const attended = !!child.attended || !!child?.attendance?.[date]?.group;
@@ -22,7 +22,7 @@ export function updateChildrensAttendance(campId,instructionId,date,childrens,is
         }else{
             childrens.forEach(async (children,index) => {
                 const attended = !!children.attended;
-                await updateChildrenAttendance(campId,instructionId,date,children.id,index,!!attended,isGroup,false,isMorning);
+                await updateChildrenAttendance(campId,instructionId,date,children.id,index,attended,isGroup,groupNumber,isMorning);
             })
         }
     }

@@ -93,6 +93,8 @@ export default function SelfTransport({}){
        )
    }
 
+   console.log({childrenList})
+
     return(
         <SelfTransportWrapper>
           <HeaderPage  title={'- איסוף והגעה עצמית -'} size={1.6} color={SECONDARY}/>

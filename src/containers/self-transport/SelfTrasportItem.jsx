@@ -8,8 +8,10 @@ export default function({children,date,handleUpdateReport,isArrived}){
 
     useEffect(() => {
         if(isArrived){
+            console.log( children?.selfTransports , children?.selfTransports?.[date]?.collect)
             children?.selfTransports && children?.selfTransports?.[date]?.collect ? setChecked(true) : setChecked(false)
         }else{
+            console.log( children?.selfTransports , children?.selfTransports?.[date]?.arrived)
             children?.selfTransports && children?.selfTransports?.[date]?.arrived ? setChecked(true) : setChecked(false)
         }
     },[isArrived])
@@ -27,7 +29,7 @@ export default function({children,date,handleUpdateReport,isArrived}){
            {`${children.childrenName} ${children.familyName}`}
          </Name>
          <span onClick={handleClicked}>
-          <AttendanceIconSVG checked={checked ? PRIMARY : WHITE } />
+          <AttendanceIconSVG checked={checked } />
         </span>
         </AttendanceItemWrapper>
     )
